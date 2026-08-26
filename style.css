@@ -1,3 +1,40 @@
+/* ===== BACKGROUND VIDEO FIX ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+#bgVideo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: -2;
+}
+
+.video-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+/* ===== END BACKGROUND VIDEO FIX ===== */
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --accent1: #ff6fa3;
