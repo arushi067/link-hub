@@ -1,4 +1,67 @@
-/* ===== BACKGROUND VIDEO FIX ===== */
+/* ===== VISIBILITY FIX FOR TEXT ===== */
+.status-text {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 0 4px rgba(0,0,0,0.8) !important;
+  opacity: 1 !important;
+  font-size: 15px !important;
+  letter-spacing: 1px;
+}
+
+.quote-box {
+  background: rgba(0,0,0,0.45) !important;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.2) !important;
+}
+
+#dailyQuote {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.8) !important;
+  opacity: 1 !important;
+}
+
+.quote-mark {
+  color: #ff5fa2 !important;
+  opacity: 1 !important;
+}
+
+/* ===== BACKGROUND VIDEO - DESKTOP + MOBILE RATIO FIX ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+#bgVideo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: -2;
+}
+
+.video-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+/* ===== END FIX ===== *//* ===== BACKGROUND VIDEO FIX ===== */
 html, body {
   margin: 0;
   padding: 0;
