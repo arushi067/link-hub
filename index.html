@@ -13,11 +13,9 @@
   var isInstagram = /Instagram/i.test(ua);
   var isIOS = /iPhone|iPad|iPod/i.test(ua);
   var alreadyTried = sessionStorage.getItem("igRedirectTried");
-
   if (isInstagram && isIOS && !alreadyTried) {
     sessionStorage.setItem("igRedirectTried", "1");
     var currentUrl = window.location.href;
-
     document.write(
       '<div style="position:fixed;inset:0;z-index:99999;background:#0d0d1a;color:#fff;' +
       'display:flex;flex-direction:column;align-items:center;justify-content:center;' +
@@ -31,24 +29,19 @@
       'padding:14px 26px;border-radius:14px;text-decoration:none;font-weight:600;font-size:14px;">' +
       'Tap here if it doesn\'t open automatically</a></div>'
     );
-
-    setTimeout(function () {
-      window.location.href = "x-safari-" + currentUrl;
-    }, 300);
-
-    setTimeout(function () {
-      window.location.href = currentUrl;
-    }, 1200);
+    setTimeout(function () { window.location.href = "x-safari-" + currentUrl; }, 300);
+    setTimeout(function () { window.location.href = currentUrl; }, 1200);
   }
 })();
 </script>
 </head>
 <body id="bodyRoot">
-<div class="aurora" id="auroraLayer">
-  <div class="aurora-shape shape1"></div>
-  <div class="aurora-shape shape2"></div>
-  <div class="aurora-shape shape3"></div>
-</div>
+
+<video id="bgVideo" autoplay muted loop playsinline preload="auto">
+  <source src="bg-video.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+
 <div class="particles" id="particles"></div>
 
 <main class="card" id="mainCard">
