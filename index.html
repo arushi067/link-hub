@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Arushi Patel</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body id="bodyRoot">
+<div class="aurora" id="auroraLayer">
+  <div class="aurora-shape shape1"></div>
+  <div class="aurora-shape shape2"></div>
+  <div class="aurora-shape shape3"></div>
+</div>
+<div class="particles" id="particles"></div>
+
+<main class="card" id="mainCard">
+  <div class="ring-wrap">
+    <div class="ring" id="ringEl"></div>
+    <img id="profilePhoto" src="https://via.placeholder.com/160" alt="Profile Photo">
+    <span class="status-dot" id="statusDot"></span>
+  </div>
+
+  <h1 id="userName">Loading...</h1>
+  <p class="status-text" id="statusText"></p>
+
+  <div class="quote-box" id="quoteBox">
+    <span class="quote-mark">“</span>
+    <p id="dailyQuote">Loading today's quote...</p>
+  </div>
+
+  <div class="links" id="linksWrap">
+    <a href="#" id="snapLink" class="link-btn snap" target="_blank"><span class="icon">👻</span><span>Snapchat</span></a>
+    <a href="#" id="discordLink" class="link-btn discord" target="_blank"><span class="icon">🎮</span><span>Discord</span></a>
+    <a href="#" id="instaLink" class="link-btn insta" target="_blank"><span class="icon">📸</span><span>Instagram</span></a>
+  </div>
+
+  <div class="whatsapp-section">
+    <button id="waBtn" class="link-btn whatsapp locked"><span class="icon">🔒</span><span>WhatsApp — Locked</span></button>
+    <div id="waRequestForm" class="wa-form hidden">
+      <p class="wa-note">Enter your Gmail to request access. Approved manually 💌</p>
+      <input type="email" id="waGmail" placeholder="you@gmail.com">
+      <button id="waSubmit" class="btn-primary">Send Request</button>
+      <p id="waMsg" class="wa-msg"></p>
+    </div>
+  </div>
+
+  <footer><span class="footer-heart">✦</span> <span id="footerName">Arushi Patel</span> <span class="footer-heart">✦</span></footer>
+</main>
+
+<script type="module" src="firebase-config.js"></script>
+<script type="module" src="script.js"></script>
+</body>
+</html>
