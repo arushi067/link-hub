@@ -3,100 +3,165 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel</title>
-<meta name="robots" content="noindex, nofollow">
+<title>Admin Panel - Arushi Patel</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="admin-style.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div id="loginScreen" class="login-wrap">
-  <div class="login-card">
-    <div class="lock-icon">🔐</div>
-    <h2>Admin Login</h2>
-    <p class="sub">Secure login powered by Firebase Auth</p>
-    <input type="email" id="loginEmail" placeholder="Admin email" autocomplete="email">
-    <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password">
+<div id="loginScreen" class="login-screen">
+  <div class="login-box">
+    <h1>Admin Login</h1>
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPass" placeholder="Password">
     <button id="loginBtn" class="btn-primary">Login</button>
-    <p id="loginMsg" class="msg"></p>
+    <p id="loginMsg" class="wa-msg"></p>
   </div>
 </div>
 
 <div id="dashboard" class="dashboard hidden">
-  <header class="topbar">
-    <h1>My Profile</h1>
-    <button id="logoutBtn" class="btn-secondary">Logout</button>
+  <header class="admin-header">
+    <h1>Arushi Patel — Admin Panel</h1>
+    <button id="logoutBtn" class="logout-btn">Logout</button>
   </header>
 
-  <div class="tabs">
+  <nav class="tabs">
     <button class="tab-btn active" data-tab="profile">Profile</button>
     <button class="tab-btn" data-tab="quote">Quote</button>
     <button class="tab-btn" data-tab="theme">Theme</button>
     <button class="tab-btn" data-tab="links">Links</button>
+    <button class="tab-btn" data-tab="memories">Memories</button>
     <button class="tab-btn" data-tab="requests">Requests</button>
+  </nav>
+
+  <!-- ===== PROFILE TAB ===== -->
+  <div class="tab-panel" id="tab-profile">
+    <h3>Basic Info</h3>
+    <input type="text" id="fName" placeholder="Display name">
+    <input type="text" id="fStatus" placeholder="Status text (e.g. Online and Working)">
+    <select id="fOnline">
+      <option value="online">Online</option>
+      <option value="away">Away</option>
+      <option value="offline">Offline</option>
+      <option value="dnd">Do Not Disturb</option>
+    </select>
+    <input type="text" id="fStatusEmoji" placeholder="Status emoji (e.g. 🖥️👻)">
+
+    <h3>Profile Photo</h3>
+    <input type="text" id="fPhotoUrl" placeholder="Photo direct URL">
+    <img id="fPhotoPreview" class="photo-preview hidden" src="" alt="Preview">
+
+    <h3>Extra Details</h3>
+    <input type="text" id="fPronouns" placeholder="Pronouns (e.g. she/her)">
+    <input type="text" id="fLocation" placeholder="Location (e.g. Mumbai, India)">
+    <input type="text" id="fBirthday" placeholder="Birthday (e.g. 12 March)">
+    <input type="text" id="fMood" placeholder="Current mood">
+
+    <button id="saveProfileBtn" class="btn-primary">Save Profile</button>
   </div>
 
-  <section class="panel tab-panel" id="tab-profile">
-    <label>Display Name</label>
-    <input type="text" id="fName" placeholder="Arushi Patel">
-    <label>Status Text</label>
-    <input type="text" id="fStatus" placeholder="online & vibing">
-    <label>Online Status</label>
-    <select id="fOnline">
-      <option value="online">🟢 Online</option>
-      <option value="away">🟡 Away</option>
-      <option value="offline">⚪ Offline</option>
-    </select>
-    <label>Profile Photo URL</label>
-    <input type="url" id="fPhotoUrl" placeholder="https://i.ibb.co/xxxxx/photo.jpg">
-    <p class="hint-text">Upload your photo on <a href="https://imgbb.com" target="_blank">imgbb.com</a> (no signup needed), then paste the direct image link here.</p>
-    <img id="fPhotoPreview" class="photo-preview hidden">
-    <button id="saveProfileBtn" class="btn-primary">Save Profile</button>
-  </section>
-
-  <section class="panel tab-panel hidden" id="tab-quote">
-    <label>Daily Quote</label>
-    <textarea id="fQuote" rows="3" placeholder="Type today's quote..."></textarea>
+  <!-- ===== QUOTE TAB ===== -->
+  <div class="tab-panel hidden" id="tab-quote">
+    <h3>Daily Quote</h3>
+    <textarea id="fQuote" rows="3" placeholder="Enter your quote here..."></textarea>
     <button id="saveQuoteBtn" class="btn-primary">Save Quote</button>
-  </section>
+  </div>
 
-  <section class="panel tab-panel hidden" id="tab-theme">
-    <label>Color Theme</label>
+  <!-- ===== THEME TAB ===== -->
+  <div class="tab-panel hidden" id="tab-theme">
+    <h3>Appearance</h3>
+    <label>Theme preset</label>
     <select id="fTheme">
-      <option value="pink">Classic Pink</option>
-      <option value="dark">Dark Cosmic</option>
-      <option value="ocean">Ocean Blue</option>
-      <option value="sunset">Sunset Orange</option>
+      <option value="pink">Pink</option>
+      <option value="dark">Dark</option>
+      <option value="purple">Purple</option>
+      <option value="ocean">Ocean</option>
     </select>
-    <label>Background Animation</label>
+
+    <label>Background animation</label>
     <select id="fAnimation">
-      <option value="blobs">Floating Blobs</option>
-      <option value="stars">Twinkling Stars</option>
-      <option value="hearts">Floating Hearts</option>
-      <option value="bubbles">Rising Bubbles</option>
+      <option value="blobs">Aurora Blobs</option>
+      <option value="particles">Floating Particles</option>
+      <option value="video">Background Video</option>
       <option value="none">None</option>
     </select>
+
+    <label>Font style</label>
+    <select id="fFont">
+      <option value="poppins">Poppins</option>
+      <option value="quicksand">Quicksand</option>
+      <option value="playfair">Playfair Display</option>
+      <option value="caveat">Caveat (handwritten)</option>
+    </select>
+
+    <label>Accent color</label>
+    <input type="color" id="fAccentColor" value="#ff5fa2">
+
+    <label>Secondary color</label>
+    <input type="color" id="fSecondColor" value="#7f5fff">
+
+    <label>Background video URL (optional)</label>
+    <input type="text" id="fBgVideo" placeholder="https://.../bg-video.mp4">
+
+    <label>Card opacity (%)</label>
+    <input type="range" id="fCardOpacity" min="0" max="100" value="100">
+
+    <label class="checkbox-row"><input type="checkbox" id="fCardBorder" checked> Show card border</label>
+    <label class="checkbox-row"><input type="checkbox" id="fParticles" checked> Show floating particles</label>
+    <label class="checkbox-row"><input type="checkbox" id="fVisitorCounter" checked> Show visitor counter</label>
+
+    <label>Profile ring style</label>
+    <select id="fRingStyle">
+      <option value="solid">Solid ring</option>
+      <option value="dashed">Dashed ring</option>
+      <option value="glow">Glowing ring</option>
+    </select>
+
     <button id="saveThemeBtn" class="btn-primary">Save Theme</button>
-  </section>
+  </div>
 
-  <section class="panel tab-panel hidden" id="tab-links">
-    <label>Snapchat URL</label>
-    <input type="url" id="fSnap" placeholder="https://snapchat.com/add/username">
-    <label>Discord Invite</label>
-    <input type="url" id="fDiscord" placeholder="https://discord.gg/xxxx">
-    <label>Instagram URL</label>
-    <input type="url" id="fInsta" placeholder="https://instagram.com/username">
-    <label>WhatsApp Number (with country code, no +)</label>
-    <input type="text" id="fWaNumber" placeholder="919999999999">
+  <!-- ===== LINKS TAB ===== -->
+  <div class="tab-panel hidden" id="tab-links">
+    <h3>Social Links</h3>
+    <input type="text" id="fSnap" placeholder="Snapchat link">
+    <input type="text" id="fDiscord" placeholder="Discord link">
+    <input type="text" id="fInsta" placeholder="Instagram link">
+    <input type="text" id="fWaNumber" placeholder="WhatsApp number (with country code)">
+
+    <h3>Custom Links</h3>
+    <input type="text" id="fCustomLink1Label" placeholder="Custom link 1 label">
+    <input type="text" id="fCustomLink1Url" placeholder="Custom link 1 URL">
+    <input type="text" id="fCustomLink2Label" placeholder="Custom link 2 label">
+    <input type="text" id="fCustomLink2Url" placeholder="Custom link 2 URL">
+
+    <h3>Extras</h3>
+    <input type="text" id="fSound" placeholder="Click sound URL (optional)">
+    <input type="text" id="fXboxGamertag" placeholder="Xbox Gamertag">
+
     <button id="saveLinksBtn" class="btn-primary">Save Links</button>
-  </section>
+  </div>
 
-  <section class="panel tab-panel hidden" id="tab-requests">
+  <!-- ===== MEMORIES TAB ===== -->
+  <div class="tab-panel hidden" id="tab-memories">
+    <h3>Add a Memory</h3>
+    <input type="text" id="fMemoryUrl" placeholder="Direct image/GIF URL (e.g. Imgur link)">
+    <input type="text" id="fMemoryCaption" placeholder="Caption (optional)">
+    <button id="addMemoryBtn" class="btn-primary">Add Memory</button>
+    <p id="memoryMsg" class="wa-msg"></p>
+
+    <h3 style="margin-top:24px;">Existing Memories</h3>
+    <div id="memoriesList"></div>
+  </div>
+
+  <!-- ===== REQUESTS TAB ===== -->
+  <div class="tab-panel hidden" id="tab-requests">
     <h3>Pending WhatsApp Requests</h3>
     <div id="requestsList"></div>
-    <h3 style="margin-top:20px;">Unlocked Users</h3>
+
+    <h3 style="margin-top:24px;">Unlocked Users</h3>
     <div id="unlockedList"></div>
-  </section>
+  </div>
+
 </div>
 
 <script type="module" src="firebase-config.js"></script>
