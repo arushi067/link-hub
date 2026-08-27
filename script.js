@@ -1,107 +1,197 @@
-// script.js — public profile page
 import { db } from "./firebase-config.js";
-import { doc, getDoc, setDoc, updateDoc, arrayUnion }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { doc, getDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const PROFILE_SLUG = "arushi"; // change this if you rename your slug in admin panel
+const PROFILE_SLUG = "arushi";
+const profileRef = doc(db, "profiles", PROFILE_SLUG);
 
-const THEMES = {
-  pink: { bg: "linear-gradient(135deg,#ffdeeb,#ffc2d9,#ffe4ef,#ffb6d1)", text: "#5c2a3d", accent1: "#ff6fa3", accent2: "#ff3d80", cardBg: "rgba(255,255,255,0.75)" },
-  dark: { bg: "#0d0d1a", text: "#eee", accent1: "#ff5fa2", accent2: "#7f5fff", cardBg: "rgba(20,20,35,0.65)" },
-  ocean: { bg: "linear-gradient(135deg,#d0f0ff,#a0d8ff,#c2eaff)", text: "#0a2540", accent1: "#2196f3", accent2: "#00bcd4", cardBg: "rgba(255,255,255,0.8)" },
-  sunset: { bg: "linear-gradient(135deg,#ffdca8,#ff9a76,#ff6f61)", text: "#4a1e1e", accent1: "#ff7e5f", accent2: "#feb47b", cardBg: "rgba(255,255,255,0.78)" }
+const THEME_COLORS = {
+  pink:   { bg: "#ffeef5", card: "#fff0f6" },
+  dark:   { bg: "#0d0d1a", card: "#1a1a2e" },
+  purple: { bg: "#1a0d2e", card: "#2d1b4e" },
+  ocean:  { bg: "#e8f7fb", card: "#f0fbfd" }
 };
 
-function applyTheme(themeName) {
-  const t = THEMES[themeName] || THEMES.pink;
-  document.body.style.background = t.bg;
-  document.body.style.color = t.text;
-  document.documentElement.style.setProperty("--accent1", t.accent1);
-  document.documentElement.style.setProperty("--accent2", t.accent2);
-  document.documentElement.style.setProperty("--card-bg", t.cardBg);
-  document.documentElement.style.setProperty("--text-color", t.text);
+const FONT_MAP = {
+  poppins: "'Poppins', sans-serif",
+  quicksand: "'Quicksand', sans-serif",
+  playfair: "'Playfair Display', serif",
+  caveat: "'Caveat', cursive"
+};
+
+function applyOnlineDot(status) {
+  const dot = document.getElementById("statusDot");
+  const colors = { online: "#2ecc71", away: "#f1c40f", offline: "#95a5a6", dnd: "#e74c3c" };
+  dot.style.background = colors[status] || colors.online;
 }
 
-function applyAnimation(anim) {
-  const particles = document.getElementById("particles");
-  particles.innerHTML = "";
-  if (anim === "none") return;
-  const count = window.innerWidth < 500 ? 25 : 45;
-  for (let i = 0; i < count; i++) {
-    const el = document.createElement("div");
-    el.className = anim === "hearts" ? "particle heart" : anim === "stars" ? "particle star" : "particle bubble";
-    el.style.left = Math.random() * 100 + "%";
-    el.style.animationDelay = (Math.random() * 5) + "s";
-    el.style.animationDuration = (4 + Math.random() * 6) + "s";
-    if (anim === "hearts") el.textContent = "💗";
-    particles.appendChild(el);
+function applyRingStyle(style) {
+  const ring = document.getElementById("ringEl");
+  ring.classList.remove("ring-solid", "ring-dashed", "ring-glow");
+  ring.classList.add("ring-" + (style || "solid"));
+}
+
+function applyBackgroundVideo(url) {
+  const video = document.getElementById("bgVideo");
+  const overlay = document.getElementById("videoOverlay");
+  if (url) {
+    video.innerHTML = '<source src="' + url + '" type="video/mp4">';
+    video.style.display = "block";
+    overlay.style.display = "block";
+    video.play().catch(() => {});
+  } else {
+    video.style.display = "none";
+    overlay.style.display = "none";
   }
 }
 
-async function renderProfile() {
-  const ref = doc(db, "profiles", PROFILE_SLUG);
-  const snap = await getDoc(ref);
-  if (!snap.exists()) {
-    document.getElementById("userName").textContent = "Profile not found";
-    return;
+function applyCustomLink(idx, label, url) {
+  const link = document.getElementById("customLink" + idx);
+  const text = document.getElementById("customLink" + idx + "Text");
+  if (label && url) {
+    link.href = url;
+    text.textContent = label;
+    link.classList.remove("hidden");
+  } else {
+    link.classList.add("hidden");
   }
-  const d = snap.data();
+}
 
-  document.getElementById("pageTitle").textContent = d.name || "Profile";
-  document.getElementById("userName").textContent = d.name || "";
-  document.getElementById("footerName").textContent = d.name || "";
-  document.getElementById("statusText").textContent = d.statusText || "";
-  document.getElementById("profilePhoto").src = d.photo || "https://via.placeholder.com/160";
-  document.getElementById("dailyQuote").textContent = d.quote || "";
+function buildMetaRow(d) {
+  const row = document.getElementById("metaRow");
+  row.innerHTML = "";
+  const chips = [];
+  if (d.pronouns) chips.push(d.pronouns);
+  if (d.location) chips.push("📍 " + d.location);
+  if (d.birthday) chips.push("🎂 " + d.birthday);
+  if (d.mood) chips.push("💭 " + d.mood);
+  chips.forEach((c) => {
+    const span = document.createElement("span");
+    span.className = "meta-chip";
+    span.textContent = c;
+    row.appendChild(span);
+  });
+}
+
+async function bumpVisitorCounter() {
+  try {
+    const snap = await getDoc(profileRef);
+    const current = snap.exists() ? (snap.data().visitorCount || 0) : 0;
+    await updateDoc(profileRef, { visitorCount: current + 1 });
+    return current + 1;
+  } catch (e) {
+    return null;
+  }
+}
+
+async function applyProfile() {
+  const snap = await getDoc(profileRef);
+  const d = snap.exists() ? snap.data() : {};
+
+  document.getElementById("pageTitle").textContent = d.name || "Arushi Patel";
+  document.getElementById("userName").textContent = d.name || "Arushi Patel";
+  document.getElementById("footerName").textContent = d.name || "Arushi Patel";
+  document.getElementById("statusText").textContent = (d.statusText || "") + " " + (d.statusEmoji || "");
+  document.getElementById("dailyQuote").textContent = d.quote || "Creativity Makes You Happier ✨";
+
+  if (d.photo) document.getElementById("profilePhoto").src = d.photo;
+
+  applyOnlineDot(d.onlineStatus);
+  applyRingStyle(d.ringStyle);
+  buildMetaRow(d);
+
+  const root = document.documentElement;
+  root.style.setProperty("--accent", d.accentColor || "#ff5fa2");
+  root.style.setProperty("--secondary", d.secondColor || "#7f5fff");
+
+  const theme = THEME_COLORS[d.theme] || THEME_COLORS.pink;
+  root.style.setProperty("--bg-color", theme.bg);
+  root.style.setProperty("--card-color", theme.card);
+
+  document.body.style.fontFamily = FONT_MAP[d.font] || FONT_MAP.poppins;
+
+  const card = document.getElementById("mainCard");
+  card.style.opacity = ((d.cardOpacity ?? 100) / 100);
+  card.style.border = d.cardBorder === false ? "none" : "";
+
+  document.getElementById("particles").style.display = d.particles === false ? "none" : "";
+
+  if (d.animation === "video" && d.bgVideo) {
+    applyBackgroundVideo(d.bgVideo);
+    document.getElementById("auroraLayer").style.display = "none";
+  } else if (d.animation === "none") {
+    document.getElementById("auroraLayer").style.display = "none";
+    applyBackgroundVideo("");
+  } else {
+    document.getElementById("auroraLayer").style.display = "";
+    applyBackgroundVideo("");
+  }
+
   document.getElementById("snapLink").href = d.snap || "#";
   document.getElementById("discordLink").href = d.discord || "#";
   document.getElementById("instaLink").href = d.insta || "#";
 
-  const dot = document.getElementById("statusDot");
-  dot.className = "status-dot";
-  if (d.onlineStatus === "away") dot.classList.add("away");
-  if (d.onlineStatus === "offline") dot.classList.add("offline");
+  applyCustomLink(1, d.customLink1Label, d.customLink1Url);
+  applyCustomLink(2, d.customLink2Label, d.customLink2Url);
 
-  applyTheme(d.theme || "pink");
-  applyAnimation(d.animation || "blobs");
+  const clickSound = document.getElementById("clickSound");
+  if (d.clickSound) {
+    clickSound.src = d.clickSound;
+    document.querySelectorAll(".link-btn").forEach((btn) => {
+      btn.addEventListener("click", () => { clickSound.currentTime = 0; clickSound.play().catch(() => {}); });
+    });
+  }
+
+  if (d.visitorCounter !== false) {
+    const counterEl = document.getElementById("visitorCounter");
+    counterEl.classList.remove("hidden");
+    const count = await bumpVisitorCounter();
+    if (count !== null) counterEl.textContent = "👁️ " + count + " visits";
+  }
+
   setupWhatsApp(d);
 }
 
-function setupWhatsApp(data) {
+function setupWhatsApp(d) {
   const waBtn = document.getElementById("waBtn");
   const waForm = document.getElementById("waRequestForm");
-  const waGmail = document.getElementById("waGmail");
   const waSubmit = document.getElementById("waSubmit");
+  const waGmail = document.getElementById("waGmail");
   const waMsg = document.getElementById("waMsg");
 
-  const savedEmail = localStorage.getItem("myWaEmail_" + PROFILE_SLUG);
-  const unlocked = (data.waUnlocked || []).includes((savedEmail || "").toLowerCase());
+  waBtn.addEventListener("click", () => {
+    waForm.classList.toggle("hidden");
+  });
 
-  if (unlocked) {
-    waBtn.innerHTML = '<span class="icon">✅</span><span>Chat on WhatsApp</span>';
-    waBtn.classList.remove("locked");
-    waBtn.classList.add("whatsapp");
-    waBtn.onclick = () => window.open(`https://wa.me/${data.waNumber}`, "_blank");
-    return;
-  }
-
-  waBtn.onclick = () => waForm.classList.toggle("hidden");
-
-  waSubmit.onclick = async () => {
-    const email = waGmail.value.trim().toLowerCase();
-    if (!email || !email.includes("@gmail.com")) {
-      waMsg.textContent = "Please enter a valid Gmail address.";
+  waSubmit.addEventListener("click", async () => {
+    const email = waGmail.value.trim();
+    if (!email || !email.includes("@")) {
+      waMsg.textContent = "Please enter a valid email.";
       waMsg.style.color = "#e74c3c";
       return;
     }
-    const ref = doc(db, "profiles", PROFILE_SLUG);
-    await updateDoc(ref, {
-      waRequests: arrayUnion({ email, time: new Date().toLocaleString() })
-    });
-    localStorage.setItem("myWaEmail_" + PROFILE_SLUG, email);
-    waMsg.textContent = "Request sent! Approval coming soon 💌";
-    waMsg.style.color = "#25D366";
-  };
+    try {
+      const snap = await getDoc(profileRef);
+      const data = snap.exists() ? snap.data() : {};
+      const requests = data.waRequests || [];
+      const unlocked = data.waUnlocked || [];
+
+      if (unlocked.includes(email)) {
+        waMsg.textContent = "You're already approved! WhatsApp: " + (d.waNumber || "");
+        waMsg.style.color = "#27ae60";
+        return;
+      }
+
+      if (!requests.find((r) => r.email === email)) {
+        requests.push({ email, requestedAt: new Date().toISOString() });
+        await updateDoc(profileRef, { waRequests: requests });
+      }
+      waMsg.textContent = "Request sent! Waiting for approval 💌";
+      waMsg.style.color = "#27ae60";
+    } catch (err) {
+      waMsg.textContent = "Something went wrong. Try again.";
+      waMsg.style.color = "#e74c3c";
+    }
+  });
 }
 
-document.addEventListener("DOMContentLoaded", renderProfile);
+applyProfile();
