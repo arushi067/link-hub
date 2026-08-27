@@ -1,5 +1,5 @@
 import { db } from "./firebase-config.js";
-import { doc, getDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const PROFILE_SLUG = "arushi";
 const profileRef = doc(db, "profiles", PROFILE_SLUG);
@@ -22,12 +22,6 @@ function applyOnlineDot(status) {
   const dot = document.getElementById("statusDot");
   const colors = { online: "#2ecc71", away: "#f1c40f", offline: "#95a5a6", dnd: "#e74c3c" };
   dot.style.background = colors[status] || colors.online;
-}
-
-function applyRingStyle(style) {
-  const ring = document.getElementById("ringEl");
-  ring.classList.remove("ring-solid", "ring-dashed", "ring-glow");
-  ring.classList.add("ring-" + (style || "solid"));
 }
 
 function applyBackgroundVideo(url) {
@@ -72,17 +66,6 @@ function buildMetaRow(d) {
   });
 }
 
-async function bumpVisitorCounter() {
-  try {
-    const snap = await getDoc(profileRef);
-    const current = snap.exists() ? (snap.data().visitorCount || 0) : 0;
-    await updateDoc(profileRef, { visitorCount: current + 1 });
-    return current + 1;
-  } catch (e) {
-    return null;
-  }
-}
-
 async function applyProfile() {
   const snap = await getDoc(profileRef);
   const d = snap.exists() ? snap.data() : {};
@@ -96,7 +79,6 @@ async function applyProfile() {
   if (d.photo) document.getElementById("profilePhoto").src = d.photo;
 
   applyOnlineDot(d.onlineStatus);
-  applyRingStyle(d.ringStyle);
   buildMetaRow(d);
 
   const root = document.documentElement;
@@ -113,16 +95,14 @@ async function applyProfile() {
   card.style.opacity = ((d.cardOpacity ?? 100) / 100);
   card.style.border = d.cardBorder === false ? "none" : "";
 
-  document.getElementById("particles").style.display = d.particles === false ? "none" : "";
+  const particlesEl = document.getElementById("particles");
+  if (particlesEl) particlesEl.style.display = d.particles === false ? "none" : "";
 
   if (d.animation === "video" && d.bgVideo) {
     applyBackgroundVideo(d.bgVideo);
     document.getElementById("auroraLayer").style.display = "none";
-  } else if (d.animation === "none") {
-    document.getElementById("auroraLayer").style.display = "none";
-    applyBackgroundVideo("");
   } else {
-    document.getElementById("auroraLayer").style.display = "";
+    document.getElementById("auroraLayer").style.display = "block";
     applyBackgroundVideo("");
   }
 
@@ -139,13 +119,6 @@ async function applyProfile() {
     document.querySelectorAll(".link-btn").forEach((btn) => {
       btn.addEventListener("click", () => { clickSound.currentTime = 0; clickSound.play().catch(() => {}); });
     });
-  }
-
-  if (d.visitorCounter !== false) {
-    const counterEl = document.getElementById("visitorCounter");
-    counterEl.classList.remove("hidden");
-    const count = await bumpVisitorCounter();
-    if (count !== null) counterEl.textContent = "👁️ " + count + " visits";
   }
 
   setupWhatsApp(d);
