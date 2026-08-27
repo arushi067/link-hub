@@ -86,3 +86,16 @@ footer { margin-top: 26px; font-size: 12px; opacity: 0.7; letter-spacing: 1px; }
   .ring-wrap { width: 120px; height: 120px; }
   .ring-wrap img { width: 104px; height: 104px; }
 }
+
+:root {
+  --accent: #ff5fa2;
+  --secondary: #7f5fff;
+  --bg-color: #ffeef5;
+  --card-color: #fff0f6;
+}
+body { background: var(--bg-color); transition: background 0.5s ease; }
+.card { background: var(--card-color); transition: background 0.5s ease; }
+.ring-solid { border-style: solid; }
+.ring-dashed { border-style: dashed; }
+.ring-glow { border-style: solid; box-shadow: 0 0 20px var(--accent); }
+.link-btn.custom1, .link-btn.custom2 { background: linear-gradient(135deg, var(--accent), var(--secondary)); color: #fff; }
