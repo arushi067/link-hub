@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memories - Arushi Patel</title>
+<link rel="stylesheet" href="memories.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="mem-header">
+  <a href="index.html" class="back-btn">&larr; Back</a>
+  <h1 class="mem-title">Gaming Memories</h1>
+  <p class="mem-sub">Snapshots of the fun, fails &amp; victories</p>
+</header>
+
+<main class="board" id="board">
+  <div class="polaroid tilt-l"><div class="tape"></div><img src="bgimg1.gif" alt="Memory 1" data-fallback="bgimg1.jpg"><p class="cap">Memory 1</p></div>
+  <div class="polaroid tilt-r"><div class="tape"></div><img src="bgimg2.gif" alt="Memory 2" data-fallback="bgimg2.jpg"><p class="cap">Memory 2</p></div>
+  <div class="polaroid tilt-l"><div class="tape"></div><img src="bgimg3.gif" alt="Memory 3" data-fallback="bgimg3.jpg"><p class="cap">Memory 3</p></div>
+  <div class="polaroid tilt-r"><div class="tape"></div><img src="bgimg4.gif" alt="Memory 4" data-fallback="bgimg4.jpg"><p class="cap">Memory 4</p></div>
+  <div class="polaroid tilt-l"><div class="tape"></div><img src="bgimg5.gif" alt="Memory 5" data-fallback="bgimg5.jpg"><p class="cap">Memory 5</p></div>
+  <div class="polaroid tilt-r"><div class="tape"></div><img src="bgimg6.gif" alt="Memory 6" data-fallback="bgimg6.jpg"><p class="cap">Memory 6</p></div>
+</main>
+
+<section class="xbox-panel">
+  <h2 class="xbox-title">🎮 PC Games — Xbox Activity</h2>
+  <p class="xbox-sub">Auto-synced from Xbox Live · <span id="xboxUser">Aruu079225</span></p>
+  <div class="xbox-loading" id="xboxLoading">Loading game history...</div>
+  <div class="xbox-error" id="xboxError" style="display:none;"></div>
+  <div class="xbox-grid" id="xboxGrid"></div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <span class="lb-close" id="lbClose">&times;</span>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<footer class="mem-footer">Arushi Patel</footer>
+
+<script src="memories.js"></script>
+</body>
+</html>
