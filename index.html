@@ -36,6 +36,7 @@
 </script>
 
 <style>
+/* ===== NEXT PAGE BUTTON ===== */
 .next-page-btn {
   position: fixed; top: 50%; right: 18px; transform: translateY(-50%);
   width: 48px; height: 48px; border-radius: 50%;
@@ -50,17 +51,53 @@
   0%, 100% { box-shadow: 0 4px 14px rgba(255,95,162,0.35); }
   50% { box-shadow: 0 4px 22px rgba(127,95,255,0.55); }
 }
-.visitor-counter {
-  position: fixed; bottom: 14px; left: 14px; font-size: 11px; opacity: 0.7;
-  background: rgba(0,0,0,0.4); color: #fff; padding: 6px 12px; border-radius: 20px; z-index: 400;
-}
+
 .meta-row { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-top:6px; }
 .meta-chip { font-size:11px; opacity:0.75; background:rgba(0,0,0,0.06); padding:4px 10px; border-radius:12px; }
+
+/* ===== PROFILE PHOTO - NO BORDER, GUARANTEED ANIMATION ===== */
+.ring-wrap { position: relative; width: 140px; height: 140px; margin: 0 auto 14px; }
+.ring-wrap #ringEl { display: none; }
+#profilePhoto {
+  width: 140px; height: 140px; border-radius: 50%; object-fit: cover;
+  border: none; box-shadow: 0 4px 18px rgba(0,0,0,0.2);
+  display: block;
+}
+.status-dot {
+  position: absolute; bottom: 4px; right: 4px; width: 18px; height: 18px;
+  border-radius: 50%; border: 3px solid #fff; background: #2ecc71;
+}
+
+/* ===== GUARANTEED BACKGROUND ANIMATION ===== */
+#auroraLayer {
+  position: fixed; inset: 0; z-index: -3; overflow: hidden;
+  background: linear-gradient(135deg, #ffe3ef, #ffd6ec, #ffe9f5, #ffcfe8);
+  background-size: 300% 300%;
+  animation: auroraShift 14s ease infinite;
+}
+@keyframes auroraShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.aurora-shape {
+  position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.55;
+  animation: floatBlob 10s ease-in-out infinite;
+}
+.shape1 { width: 260px; height: 260px; background: #ff9ecb; top: 5%; left: 8%; animation-delay: 0s; }
+.shape2 { width: 220px; height: 220px; background: #b98cff; top: 55%; left: 65%; animation-delay: 2.5s; }
+.shape3 { width: 200px; height: 200px; background: #ffd1e6; top: 70%; left: 15%; animation-delay: 5s; }
+@keyframes floatBlob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -30px) scale(1.15); }
+}
+
 #bgVideo {
   position: fixed; top: 50%; left: 50%; width: 100vw; height: 100vh; min-width:100%; min-height:100%;
   transform: translate(-50%, -50%); object-fit: cover; z-index: -2; display:none;
 }
 .video-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: -1; pointer-events:none; display:none; }
+
 @media (max-width: 480px) { .next-page-btn { width: 42px; height: 42px; right: 12px; font-size: 18px; } }
 </style>
 </head>
@@ -76,7 +113,6 @@
 <div class="video-overlay" id="videoOverlay"></div>
 
 <a href="memories.html" class="next-page-btn" title="View Memories">➜</a>
-<div class="visitor-counter hidden" id="visitorCounter">👁️ 0 visits</div>
 
 <main class="card" id="mainCard">
   <div class="ring-wrap">
