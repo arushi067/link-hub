@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title id="pageTitle">Arushi Patel</title>
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700&family=Quicksand:wght@500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 
 <script>
 (function () {
@@ -13,11 +13,9 @@
   var isInstagram = /Instagram/i.test(ua);
   var isIOS = /iPhone|iPad|iPod/i.test(ua);
   var alreadyTried = sessionStorage.getItem("igRedirectTried");
-
   if (isInstagram && isIOS && !alreadyTried) {
     sessionStorage.setItem("igRedirectTried", "1");
     var currentUrl = window.location.href;
-
     document.write(
       '<div style="position:fixed;inset:0;z-index:99999;background:#0d0d1a;color:#fff;' +
       'display:flex;flex-direction:column;align-items:center;justify-content:center;' +
@@ -31,50 +29,39 @@
       'padding:14px 26px;border-radius:14px;text-decoration:none;font-weight:600;font-size:14px;">' +
       'Tap here if it doesn\'t open automatically</a></div>'
     );
-
-    setTimeout(function () {
-      window.location.href = "x-safari-" + currentUrl;
-    }, 300);
-
-    setTimeout(function () {
-      window.location.href = currentUrl;
-    }, 1200);
+    setTimeout(function () { window.location.href = "x-safari-" + currentUrl; }, 300);
+    setTimeout(function () { window.location.href = currentUrl; }, 1200);
   }
 })();
 </script>
 
 <style>
 .next-page-btn {
-  position: fixed;
-  top: 50%;
-  right: 18px;
-  transform: translateY(-50%);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ff5fa2, #7f5fff);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  font-size: 22px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-  z-index: 500;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: fixed; top: 50%; right: 18px; transform: translateY(-50%);
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent, #ff5fa2), var(--secondary, #7f5fff));
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  text-decoration: none; font-size: 22px; box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+  z-index: 500; transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: nextPulse 2.4s infinite ease-in-out;
 }
-.next-page-btn:hover {
-  transform: translateY(-50%) scale(1.12);
-  box-shadow: 0 6px 20px rgba(127,95,255,0.5);
-}
+.next-page-btn:hover { transform: translateY(-50%) scale(1.12); }
 @keyframes nextPulse {
   0%, 100% { box-shadow: 0 4px 14px rgba(255,95,162,0.35); }
   50% { box-shadow: 0 4px 22px rgba(127,95,255,0.55); }
 }
-@media (max-width: 480px) {
-  .next-page-btn { width: 42px; height: 42px; right: 12px; font-size: 18px; }
+.visitor-counter {
+  position: fixed; bottom: 14px; left: 14px; font-size: 11px; opacity: 0.7;
+  background: rgba(0,0,0,0.4); color: #fff; padding: 6px 12px; border-radius: 20px; z-index: 400;
 }
+.meta-row { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-top:6px; }
+.meta-chip { font-size:11px; opacity:0.75; background:rgba(0,0,0,0.06); padding:4px 10px; border-radius:12px; }
+#bgVideo {
+  position: fixed; top: 50%; left: 50%; width: 100vw; height: 100vh; min-width:100%; min-height:100%;
+  transform: translate(-50%, -50%); object-fit: cover; z-index: -2; display:none;
+}
+.video-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: -1; pointer-events:none; display:none; }
+@media (max-width: 480px) { .next-page-btn { width: 42px; height: 42px; right: 12px; font-size: 18px; } }
 </style>
 </head>
 <body id="bodyRoot">
@@ -85,7 +72,11 @@
 </div>
 <div class="particles" id="particles"></div>
 
+<video id="bgVideo" autoplay muted loop playsinline preload="auto"></video>
+<div class="video-overlay" id="videoOverlay"></div>
+
 <a href="memories.html" class="next-page-btn" title="View Memories">➜</a>
+<div class="visitor-counter hidden" id="visitorCounter">👁️ 0 visits</div>
 
 <main class="card" id="mainCard">
   <div class="ring-wrap">
@@ -96,6 +87,7 @@
 
   <h1 id="userName">Loading...</h1>
   <p class="status-text" id="statusText"></p>
+  <div class="meta-row" id="metaRow"></div>
 
   <div class="quote-box" id="quoteBox">
     <span class="quote-mark">"</span>
@@ -106,6 +98,8 @@
     <a href="#" id="snapLink" class="link-btn snap" target="_blank"><span class="icon">👻</span><span>Snapchat</span></a>
     <a href="#" id="discordLink" class="link-btn discord" target="_blank"><span class="icon">🎮</span><span>Discord</span></a>
     <a href="#" id="instaLink" class="link-btn insta" target="_blank"><span class="icon">📸</span><span>Instagram</span></a>
+    <a href="#" id="customLink1" class="link-btn custom1 hidden" target="_blank"><span class="icon">🔗</span><span id="customLink1Text"></span></a>
+    <a href="#" id="customLink2" class="link-btn custom2 hidden" target="_blank"><span class="icon">🔗</span><span id="customLink2Text"></span></a>
   </div>
 
   <div class="whatsapp-section">
@@ -120,6 +114,8 @@
 
   <footer><span class="footer-heart">✦</span> <span id="footerName">Arushi Patel</span> <span class="footer-heart">✦</span></footer>
 </main>
+
+<audio id="clickSound" preload="auto"></audio>
 
 <script type="module" src="firebase-config.js"></script>
 <script type="module" src="script.js"></script>
