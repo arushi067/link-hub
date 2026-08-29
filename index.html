@@ -118,56 +118,6 @@ footer { margin-top: 10px; font-size: 12px; opacity: 0.6; }
 
 @media (max-width: 480px) { .next-page-btn { width: 42px; height: 42px; right: 12px; font-size: 18px; } }
 
-  body { perspective: 1200px; }
-
-.card {
-  transform-style: preserve-3d;
-  transition: transform 0.15s ease-out, box-shadow 0.3s ease;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.25), 0 8px 20px rgba(0,0,0,0.15);
-  will-change: transform;
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 28px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0));
-  pointer-events: none;
-  z-index: 1;
-}
-
-.ring-wrap { transform: translateZ(30px); }
-h1, .status-text, .meta-row { transform: translateZ(20px); }
-.quote-box { transform: translateZ(15px); }
-
-.link-btn {
-  transform: translateZ(10px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-.link-btn:hover {
-  transform: translateZ(25px) scale(1.04);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.3);
-}
-
-@keyframes floatCard {
-  0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
-  50% { transform: translateY(-8px) rotateX(2deg) rotateY(-2deg); }
-}
-
-@media (max-width: 768px) {
-  .card { animation: floatCard 6s ease-in-out infinite; }
-  .card { width: 90vw; padding: 32px 22px 24px; }
-  h1 { font-size: 22px; }
-  .link-btn { padding: 13px; font-size: 13px; }
-  .ring-wrap { width: 110px; height: 110px; }
-  #profilePhoto { width: 110px; height: 110px; }
-}
-
-@media (min-width: 769px) {
-  .card { transform: rotateX(0deg) rotateY(0deg); }
-}
   
 </style>
 </head>
