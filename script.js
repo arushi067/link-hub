@@ -245,21 +245,5 @@ function setupWhatsApp(d) {
 
 applyProfile();
 
-if (window.matchMedia("(min-width: 769px)").matches) {
-  const card = document.getElementById("mainCard");
-  document.addEventListener("mousemove", (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    const rotateY = Math.max(-12, Math.min(12, (x / rect.width) * 20));
-    const rotateX = Math.max(-12, Math.min(12, (-y / rect.height) * 20));
-    if (Math.abs(x) < rect.width && Math.abs(y) < rect.height) {
-      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    } else {
-      card.style.transform = "rotateX(0deg) rotateY(0deg)";
-    }
-  });
-  document.addEventListener("mouseleave", () => {
-    card.style.transform = "rotateX(0deg) rotateY(0deg)";
-  });
-}
+
+    
