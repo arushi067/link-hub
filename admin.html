@@ -3,132 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel — Arushi</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Admin Panel</title>
+<meta name="robots" content="noindex, nofollow">
 <link rel="stylesheet" href="admin-style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="admin-shell">
-  <aside class="sidebar">
-    <div class="brand">✨ Admin</div>
-    <nav>
-      <button class="tab-btn active" data-tab="profile">👤 Profile</button>
-      <button class="tab-btn" data-tab="theme">🎨 Theme & Animation</button>
-      <button class="tab-btn" data-tab="links">🔗 Links</button>
-      <button class="tab-btn" data-tab="memories">🖼️ Memories</button>
-      <button class="tab-btn" data-tab="requests">📩 WhatsApp Requests</button>
-    </nav>
-    <div class="save-status" id="saveStatus"></div>
-  </aside>
+<div id="loginScreen" class="login-wrap">
+  <div class="login-card">
+    <div class="lock-icon"></div>
+    <h2>Admin Login</h2>
+    <p class="sub">Secure login powered by Firebase Authentication</p>
+    <input type="email" id="loginEmail" placeholder="Admin email" autocomplete="email">
+    <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password">
+    <button id="loginBtn" class="btn-primary">Login</button>
+    <p id="loginMsg" class="msg"></p>
+  </div>
+</div>
 
-  <main class="content">
+<div id="dashboard" class="dashboard hidden">
+  <header class="topbar">
+    <h1>My Profile</h1>
+    <button id="logoutBtn" class="btn-secondary">Logout</button>
+  </header>
 
-    <section class="tab-panel active" id="tab-profile">
-      <h2>Profile Info</h2>
-      <div class="grid2">
-        <label>Name<input type="text" id="fName" placeholder="Arushi Patel"></label>
-        <label>Photo URL<input type="text" id="fPhoto" placeholder="https://..."></label>
-        <label>Status Text<input type="text" id="fStatusText" placeholder="Online and working"></label>
-        <label>Status Emoji<input type="text" id="fStatusEmoji" placeholder="💻"></label>
-        <label>Online Status
-          <select id="fOnlineStatus">
-            <option value="online">🟢 Online</option>
-            <option value="away">🟡 Away</option>
-            <option value="dnd">🔴 Do Not Disturb</option>
-            <option value="offline">⚪ Offline</option>
-          </select>
-        </label>
-        <label>Quote of the Day<input type="text" id="fQuote"></label>
-        <label>Pronouns<input type="text" id="fPronouns" placeholder="She/Her"></label>
-        <label>Location<input type="text" id="fLocation" placeholder="Ahmedabad"></label>
-        <label>Birthday<input type="text" id="fBirthday" placeholder="12 May"></label>
-        <label>Mood<input type="text" id="fMood" placeholder="Happy 😊"></label>
-      </div>
-      <button class="save-btn" id="saveProfile">Save Profile</button>
-    </section>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="profile">Profile</button>
+    <button class="tab-btn" data-tab="quote">Quote</button>
+    <button class="tab-btn" data-tab="theme">Theme</button>
+    <button class="tab-btn" data-tab="links">Links</button>
+    <button class="tab-btn" data-tab="memories">Memories</button>
+    <button class="tab-btn" data-tab="requests">Requests</button>
+  </div>
 
-    <section class="tab-panel" id="tab-theme">
-      <h2>Theme & Background Animation</h2>
-      <div class="grid2">
-        <label>Color Theme
-          <select id="fTheme">
-            <option value="pink">🌸 Pink</option>
-            <option value="dark">🌑 Dark</option>
-            <option value="purple">🔮 Purple</option>
-            <option value="ocean">🌊 Ocean</option>
-            <option value="sunset">🌅 Sunset</option>
-            <option value="midnight">🌌 Midnight</option>
-          </select>
-        </label>
-        <label>Font
-          <select id="fFont">
-            <option value="poppins">Poppins</option>
-            <option value="quicksand">Quicksand</option>
-            <option value="playfair">Playfair Display</option>
-            <option value="caveat">Caveat (handwriting)</option>
-          </select>
-        </label>
-        <label>Accent Color <input type="color" id="fAccent" value="#ff5fa2"></label>
-        <label>Secondary Color <input type="color" id="fSecond" value="#7f5fff"></label>
+  <section class="panel tab-panel" id="tab-profile">
+    <label>Display Name</label>
+    <input type="text" id="fName" placeholder="Arushi Patel">
+    <label>Status Text</label>
+    <input type="text" id="fStatus" placeholder="online / vibing">
+    <label>Online Status</label>
+    <select id="fOnline">
+      <option value="online">Online</option>
+      <option value="away">Away</option>
+      <option value="offline">Offline</option>
+    </select>
+    <label>Profile Photo URL</label>
+    <input type="url" id="fPhotoUrl" placeholder="https://i.ibb.co/xxxxx/photo.jpg">
+    <p class="hint-text">Upload your photo on <a href="https://imgbb.com" target="_blank">imgbb.com</a> (no signup needed), then paste the direct image link here.</p>
+    <img id="fPhotoPreview" class="photo-preview hidden">
+    <button id="saveProfileBtn" class="btn-primary">Save Profile</button>
+  </section>
 
-        <label>Background Animation
-          <select id="fAnimation">
-            <option value="aurora">🌈 Aurora Gradient Shift</option>
-            <option value="blobs">🫧 Floating Gradient Blobs</option>
-            <option value="stars">✨ Starry Night + Shooting Stars</option>
-            <option value="bubbles">🔵 Rising Bubbles</option>
-            <option value="wave">🌀 Purple Wave Shift</option>
-            <option value="video">🎬 Custom Video Background</option>
-            <option value="none">⬜ None (Static)</option>
-          </select>
-        </label>
-        <label>Video URL (if animation = Video)<input type="text" id="fBgVideo" placeholder="https://..."></label>
-        <label>Sparkle Particles Overlay
-          <select id="fParticles">
-            <option value="true">On</option>
-            <option value="false">Off</option>
-          </select>
-        </label>
-        <label>Card Opacity (%)<input type="number" id="fCardOpacity" min="50" max="100" value="100"></label>
-      </div>
+  <section class="panel tab-panel hidden" id="tab-quote">
+    <label>Daily Quote</label>
+    <textarea id="fQuote" rows="3" placeholder="Type today's quote..."></textarea>
+    <button id="saveQuoteBtn" class="btn-primary">Save Quote</button>
+  </section>
 
-      <div class="preview-note">💡 Preview live changes by opening your site in another tab after saving.</div>
-      <button class="save-btn" id="saveTheme">Save Theme</button>
-    </section>
+  <section class="panel tab-panel hidden" id="tab-theme">
+    <label>Color Theme</label>
+    <select id="fTheme">
+      <option value="pink">Classic Pink</option>
+      <option value="dark">Dark Cosmic</option>
+      <option value="ocean">Ocean Blue</option>
+      <option value="sunset">Sunset Orange</option>
+    </select>
+    <label>Background Animation</label>
+    <select id="fAnimation">
+      <option value="blobs">Floating Blobs</option>
+      <option value="stars">Twinkling Stars</option>
+      <option value="hearts">Floating Hearts</option>
+      <option value="bubbles">Rising Bubbles</option>
+      <option value="none">None</option>
+    </select>
+    <button id="saveThemeBtn" class="btn-primary">Save Theme</button>
+  </section>
 
-    <section class="tab-panel" id="tab-links">
-      <h2>Links & Extras</h2>
-      <div class="grid2">
-        <label>Snapchat URL<input type="text" id="fSnap"></label>
-        <label>Discord URL<input type="text" id="fDiscord"></label>
-        <label>Instagram URL<input type="text" id="fInsta"></label>
-        <label>WhatsApp Number<input type="text" id="fWaNumber" placeholder="+91..."></label>
-        <label>Custom Link 1 Label<input type="text" id="fCustom1Label"></label>
-        <label>Custom Link 1 URL<input type="text" id="fCustom1Url"></label>
-        <label>Custom Link 2 Label<input type="text" id="fCustom2Label"></label>
-        <label>Custom Link 2 URL<input type="text" id="fCustom2Url"></label>
-        <label>Click Sound URL<input type="text" id="fClickSound" placeholder="https://.../click.mp3"></label>
-        <label>Xbox Gamertag<input type="text" id="fXboxGamertag" placeholder="Aruu079225"></label>
-      </div>
-      <button class="save-btn" id="saveLinks">Save Links</button>
-    </section>
+  <section class="panel tab-panel hidden" id="tab-links">
+    <label>Snapchat URL</label>
+    <input type="url" id="fSnap" placeholder="https://snapchat.com/add/username">
+    <label>Discord Invite</label>
+    <input type="url" id="fDiscord" placeholder="https://discord.gg/xxxx">
+    <label>Instagram URL</label>
+    <input type="url" id="fInsta" placeholder="https://instagram.com/username">
+    <label>WhatsApp Number (with country code, no +)</label>
+    <input type="text" id="fWaNumber" placeholder="919999999999">
+    <button id="saveLinksBtn" class="btn-primary">Save Links</button>
+  </section>
 
-    <section class="tab-panel" id="tab-memories">
-      <h2>Memories Gallery</h2>
-      <div class="grid2">
-        <label>Image URL<input type="text" id="memImage" placeholder="https://..."></label>
-        <label>Caption<input type="text" id="memCaption" placeholder="Memory 1"></label>
-      </div>
-      <button class="save-btn" id="addMemory">➕ Add Memory</button>
-      <div id="memoryList" class="memory-list"></div>
-    </section>
+  <section class="panel tab-panel hidden" id="tab-memories">
+    <label>Memory Photo URL</label>
+    <input type="url" id="fMemUrl" placeholder="https://i.ibb.co/xxxxx/photo.jpg">
+    <p class="hint-text">Upload your photo on <a href="https://imgbb.com" target="_blank">imgbb.com</a> (no signup needed), then paste the direct image link here.</p>
+    <img id="fMemPreview" class="photo-preview hidden">
+    <label>Caption</label>
+    <input type="text" id="fMemCaption" placeholder="e.g. Game night with the squad">
+    <button id="addMemoryBtn" class="btn-primary">Add Memory</button>
+    <h3 style="margin-top:20px">Current Memories</h3>
+    <div id="memoriesList"></div>
+  </section>
 
-    <section class="tab-panel" id="tab-requests">
-      <h2>WhatsApp Access Requests</h2>
-      <div id="requestList" class="request-list"></div>
-    </section>
-
-  </main>
+  <section class="panel tab-panel hidden" id="tab-requests">
+    <h3>Pending WhatsApp Requests</h3>
+    <div id="requestsList"></div>
+    <h3 style="margin-top:20px">Unlocked Users</h3>
+    <div id="unlockedList"></div>
+  </section>
 </div>
 
 <script type="module" src="firebase-config.js"></script>
