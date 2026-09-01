@@ -1,5 +1,5 @@
-import { db } from "./firebase-config.js";
-import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { doc, getDoc, setDoc, updateDoc, arrayUnion }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const PROFILE_SLUG = "arushi";
 const profileRef = doc(db, "profiles", PROFILE_SLUG);
