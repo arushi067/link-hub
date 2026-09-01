@@ -4,172 +4,56 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title id="pageTitle">Arushi Patel</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700&family=Quicksand:wght@500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
-
-<style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family: 'Poppins', sans-serif;
-  min-height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  overflow-x: hidden;
-  position: relative;
-  transition: background 0.6s ease;
-}
-
-#bgLayer { position: fixed; inset: 0; z-index: -5; overflow: hidden; }
-
-.bg-aurora {
-  background: linear-gradient(135deg, #ffe3ef, #ffd6ec, #e0d4ff, #ffcfe8);
-  background-size: 300% 300%;
-  animation: auroraShift 12s ease infinite;
-}
-@keyframes auroraShift { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
-
-.bg-blobs { background:#fff0f6; }
-.blob { position:absolute; border-radius:50%; filter:blur(70px); opacity:0.6; animation: blobFloat 9s ease-in-out infinite; }
-.blob1{width:280px;height:280px;background:#ff9ecb;top:5%;left:8%;}
-.blob2{width:240px;height:240px;background:#b98cff;top:55%;left:65%;animation-delay:2s;}
-.blob3{width:220px;height:220px;background:#ffd1e6;top:70%;left:15%;animation-delay:4s;}
-.blob4{width:200px;height:200px;background:#9ecfff;top:20%;left:70%;animation-delay:6s;}
-@keyframes blobFloat {0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(40px,-40px) scale(1.2);}}
-
-.bg-stars { background: radial-gradient(ellipse at bottom, #1b1b3a 0%, #0d0d1a 100%); }
-.star { position:absolute; background:#fff; border-radius:50%; animation: twinkle 3s infinite ease-in-out; }
-@keyframes twinkle {0%,100%{opacity:0.2;}50%{opacity:1;}}
-@keyframes shootingStar {0%{transform:translateX(0) translateY(0) rotate(315deg);opacity:1;}70%{opacity:1;}100%{transform:translateX(-500px) translateY(500px) rotate(315deg);opacity:0;}}
-.shoot { position:absolute; width:2px; height:2px; background:linear-gradient(-45deg, #fff, transparent); border-radius:50%; box-shadow:0 0 0 4px rgba(255,255,255,.1),0 0 0 8px rgba(255,255,255,.1),0 0 20px rgba(255,255,255,1); animation: shootingStar 3s linear infinite; }
-
-.bg-bubbles { background: linear-gradient(160deg,#d4f1f9,#e8f7fb); }
-.bubble { position:absolute; bottom:-100px; border-radius:50%; background: rgba(127,199,255,0.35); animation: bubbleRise linear infinite; }
-@keyframes bubbleRise {0%{transform:translateY(0) translateX(0);opacity:0.7;}100%{transform:translateY(-110vh) translateX(30px);opacity:0;}}
-
-.bg-wave { background: linear-gradient(135deg,#1a0d2e,#2d1b4e,#3a1f5c,#1a0d2e); background-size:300% 300%; animation: auroraShift 16s ease infinite; }
-
-.bg-none {}
-
-#particles { position:fixed; inset:0; z-index:-4; pointer-events:none; }
-.particle { position:absolute; border-radius:50%; background:rgba(255,255,255,0.7); animation: particleFloat 6s ease-in-out infinite; }
-@keyframes particleFloat {0%,100%{transform:translateY(0);opacity:0.3;}50%{transform:translateY(-25px);opacity:0.9;}}
-
-#bgVideo { position:fixed; top:50%; left:50%; width:100vw; height:100vh; min-width:100%; min-height:100%; transform:translate(-50%,-50%); object-fit:cover; z-index:-3; display:none; }
-.video-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:-2; pointer-events:none; display:none; }
-
-.next-page-btn {
-  position: fixed; top: 50%; right: 18px; transform: translateY(-50%);
-  width: 48px; height: 48px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent, #ff5fa2), var(--secondary, #7f5fff));
-  color: #fff; display: flex; align-items: center; justify-content: center;
-  text-decoration: none; font-size: 22px; box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-  z-index: 500; transition: transform 0.3s ease;
-  animation: nextPulse 2.4s infinite ease-in-out;
-}
-.next-page-btn:hover { transform: translateY(-50%) scale(1.12); }
-@keyframes nextPulse {0%,100%{box-shadow:0 4px 14px rgba(255,95,162,0.35);}50%{box-shadow:0 4px 22px rgba(127,95,255,0.55);}}
-
-.card {
-  position: relative; z-index: 10;
-  width: min(92vw, 420px);
-  background: var(--card-color, #fff0f6);
-  border-radius: 28px;
-  padding: 40px 30px 30px;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-  backdrop-filter: blur(6px);
-}
-
-.ring-wrap { position: relative; width: 140px; height: 140px; margin: 0 auto 14px; }
-#profilePhoto { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border:none; box-shadow: 0 4px 18px rgba(0,0,0,0.2); display:block; }
-.status-dot { position:absolute; bottom:4px; right:4px; width:18px; height:18px; border-radius:50%; border:3px solid #fff; background:#2ecc71; }
-
-h1 { font-size: 26px; margin-bottom: 4px; color: var(--accent, #ff5fa2); font-weight:800; }
-.status-text { font-size: 12px; letter-spacing: 1px; opacity: 0.6; text-transform: uppercase; margin-bottom: 10px; }
-.meta-row { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-top:6px; margin-bottom:14px; }
-.meta-chip { font-size:11px; opacity:0.75; background:rgba(0,0,0,0.06); padding:4px 10px; border-radius:12px; }
-
-.quote-box { background: rgba(255,255,255,0.5); border-radius: 16px; padding: 14px 18px; margin-bottom: 20px; position: relative; }
-.quote-mark { font-size: 30px; color: var(--accent, #ff5fa2); opacity: 0.4; position:absolute; top:-6px; left:8px; }
-#dailyQuote { font-style: italic; font-size: 14px; }
-
-.links { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
-.link-btn {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  padding: 14px; border-radius: 16px; font-weight: 700; font-size: 14px;
-  text-decoration: none; color: #fff; transition: transform 0.2s ease;
-  border: none; cursor: pointer; width: 100%;
-}
-.link-btn:hover { transform: scale(1.03); }
-.snap { background: linear-gradient(135deg, #fffc00, #ffe066); color: #111; }
-.discord { background: linear-gradient(135deg, #5865F2, #7f5fff); }
-.insta { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); }
-.whatsapp.locked { background: #9aa0a6; }
-.custom1 { background: linear-gradient(135deg, var(--accent,#ff5fa2), var(--secondary,#7f5fff)); }
-.custom2 { background: linear-gradient(135deg, var(--secondary,#7f5fff), var(--accent,#ff5fa2)); }
-.hidden { display: none !important; }
-
-.wa-form { margin-top: 10px; text-align: left; }
-.wa-note { font-size: 12px; opacity: 0.7; margin-bottom: 8px; }
-.wa-form input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 8px; }
-.btn-primary { width: 100%; padding: 10px; border-radius: 10px; border: none; background: var(--accent, #ff5fa2); color: #fff; font-weight: 700; cursor: pointer; }
-.wa-msg { font-size: 12px; margin-top: 6px; }
-
-footer { margin-top: 10px; font-size: 12px; opacity: 0.6; }
-.footer-heart { color: var(--accent, #ff5fa2); }
-
-@media (max-width: 480px) { .next-page-btn { width: 42px; height: 42px; right: 12px; font-size: 18px; } }
-
-  
-</style>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body id="bodyRoot">
-
-<div id="bgLayer" class="bg-aurora"></div>
-<div id="particles"></div>
-
-<video id="bgVideo" autoplay muted loop playsinline preload="auto"></video>
-<div class="video-overlay" id="videoOverlay"></div>
-
-<a href="memories.html" class="next-page-btn" title="View Memories">➜</a>
-
-<main class="card" id="mainCard">
-  <div class="ring-wrap">
-    <img id="profilePhoto" src="https://via.placeholder.com/160" alt="Profile Photo">
-    <span class="status-dot" id="statusDot"></span>
+  <div class="aurora" id="auroraLayer">
+    <div class="aurora-shape shape1"></div>
+    <div class="aurora-shape shape2"></div>
+    <div class="aurora-shape shape3"></div>
   </div>
+  <div class="particles" id="particles"></div>
 
-  <h1 id="userName">Loading...</h1>
-  <p class="status-text" id="statusText"></p>
-  <div class="meta-row" id="metaRow"></div>
-
-  <div class="quote-box" id="quoteBox">
-    <span class="quote-mark">"</span>
-    <p id="dailyQuote">Loading today's quote...</p>
-  </div>
-
-  <div class="links" id="linksWrap">
-    <a href="#" id="snapLink" class="link-btn snap" target="_blank"><span class="icon">👻</span><span>Snapchat</span></a>
-    <a href="#" id="discordLink" class="link-btn discord" target="_blank"><span class="icon">🎮</span><span>Discord</span></a>
-    <a href="#" id="instaLink" class="link-btn insta" target="_blank"><span class="icon">📸</span><span>Instagram</span></a>
-    <a href="#" id="customLink1" class="link-btn custom1 hidden" target="_blank"><span class="icon">🔗</span><span id="customLink1Text"></span></a>
-    <a href="#" id="customLink2" class="link-btn custom2 hidden" target="_blank"><span class="icon">🔗</span><span id="customLink2Text"></span></a>
-  </div>
-
-  <div class="whatsapp-section">
-    <button id="waBtn" class="link-btn whatsapp locked"><span class="icon">🔒</span><span>WhatsApp — Locked</span></button>
-    <div id="waRequestForm" class="wa-form hidden">
-      <p class="wa-note">Enter your Gmail to request access. Approved manually 💌</p>
-      <input type="email" id="waGmail" placeholder="you@gmail.com">
-      <button id="waSubmit" class="btn-primary">Send Request</button>
-      <p id="waMsg" class="wa-msg"></p>
+  <main class="card" id="mainCard">
+    <div class="ring-wrap">
+      <div class="ring" id="ringEl"></div>
+      <img id="profilePhoto" src="https://via.placeholder.com/160" alt="Profile Photo">
+      <span class="status-dot" id="statusDot"></span>
     </div>
-  </div>
 
-  <footer><span class="footer-heart">✦</span> <span id="footerName">Arushi Patel</span> <span class="footer-heart">✦</span></footer>
-</main>
+    <h1 id="userName">Loading...</h1>
+    <p class="status-text" id="statusText"></p>
 
-<audio id="clickSound" preload="auto"></audio>
+    <div class="quote-box" id="quoteBox">
+      <span class="quote-mark">"</span>
+      <p id="dailyQuote">Loading today's quote...</p>
+    </div>
 
-<script type="module" src="firebase-config.js"></script>
-<script type="module" src="script.js"></script>
+    <div class="links" id="linksWrap">
+      <a href="#" id="snapLink" class="link-btn snap" target="_blank"><span class="icon"></span><span>Snapchat</span></a>
+      <a href="#" id="discordLink" class="link-btn discord" target="_blank"><span class="icon"></span><span>Discord</span></a>
+      <a href="#" id="instaLink" class="link-btn insta" target="_blank"><span class="icon"></span><span>Instagram</span></a>
+    </div>
+
+    <div class="whatsapp-section">
+      <button id="waBtn" class="link-btn whatsapp locked"><span class="icon"></span><span>WhatsApp Locked</span></button>
+      <div id="waRequestForm" class="wa-form hidden">
+        <p class="wa-note">Enter your Gmail to request access. Approved manually.</p>
+        <input type="email" id="waGmail" placeholder="you@gmail.com">
+        <button id="waSubmit" class="btn-primary">Send Request</button>
+        <p id="waMsg" class="wa-msg"></p>
+      </div>
+    </div>
+
+    <footer>
+      <span class="footer-heart"></span>
+      <span id="footerName">Arushi Patel</span>
+      <span class="footer-heart"></span>
+    </footer>
+  </main>
+
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
