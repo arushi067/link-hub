@@ -1,39 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Memories - Arushi Patel</title>
-<link rel="stylesheet" href="memories.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Memories - Arushi Patel</title>
+
+  <link rel="stylesheet" href="memories.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
-<header class="mem-header">
-  <a href="index.html" class="back-btn">&larr; Back</a>
-  <h1 class="mem-title">Gaming Memories</h1>
-  <p class="mem-sub">Snapshots of the fun, fails &amp; victories</p>
-</header>
+  <header class="mem-header">
+    <a href="index.html" class="back-btn" aria-label="Go back to profile">
+      ← Back
+    </a>
 
-<main class="board" id="board">
-  <p class="empty-note" id="boardEmpty" style="display:none;text-align:center;width:100%;">No memories added yet.</p>
-</main>
+    <h1 class="mem-title">Gaming Memories</h1>
+    <p class="mem-sub">Snapshots of the fun, fails &amp; victories</p>
+  </header>
 
-<section class="xbox-panel">
-  <h2 class="xbox-title">PC Games / Xbox Activity</h2>
-  <p class="xbox-sub">Auto-synced from Xbox Live · <span id="xboxUser">Aruu079225</span></p>
-  <div class="xbox-loading" id="xboxLoading">Loading game history...</div>
-  <div class="xbox-error" id="xboxError" style="display:none"></div>
-  <div class="xbox-grid" id="xboxGrid"></div>
-</section>
+  <main class="board" id="board" aria-live="polite">
+    <p class="empty-note" id="boardLoading" style="text-align:center;width:100%;">
+      Loading memories...
+    </p>
 
-<div class="lightbox" id="lightbox">
-  <span class="lb-close" id="lbClose">&times;</span>
-  <img id="lbImg" src="" alt="">
-</div>
+    <p class="empty-note" id="boardEmpty" style="display:none;text-align:center;width:100%;">
+      No memories added yet.
+    </p>
 
-<footer class="mem-footer">Arushi Patel</footer>
+    <p class="empty-note" id="boardError" style="display:none;text-align:center;width:100%;color:#d93670;">
+      Could not load memories. Please try again later.
+    </p>
+  </main>
 
-<script type="module" src="firebase-config.js"></script>
-<script type="module" src="memories.js"></script>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Memory image preview">
+    <button class="lb-close" id="lbClose" type="button" aria-label="Close image preview">
+      ×
+    </button>
+
+    <button class="lb-nav lb-prev" id="lbPrev" type="button" aria-label="Previous memory">
+      ←
+    </button>
+
+    <img id="lbImg" src="" alt="">
+
+    <button class="lb-nav lb-next" id="lbNext" type="button" aria-label="Next memory">
+      →
+    </button>
+
+    <p id="lbCaption" class="lb-caption"></p>
+  </div>
+
+  <footer class="mem-footer">Arushi Patel</footer>
+
+  <script type="module" src="memories.js"></script>
 </body>
 </html>
