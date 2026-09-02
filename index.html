@@ -1,100 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="pageTitle">Arushi Patel</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-<style>
-body, .emoji-ios {
-  font-family: "Apple Color Emoji", "Poppins", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
-}
-
-.memories-arrow {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 18px;
-  padding: 12px 20px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.25);
-  color: inherit;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  transition: transform 0.2s, background 0.2s;
-}
-.memories-arrow:hover {
-  background: rgba(255,255,255,0.28);
-  transform: translateY(-2px);
-}
-.memories-arrow .arrow-icon {
-  font-size: 16px;
-  transition: transform 0.2s;
-}
-.memories-arrow:hover .arrow-icon {
-  transform: translateX(4px);
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ff8ebe">
+  <title id="pageTitle">Arushi Patel</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--glass:rgba(255,255,255,.54);--stroke:rgba(255,255,255,.72);--ink:#51273a;--pink:#ff4f91;--pink2:#fd80b3;--shadow:0 28px 65px rgba(132,44,86,.24)}
+    body{overflow-x:hidden;font-family:Poppins,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+    .emoji-ios{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+    #mainCard.card{position:relative;isolation:isolate;overflow:visible;border:1px solid var(--stroke);border-radius:32px;background:linear-gradient(145deg,rgba(255,255,255,.7),rgba(255,255,255,.38));box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.85);transform:perspective(1100px) rotateX(2deg);transition:transform .35s ease,box-shadow .35s ease;backdrop-filter:blur(22px)}
+    #mainCard.card::before{content:"";position:absolute;z-index:-1;inset:10px -10px -14px 10px;border-radius:32px;background:linear-gradient(135deg,rgba(255,79,145,.32),rgba(126,95,255,.19));filter:blur(1px);transform:translateZ(-1px)}
+    #mainCard.card::after{content:"";position:absolute;top:0;left:9%;width:82%;height:26%;border-radius:0 0 55% 55%;background:linear-gradient(180deg,rgba(255,255,255,.45),transparent);pointer-events:none}
+    @media(hover:hover){#mainCard.card:hover{transform:perspective(1100px) rotateX(0deg) rotateY(-2deg) translateY(-7px);box-shadow:0 38px 82px rgba(132,44,86,.29),inset 0 1px 0 rgba(255,255,255,.9)}}
+    .ring-wrap{filter:drop-shadow(0 13px 14px rgba(210,52,116,.2))}.ring{animation:softSpin 7s linear infinite}@keyframes softSpin{to{transform:rotate(360deg)}}
+    .memories-arrow{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:20px 0 2px;padding:13px 17px;overflow:hidden;border:1px solid rgba(255,255,255,.76);border-radius:16px;background:linear-gradient(135deg,rgba(255,255,255,.74),rgba(255,210,231,.58));box-shadow:0 12px 22px rgba(165,45,95,.12),inset 0 1px rgba(255,255,255,.9);color:var(--ink);font-size:14px;font-weight:800;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease}
+    .memories-arrow::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.8) 48%,transparent 70%);transform:translateX(-130%);transition:transform .55s ease}.memories-arrow:hover::before{transform:translateX(130%)}.memories-arrow:hover{transform:translateY(-3px);box-shadow:0 18px 28px rgba(165,45,95,.2)}.memories-arrow>*{position:relative}.memories-arrow .gallery-badge{display:grid;place-items:center;width:27px;height:27px;border-radius:9px;background:linear-gradient(135deg,#ff6fa7,#9175ff);color:#fff;font-size:15px;box-shadow:0 5px 11px rgba(165,45,125,.25)}.arrow-icon{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:rgba(255,79,145,.13);color:var(--pink);font-size:18px;transition:transform .2s ease}.memories-arrow:hover .arrow-icon{transform:translateX(4px)}
+    .memory-hint{margin:9px 0 0;color:rgba(81,39,58,.62);font-size:10px;font-weight:600;letter-spacing:.04em;text-align:center}.footer-heart{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+  </style>
 </head>
 <body id="bodyRoot">
-  <div class="aurora" id="auroraLayer">
-    <div class="aurora-shape shape1"></div>
-    <div class="aurora-shape shape2"></div>
-    <div class="aurora-shape shape3"></div>
-  </div>
+  <div class="aurora" id="auroraLayer"><div class="aurora-shape shape1"></div><div class="aurora-shape shape2"></div><div class="aurora-shape shape3"></div></div>
   <div class="particles" id="particles"></div>
-
   <main class="card" id="mainCard">
-    <div class="ring-wrap">
-      <div class="ring" id="ringEl"></div>
-      <img id="profilePhoto" src="https://via.placeholder.com/160" alt="Profile Photo">
-      <span class="status-dot" id="statusDot"></span>
-    </div>
-
-    <h1 id="userName">Loading...</h1>
-    <p class="status-text" id="statusText"></p>
-
-    <div class="quote-box" id="quoteBox">
-      <span class="quote-mark">"</span>
-      <p id="dailyQuote">Loading today's quote...</p>
-    </div>
-
-    <div class="links" id="linksWrap">
-      <a href="#" id="snapLink" class="link-btn snap" target="_blank"><span class="icon"></span><span>Snapchat</span></a>
-      <a href="#" id="discordLink" class="link-btn discord" target="_blank"><span class="icon"></span><span>Discord</span></a>
-      <a href="#" id="instaLink" class="link-btn insta" target="_blank"><span class="icon"></span><span>Instagram</span></a>
-    </div>
-
-    <div class="whatsapp-section">
-      <button id="waBtn" class="link-btn whatsapp locked"><span class="icon"></span><span>WhatsApp Locked</span></button>
-      <div id="waRequestForm" class="wa-form hidden">
-        <p class="wa-note">Enter your Gmail to request access. Approved manually.</p>
-        <input type="email" id="waGmail" placeholder="you@gmail.com">
-        <button id="waSubmit" class="btn-primary">Send Request</button>
-        <p id="waMsg" class="wa-msg"></p>
-      </div>
-    </div>
-
-    <a href="memories.html" class="memories-arrow">
-      <span class="emoji-ios">📷</span>
-      <span>View Memories</span>
-      <span class="arrow-icon">➜</span>
-    </a>
-
-    <footer>
-      <span class="footer-heart"></span>
-      <span id="footerName">Arushi Patel</span>
-      <span class="footer-heart"></span>
-    </footer>
+    <div class="ring-wrap"><div class="ring" id="ringEl"></div><img id="profilePhoto" src="https://via.placeholder.com/160" alt="Profile photo"><span class="status-dot" id="statusDot"></span></div>
+    <h1 id="userName">Loading...</h1><p class="status-text" id="statusText"></p>
+    <div class="quote-box" id="quoteBox"><span class="quote-mark">“</span><p id="dailyQuote">Loading today’s quote...</p></div>
+    <div class="links" id="linksWrap"><a href="#" id="snapLink" class="link-btn snap" target="_blank" rel="noopener"><span class="icon"></span><span>Snapchat</span></a><a href="#" id="discordLink" class="link-btn discord" target="_blank" rel="noopener"><span class="icon"></span><span>Discord</span></a><a href="#" id="instaLink" class="link-btn insta" target="_blank" rel="noopener"><span class="icon"></span><span>Instagram</span></a></div>
+    <div class="whatsapp-section"><button id="waBtn" class="link-btn whatsapp locked" type="button"><span class="icon"></span><span>WhatsApp Locked</span></button><div id="waRequestForm" class="wa-form hidden"><p class="wa-note">Enter your Gmail to request access. Approved manually.</p><input type="email" id="waGmail" placeholder="you@gmail.com" autocomplete="email"><button id="waSubmit" class="btn-primary" type="button">Send Request</button><p id="waMsg" class="wa-msg"></p></div></div>
+    <a href="memories.html" class="memories-arrow" aria-label="Open Arushi's memory gallery"><span class="gallery-badge emoji-ios">📸</span><span>Explore Memory Gallery</span><span class="arrow-icon" aria-hidden="true">→</span></a><p class="memory-hint">TAP TO OPEN THE PHOTO STORY</p>
+    <footer><span class="footer-heart">💗</span><span id="footerName">Arushi Patel</span><span class="footer-heart">💗</span></footer>
   </main>
-
-  <script type="module" src="firebase-config.js"></script>
   <script type="module" src="script.js"></script>
 </body>
 </html>
