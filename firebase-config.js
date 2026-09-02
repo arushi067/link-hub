@@ -1,6 +1,16 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  initializeApp,
+  getApp,
+  getApps
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+  getFirestore
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBH6i8ezjhqxvGx8RZrpfVc-fcdgi0hhBM",
@@ -12,6 +22,13 @@ const firebaseConfig = {
   measurementId: "G-VP68Q2Z86P"
 };
 
-const app = initializeApp(firebaseConfig);
+/*
+  Reuse Firebase if this module was already initialized.
+  This prevents: "Firebase App named '[DEFAULT]' already exists".
+*/
+const app = getApps().length > 0
+  ? getApp()
+  : initializeApp(firebaseConfig);
+
 export const auth = getAuth(app);
 export const db = getFirestore(app);
