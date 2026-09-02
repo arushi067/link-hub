@@ -1,158 +1,169 @@
 import { db } from "./firebase-config.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-async function loadMemories() {
-  const board = document.getElementById("board");
-  const emptyNote = document.getElementById("boardEmpty");
-  if (!board) return;
+const PROFILE_SLUG = "arushi";
 
-  try {
-    const snap = await getDoc(doc(db, "profiles", "arushi"));
-    const d = snap.exists() ? snap.data() : {};
-    const memories = d.memories || [];
+const board = document.getElementById("board");
+const boardLoading = document.getElementById("boardLoading");
+const boardEmpty = document.getElementById("boardEmpty");
+const boardError = document.getElementById("boardError");
 
-    board.querySelectorAll(".polaroid").forEach(el => el.remove());
+const lightbox = document.getElementById("lightbox");
+const lbImg = document.getElementById("lbImg");
+const lbCaption = document.getElementById("lbCaption");
+const lbClose = document.getElementById("lbClose");
+const lbPrev = document.getElementById("lbPrev");
+const lbNext = document.getElementById("lbNext");
 
-    if (memories.length === 0) {
-      if (emptyNote) emptyNote.style.display = "block";
-      return;
-    }
-    if (emptyNote) emptyNote.style.display = "none";
+let memories = [];
+let activeMemoryIndex = 0;
 
-    memories.forEach((m, i) => {
-      const div = document.createElement("div");
-      div.className = "polaroid " + (i % 2 === 0 ? "tilt-l" : "tilt-r");
-      div.innerHTML = `
-        <div class="tape"></div>
-        <img src="${m.url}" alt="${m.caption || 'Memory'}">
-        <p class="cap">${m.caption || 'Memory'}</p>
-      `;
-      board.appendChild(div);
-    });
+function showOnlyMessage(messageElement) {
+  boardLoading.style.display = "none";
+  boardEmpty.style.display = "none";
+  boardError.style.display = "none";
 
-    attachPolaroidEvents();
-  } catch (err) {
-    console.error("Failed to load memories:", err);
-    if (emptyNote) {
-      emptyNote.style.display = "block";
-      emptyNote.textContent = "Could not load memories.";
-    }
+  if (messageElement) {
+    messageElement.style.display = "block";
   }
 }
 
-function attachPolaroidEvents() {
-  const polaroids = document.querySelectorAll(".polaroid");
-  const lightbox = document.getElementById("lightbox");
-  const lbImg = document.getElementById("lbImg");
-  const lbClose = document.getElementById("lbClose");
+function makeMemoryCard(memory, index) {
+  const card = document.createElement("article");
+  card.className = `polaroid ${index % 2 === 0 ? "tilt-l" : "tilt-r"}`;
+  card.tabIndex = 0;
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", `Open memory: ${memory.caption || `Memory ${index + 1}`}`);
 
-  polaroids.forEach(p => {
-    const img = p.querySelector("img");
-    p.addEventListener("click", () => {
-      lbImg.src = img.src;
-      lightbox.classList.add("active");
-    });
+  const tape = document.createElement("div");
+  tape.className = "tape";
+
+  const image = document.createElement("img");
+  image.src = memory.url;
+  image.alt = memory.caption || `Memory ${index + 1}`;
+  image.loading = "lazy";
+
+  image.addEventListener("error", () => {
+    image.alt = "This memory image could not be loaded";
+    image.style.opacity = "0.35";
   });
 
-  lbClose.addEventListener("click", () => lightbox.classList.remove("active"));
-  lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) lightbox.classList.remove("active");
+  const caption = document.createElement("p");
+  caption.className = "cap";
+  caption.textContent = memory.caption || `Memory ${index + 1}`;
+
+  const openCard = () => openLightbox(index);
+
+  card.addEventListener("click", openCard);
+
+  card.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openCard();
+    }
   });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") lightbox.classList.remove("active");
-  });
+
+  card.append(tape, image, caption);
+  return card;
 }
 
-document.addEventListener("DOMContentLoaded", loadMemories);
+function renderMemories() {
+  board.querySelectorAll(".polaroid").forEach((card) => card.remove());
 
-/* ===== XBOX LIVE PANEL ===== */
-const XBOX_API_KEY = "da211102-d66f-47e4-b651-8ba6a040f6b1";
-const XBOX_USERNAME = "Aruu079225";
-const XBOX_API_BASE = "https://xbl.io/api/v2";
-
-async function resolveXUID(gamertag, apiKey) {
-  const res = await fetch(XBOX_API_BASE + "/search/" + encodeURIComponent(gamertag), {
-    headers: { "X-Authorization": apiKey, "Accept": "application/json" }
-  });
-  if (!res.ok) throw new Error("Could not resolve gamertag to XUID (status " + res.status + ")");
-  const data = await res.json();
-  if (!data.people || !data.people.length) throw new Error("Gamertag not found");
-  return data.people[0].xuid;
-}
-
-async function fetchTitleHistory(xuid, apiKey) {
-  const res = await fetch(XBOX_API_BASE + "/player/titleHistory/" + xuid, {
-    headers: { "X-Authorization": apiKey, "Accept": "application/json" }
-  });
-  if (!res.ok) throw new Error("Failed to fetch title history (status " + res.status + ")");
-  return res.json();
-}
-
-function formatDate(iso) {
-  if (!iso) return "Unknown";
-  const d = new Date(iso);
-  return d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
-}
-
-function renderXboxGames(titles) {
-  const grid = document.getElementById("xboxGrid");
-  const loading = document.getElementById("xboxLoading");
-  if (!grid || !loading) return;
-  loading.style.display = "none";
-  grid.innerHTML = "";
-  if (!titles || !titles.length) {
-    grid.innerHTML = '<p>No recent games found.</p>';
+  if (!memories.length) {
+    showOnlyMessage(boardEmpty);
     return;
   }
-  titles.forEach((title, i) => {
-    const card = document.createElement("div");
-    card.className = "xbox-card";
-    card.style.animationDelay = (i * 0.08) + "s";
-    const img = document.createElement("img");
-    img.src = title.displayImage || (title.images && title.images.tile) || "";
-    img.alt = title.name;
-    img.onerror = () => { img.style.display = "none"; };
-    const body = document.createElement("div");
-    body.className = "xbox-card-body";
-    const name = document.createElement("div");
-    name.className = "xbox-game-name";
-    name.textContent = title.name;
-    const played = document.createElement("div");
-    played.className = "xbox-last-played";
-    played.textContent = "Last played: " + formatDate(title.titleHistory && title.titleHistory.lastTimePlayed);
-    body.appendChild(name);
-    body.appendChild(played);
-    card.appendChild(img);
-    card.appendChild(body);
-    grid.appendChild(card);
+
+  showOnlyMessage(null);
+
+  memories.forEach((memory, index) => {
+    board.appendChild(makeMemoryCard(memory, index));
   });
 }
 
-function showXboxError(msg) {
-  const loading = document.getElementById("xboxLoading");
-  const errEl = document.getElementById("xboxError");
-  if (!loading || !errEl) return;
-  loading.style.display = "none";
-  errEl.style.display = "block";
-  errEl.textContent = "⚠️ " + msg;
+function openLightbox(index) {
+  if (!memories.length) return;
+
+  activeMemoryIndex = index;
+  const memory = memories[activeMemoryIndex];
+
+  lbImg.src = memory.url;
+  lbImg.alt = memory.caption || `Memory ${activeMemoryIndex + 1}`;
+  lbCaption.textContent = memory.caption || "";
+
+  lightbox.classList.add("active");
+  document.body.style.overflow = "hidden";
+
+  const multipleMemories = memories.length > 1;
+  lbPrev.style.display = multipleMemories ? "flex" : "none";
+  lbNext.style.display = multipleMemories ? "flex" : "none";
 }
 
-async function initXboxPanel() {
-  if (!document.getElementById("xboxGrid")) return;
+function closeLightbox() {
+  lightbox.classList.remove("active");
+  lbImg.src = "";
+  document.body.style.overflow = "";
+}
+
+function showPreviousMemory() {
+  if (!memories.length) return;
+  const previous = (activeMemoryIndex - 1 + memories.length) % memories.length;
+  openLightbox(previous);
+}
+
+function showNextMemory() {
+  if (!memories.length) return;
+  const next = (activeMemoryIndex + 1) % memories.length;
+  openLightbox(next);
+}
+
+async function loadMemories() {
   try {
-    const xuid = await resolveXUID(XBOX_USERNAME, XBOX_API_KEY);
-    const history = await fetchTitleHistory(xuid, XBOX_API_KEY);
-    const titles = history.titles || [];
-    titles.sort((a, b) => {
-      const dA = new Date((a.titleHistory && a.titleHistory.lastTimePlayed) || 0);
-      const dB = new Date((b.titleHistory && b.titleHistory.lastTimePlayed) || 0);
-      return dB - dA;
-    });
-    renderXboxGames(titles.slice(0, 12));
-  } catch (err) {
-    showXboxError(err.message || "Could not load Xbox data. Check API key/username.");
+    showOnlyMessage(boardLoading);
+
+    const profileRef = doc(db, "profiles", PROFILE_SLUG);
+    const profileSnapshot = await getDoc(profileRef);
+
+    if (!profileSnapshot.exists()) {
+      console.warn(`Profile document not found: profiles/${PROFILE_SLUG}`);
+      memories = [];
+      renderMemories();
+      return;
+    }
+
+    const profileData = profileSnapshot.data();
+
+    memories = Array.isArray(profileData.memories)
+      ? profileData.memories.filter((memory) => memory && typeof memory.url === "string" && memory.url.trim())
+      : [];
+
+    renderMemories();
+  } catch (error) {
+    console.error("Error loading memories:", error);
+    showOnlyMessage(boardError);
   }
 }
 
-document.addEventListener("DOMContentLoaded", initXboxPanel);
-setInterval(initXboxPanel, 5 * 60 * 1000);
+lbClose.addEventListener("click", closeLightbox);
+lbPrev.addEventListener("click", showPreviousMemory);
+lbNext.addEventListener("click", showNextMemory);
+
+lightbox.addEventListener("click", (event) => {
+  if (event.target === lightbox) {
+    closeLightbox();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (!lightbox.classList.contains("active")) return;
+
+  if (event.key === "Escape") closeLightbox();
+  if (event.key === "ArrowLeft") showPreviousMemory();
+  if (event.key === "ArrowRight") showNextMemory();
+});
+
+loadMemories();
