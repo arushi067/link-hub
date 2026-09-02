@@ -1,219 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel</title>
-<meta name="robots" content="noindex, nofollow">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
-body { background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); min-height: 100vh; color: #fff; }
-.hidden { display: none !important; }
-
-.login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-.login-card {
-  background: rgba(255,255,255,0.06); backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;
-  padding: 40px 32px; width: 100%; max-width: 380px; text-align: center;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-}
-.lock-icon { width: 56px; height: 56px; margin: 0 auto 16px; background: linear-gradient(135deg, #ff6ec7, #7873f5); border-radius: 50%; }
-.login-card h2 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
-.login-card .sub { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 24px; }
-.login-card input {
-  width: 100%; padding: 13px 16px; margin-bottom: 12px; border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.08);
-  color: #fff; font-size: 14px; outline: none;
-}
-.login-card input::placeholder { color: rgba(255,255,255,0.4); }
-.login-card input:focus { border-color: #ff6ec7; }
-
-.btn-primary {
-  width: 100%; padding: 13px; border: none; border-radius: 12px;
-  background: linear-gradient(135deg, #ff6ec7, #7873f5); color: #fff;
-  font-size: 15px; font-weight: 600; cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,110,199,0.3); }
-.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-.btn-secondary {
-  padding: 9px 18px; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px;
-  background: rgba(255,255,255,0.05); color: #fff; font-size: 13px; cursor: pointer;
-}
-.btn-secondary:hover { background: rgba(255,255,255,0.12); }
-
-.msg { color: #ff6b6b; font-size: 13px; margin-top: 10px; min-height: 16px; word-break: break-word; }
-.msg.success { color: #2ecc71; }
-
-.status-box {
-  margin-top: 16px; padding: 10px 14px; border-radius: 10px;
-  background: rgba(255,255,255,0.05); font-size: 11px; color: rgba(255,255,255,0.5);
-  text-align: left;
-}
-
-.dashboard { max-width: 720px; margin: 0 auto; padding: 30px 20px 60px; }
-.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-.topbar h1 { font-size: 26px; font-weight: 800; }
-
-.tabs {
-  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;
-  border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 14px;
-}
-.tab-btn {
-  padding: 9px 16px; border: none; border-radius: 10px;
-  background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7);
-  font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;
-}
-.tab-btn.active { background: linear-gradient(135deg, #ff6ec7, #7873f5); color: #fff; font-weight: 600; }
-.tab-btn:hover:not(.active) { background: rgba(255,255,255,0.12); }
-
-.panel {
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 18px; padding: 24px;
-}
-.panel label { display: block; font-size: 13px; font-weight: 600; margin: 14px 0 6px; color: rgba(255,255,255,0.8); }
-.panel label:first-child { margin-top: 0; }
-.panel input, .panel select, .panel textarea {
-  width: 100%; padding: 12px 14px; border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.07);
-  color: #fff; font-size: 14px; outline: none; resize: vertical;
-}
-.panel input:focus, .panel select:focus, .panel textarea:focus { border-color: #ff6ec7; }
-.panel select option { background: #1a1a2e; }
-
-.hint-text { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 6px; }
-.hint-text a { color: #ff6ec7; }
-
-.photo-preview { width: 90px; height: 90px; object-fit: cover; border-radius: 12px; margin-top: 12px; border: 2px solid rgba(255,255,255,0.15); }
-
-.panel > .btn-primary { margin-top: 18px; }
-
-.request-item, .unlocked-item {
-  display: flex; justify-content: space-between; align-items: center;
-  background: rgba(255,255,255,0.06); border-radius: 12px; padding: 12px 14px;
-  margin-bottom: 8px; font-size: 13px;
-}
-.request-item span, .unlocked-item span { color: rgba(255,255,255,0.85); }
-.request-item small { color: rgba(255,255,255,0.5); }
-
-.approve-btn, .deny-btn, .revoke-btn, .revoke-btn-wa {
-  padding: 7px 14px; border: none; border-radius: 8px; font-size: 12px;
-  font-weight: 600; cursor: pointer; margin-left: 6px;
-}
-.approve-btn { background: #2ecc71; color: #fff; }
-.deny-btn, .revoke-btn, .revoke-btn-wa { background: #e74c3c; color: #fff; }
-
-.empty-note { color: rgba(255,255,255,0.4); font-size: 13px; text-align: center; padding: 20px 0; }
-h3 { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Arushi Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#111323;--panel:rgba(28,31,54,.82);--panel-2:#202440;--line:rgba(255,255,255,.11);--text:#f8f8fd;--muted:#aeb1c8;--pink:#ff64b4;--purple:#7668ff;--green:#32d583;--red:#ff5d6c;--shadow:0 24px 70px rgba(0,0,0,.32)}
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif} body{min-height:100vh;color:var(--text);background:radial-gradient(circle at 15% 5%,#433270 0,transparent 30%),radial-gradient(circle at 90% 100%,#4c214b 0,transparent 33%),var(--bg)}
+    button,input,textarea,select{font:inherit}.hidden{display:none!important}.login-wrap{min-height:100vh;display:grid;place-items:center;padding:24px}.login-card{width:min(100%,410px);padding:38px 32px;border:1px solid var(--line);border-radius:26px;background:var(--panel);backdrop-filter:blur(18px);box-shadow:var(--shadow);text-align:center}.brand-mark{width:62px;height:62px;margin:0 auto 16px;display:grid;place-items:center;border-radius:20px;background:linear-gradient(135deg,var(--pink),var(--purple));font-size:29px;box-shadow:0 12px 30px rgba(255,100,180,.3)}h1{font-size:24px;line-height:1.2}.sub{margin:9px 0 24px;font-size:13px;color:var(--muted)}
+    .field{margin-bottom:12px;text-align:left}.field label,.panel label{display:block;margin:0 0 7px;font-size:12px;font-weight:600;color:#d9daeb}.field input,.panel input,.panel textarea,.panel select{width:100%;border:1px solid var(--line);border-radius:12px;outline:none;background:rgba(255,255,255,.065);padding:12px 13px;color:var(--text);transition:.2s}.panel textarea{min-height:92px;resize:vertical}.panel select option{background:#1d2039}.field input:focus,.panel input:focus,.panel textarea:focus,.panel select:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,100,180,.12)}
+    .btn-primary,.btn-secondary,.tab-btn{border:0;cursor:pointer;transition:.2s}.btn-primary{width:100%;padding:12px;border-radius:12px;background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;font-weight:700;box-shadow:0 10px 24px rgba(112,88,255,.25)}.btn-primary:hover{transform:translateY(-2px);filter:brightness(1.06)}.btn-primary:disabled{cursor:not-allowed;opacity:.6;transform:none}.btn-secondary{padding:10px 14px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.06);color:#fff;font-size:12px;font-weight:600}.btn-secondary:hover{background:rgba(255,255,255,.13)}.msg{min-height:19px;margin-top:11px;color:#ff8994;font-size:12px}.msg.success{color:var(--green)}.status-box{margin-top:14px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--muted);font-size:11px;text-align:left}
+    .dashboard{width:min(1120px,100%);margin:auto;padding:26px 20px 60px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}.eyebrow{color:#d8b6ff;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.topbar h1{margin-top:3px;font-size:27px}.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:18px}.sidebar,.panel{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(15px);box-shadow:var(--shadow)}.sidebar{height:max-content;padding:12px;border-radius:18px;position:sticky;top:16px}.sidebar-title{padding:9px 10px 12px;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}.tabs{display:grid;gap:5px}.tab-btn{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:11px;text-align:left;background:transparent;color:#c4c6d6;font-size:13px;font-weight:600}.tab-btn:hover{background:rgba(255,255,255,.06);color:#fff}.tab-btn.active{background:linear-gradient(135deg,rgba(255,100,180,.24),rgba(118,104,255,.28));color:#fff}.tab-icon{width:20px;text-align:center}.content{min-width:0}.panel{border-radius:20px;padding:25px}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:20px}.panel-head h2{font-size:18px}.panel-head p,.hint-text{margin-top:4px;color:var(--muted);font-size:12px}.hint-text a{color:#ff92c8}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.form-grid .wide{grid-column:1/-1}.panel .btn-primary{margin-top:20px}.photo-preview{display:block;width:94px;height:94px;margin-top:11px;object-fit:cover;border:2px solid rgba(255,255,255,.18);border-radius:16px;background:#252945}.section-divider{height:1px;margin:23px 0;background:var(--line)}h3{font-size:14px;margin-bottom:11px}.request-item,.unlocked-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;margin-bottom:8px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.045);font-size:13px}.request-item small{color:var(--muted)}.item-photo{width:45px;height:45px;border-radius:10px;object-fit:cover}.item-main{display:flex;align-items:center;gap:10px;min-width:0}.item-main span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.approve-btn,.deny-btn,.revoke-btn,.revoke-btn-wa{padding:7px 10px;border:0;border-radius:8px;color:#fff;font-size:11px;font-weight:700;cursor:pointer}.approve-btn{background:#1dbb6b}.deny-btn,.revoke-btn,.revoke-btn-wa{background:#d94757}.empty-note{padding:24px 0;color:var(--muted);font-size:13px;text-align:center}
+    @media(max-width:760px){.dashboard{padding:18px 13px 40px}.layout{grid-template-columns:1fr}.sidebar{position:static;overflow:auto}.tabs{display:flex;width:max-content}.tab-btn{white-space:nowrap}.sidebar{padding:9px}.sidebar-title{display:none}.panel{padding:18px}.form-grid{grid-template-columns:1fr}.form-grid .wide{grid-column:auto}.topbar h1{font-size:22px}.login-card{padding:32px 22px}}
+  </style>
 </head>
 <body>
-
-<div id="loginScreen" class="login-wrap">
-  <div class="login-card">
-    <div class="lock-icon"></div>
-    <h2>Admin Login</h2>
-    <p class="sub">Secure login powered by Firebase Authentication</p>
-    <input type="email" id="loginEmail" placeholder="Admin email" autocomplete="email">
-    <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password">
-    <button id="loginBtn" class="btn-primary">Login</button>
-    <p id="loginMsg" class="msg"></p>
-    <div class="status-box" id="statusBox">Checking connection...</div>
-  </div>
-</div>
-
-<div id="dashboard" class="dashboard hidden">
-  <header class="topbar">
-    <h1>My Profile</h1>
-    <button id="logoutBtn" class="btn-secondary">Logout</button>
-  </header>
-
-  <div class="tabs">
-    <button class="tab-btn active" data-tab="profile">Profile</button>
-    <button class="tab-btn" data-tab="quote">Quote</button>
-    <button class="tab-btn" data-tab="theme">Theme</button>
-    <button class="tab-btn" data-tab="links">Links</button>
-    <button class="tab-btn" data-tab="memories">Memories</button>
-    <button class="tab-btn" data-tab="requests">Requests</button>
+  <div id="loginScreen" class="login-wrap">
+    <section class="login-card" aria-labelledby="loginTitle">
+      <div class="brand-mark">✦</div>
+      <h1 id="loginTitle">Admin Login</h1>
+      <p class="sub">Manage your profile, links, memories and requests.</p>
+      <div class="field"><label for="loginEmail">Email</label><input id="loginEmail" type="email" placeholder="admin@email.com" autocomplete="email"></div>
+      <div class="field"><label for="loginPass">Password</label><input id="loginPass" type="password" placeholder="Your password" autocomplete="current-password"></div>
+      <button id="loginBtn" class="btn-primary" type="button">Log in securely</button>
+      <p id="loginMsg" class="msg" role="alert"></p>
+      <div id="statusBox" class="status-box">Checking Firebase connection…</div>
+    </section>
   </div>
 
-  <section class="panel tab-panel" id="tab-profile">
-    <label>Display Name</label>
-    <input type="text" id="fName" placeholder="Arushi Patel">
-    <label>Status Text</label>
-    <input type="text" id="fStatus" placeholder="online / vibing">
-    <label>Online Status</label>
-    <select id="fOnline">
-      <option value="online">Online</option>
-      <option value="away">Away</option>
-      <option value="offline">Offline</option>
-    </select>
-    <label>Profile Photo URL</label>
-    <input type="url" id="fPhotoUrl" placeholder="https://i.ibb.co/xxxxx/photo.jpg">
-    <p class="hint-text">Upload your photo on <a href="https://imgbb.com" target="_blank">imgbb.com</a> (no signup needed), then paste the direct image link here.</p>
-    <img id="fPhotoPreview" class="photo-preview hidden">
-    <button id="saveProfileBtn" class="btn-primary">Save Profile</button>
-  </section>
-
-  <section class="panel tab-panel hidden" id="tab-quote">
-    <label>Daily Quote</label>
-    <textarea id="fQuote" rows="3" placeholder="Type today's quote..."></textarea>
-    <button id="saveQuoteBtn" class="btn-primary">Save Quote</button>
-  </section>
-
-  <section class="panel tab-panel hidden" id="tab-theme">
-    <label>Color Theme</label>
-    <select id="fTheme">
-      <option value="pink">Classic Pink</option>
-      <option value="dark">Dark Cosmic</option>
-      <option value="ocean">Ocean Blue</option>
-      <option value="sunset">Sunset Orange</option>
-    </select>
-    <label>Background Animation</label>
-    <select id="fAnimation">
-      <option value="blobs">Floating Blobs</option>
-      <option value="stars">Twinkling Stars</option>
-      <option value="hearts">Floating Hearts</option>
-      <option value="bubbles">Rising Bubbles</option>
-      <option value="none">None</option>
-    </select>
-    <button id="saveThemeBtn" class="btn-primary">Save Theme</button>
-  </section>
-
-  <section class="panel tab-panel hidden" id="tab-links">
-    <label>Snapchat URL</label>
-    <input type="url" id="fSnap" placeholder="https://snapchat.com/add/username">
-    <label>Discord Invite</label>
-    <input type="url" id="fDiscord" placeholder="https://discord.gg/xxxx">
-    <label>Instagram URL</label>
-    <input type="url" id="fInsta" placeholder="https://instagram.com/username">
-    <label>WhatsApp Number (with country code, no +)</label>
-    <input type="text" id="fWaNumber" placeholder="919999999999">
-    <button id="saveLinksBtn" class="btn-primary">Save Links</button>
-  </section>
-
-  <section class="panel tab-panel hidden" id="tab-memories">
-    <label>Memory Photo URL</label>
-    <input type="url" id="fMemUrl" placeholder="https://i.ibb.co/xxxxx/photo.jpg">
-    <p class="hint-text">Upload your photo on <a href="https://imgbb.com" target="_blank">imgbb.com</a> (no signup needed), then paste the direct image link here.</p>
-    <img id="fMemPreview" class="photo-preview hidden">
-    <label>Caption</label>
-    <input type="text" id="fMemCaption" placeholder="e.g. Game night with the squad">
-    <button id="addMemoryBtn" class="btn-primary">Add Memory</button>
-    <h3 style="margin-top:22px">Current Memories</h3>
-    <div id="memoriesList"></div>
-  </section>
-
-  <section class="panel tab-panel hidden" id="tab-requests">
-    <h3>Pending WhatsApp Requests</h3>
-    <div id="requestsList"></div>
-    <h3 style="margin-top:20px">Unlocked Users</h3>
-    <div id="unlockedList"></div>
-  </section>
-</div>
-
-<script type="module" src="admin.js"></script>
+  <div id="dashboard" class="dashboard hidden">
+    <header class="topbar"><div><p class="eyebrow">Arushi Real</p><h1>Profile Control Center</h1></div><button id="logoutBtn" class="btn-secondary" type="button">Log out</button></header>
+    <div class="layout">
+      <aside class="sidebar"><p class="sidebar-title">Workspace</p><nav class="tabs" aria-label="Admin sections">
+        <button class="tab-btn active" data-tab="profile" type="button"><span class="tab-icon">◉</span> Profile</button>
+        <button class="tab-btn" data-tab="quote" type="button"><span class="tab-icon">❝</span> Daily quote</button>
+        <button class="tab-btn" data-tab="theme" type="button"><span class="tab-icon">✦</span> Theme</button>
+        <button class="tab-btn" data-tab="links" type="button"><span class="tab-icon">↗</span> Social links</button>
+        <button class="tab-btn" data-tab="memories" type="button"><span class="tab-icon">▣</span> Memories</button>
+        <button class="tab-btn" data-tab="requests" type="button"><span class="tab-icon">⌁</span> Requests</button>
+      </nav></aside>
+      <main class="content">
+        <section id="tab-profile" class="panel tab-panel"><div class="panel-head"><div><h2>Profile details</h2><p>These details appear on your public profile card.</p></div></div><div class="form-grid"><div><label for="fName">Display name</label><input id="fName" type="text" placeholder="Arushi Patel"></div><div><label for="fStatus">Status text</label><input id="fStatus" type="text" placeholder="Online / vibing"></div><div><label for="fOnline">Online status</label><select id="fOnline"><option value="online">Online</option><option value="away">Away</option><option value="offline">Offline</option></select></div><div><label for="fPhotoUrl">Profile photo URL</label><input id="fPhotoUrl" type="url" placeholder="https://.../photo.jpg"></div></div><p class="hint-text">Use a direct image URL from an image host such as <a href="https://imgbb.com" target="_blank" rel="noopener">imgbb.com</a>.</p><img id="fPhotoPreview" class="photo-preview hidden" alt="Profile preview"><button id="saveProfileBtn" class="btn-primary" type="button">Save profile</button></section>
+        <section id="tab-quote" class="panel tab-panel hidden"><div class="panel-head"><div><h2>Daily quote</h2><p>Update the quote shown beneath your profile.</p></div></div><label for="fQuote">Quote</label><textarea id="fQuote" placeholder="Type today's quote..."></textarea><button id="saveQuoteBtn" class="btn-primary" type="button">Save quote</button></section>
+        <section id="tab-theme" class="panel tab-panel hidden"><div class="panel-head"><div><h2>Profile appearance</h2><p>Choose the public profile color theme and background movement.</p></div></div><div class="form-grid"><div><label for="fTheme">Color theme</label><select id="fTheme"><option value="pink">Classic Pink</option><option value="dark">Dark Cosmic</option><option value="ocean">Ocean Blue</option><option value="sunset">Sunset Orange</option></select></div><div><label for="fAnimation">Background animation</label><select id="fAnimation"><option value="blobs">Floating Blobs</option><option value="stars">Twinkling Stars</option><option value="hearts">Floating Hearts</option><option value="bubbles">Rising Bubbles</option><option value="none">None</option></select></div></div><button id="saveThemeBtn" class="btn-primary" type="button">Save appearance</button></section>
+        <section id="tab-links" class="panel tab-panel hidden"><div class="panel-head"><div><h2>Social links</h2><p>Leave a field empty if you do not want to share it.</p></div></div><div class="form-grid"><div><label for="fSnap">Snapchat URL</label><input id="fSnap" type="url" placeholder="https://snapchat.com/add/username"></div><div><label for="fDiscord">Discord invite</label><input id="fDiscord" type="url" placeholder="https://discord.gg/xxxx"></div><div><label for="fInsta">Instagram URL</label><input id="fInsta" type="url" placeholder="https://instagram.com/username"></div><div><label for="fWaNumber">WhatsApp number</label><input id="fWaNumber" type="text" inputmode="numeric" placeholder="919999999999"></div></div><button id="saveLinksBtn" class="btn-primary" type="button">Save social links</button></section>
+        <section id="tab-memories" class="panel tab-panel hidden"><div class="panel-head"><div><h2>Memory gallery</h2><p>Add photos that automatically appear on the Memories page.</p></div></div><div class="form-grid"><div class="wide"><label for="fMemUrl">Memory image URL</label><input id="fMemUrl" type="url" placeholder="https://.../memory.jpg"><p class="hint-text">Paste a direct image URL, not an image-host page URL.</p><img id="fMemPreview" class="photo-preview hidden" alt="Memory preview"></div><div class="wide"><label for="fMemCaption">Caption</label><input id="fMemCaption" type="text" placeholder="Game night with the squad"></div></div><button id="addMemoryBtn" class="btn-primary" type="button">Add memory</button><div class="section-divider"></div><h3>Current memories</h3><div id="memoriesList"></div></section>
+        <section id="tab-requests" class="panel tab-panel hidden"><div class="panel-head"><div><h2>WhatsApp access</h2><p>Approve, deny or revoke visitor access requests.</p></div></div><h3>Pending requests</h3><div id="requestsList"></div><div class="section-divider"></div><h3>Unlocked users</h3><div id="unlockedList"></div></section>
+      </main>
+    </div>
+  </div>
+  <script type="module" src="admin.js"></script>
 </body>
 </html>
