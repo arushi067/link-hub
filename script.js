@@ -1,97 +1,295 @@
 import { db } from "./firebase-config.js";
-import { doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  arrayUnion
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const PROFILE_SLUG = "arushi";
+
 const $ = (id) => document.getElementById(id);
 
-const THEMES = {
-  pink: { bg: "#f5f3ee", text: "#252124", accent: "#d94b83" },
-  dark: { bg: "#19171b", text: "#f7f2f4", accent: "#ff72a8" },
-  ocean: { bg: "#edf6f7", text: "#18363a", accent: "#318ea0" },
-  sunset: { bg: "#fff2e8", text: "#43251f", accent: "#e86f4e" }
-};
+function safeText(value) {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function safeUrl(value) {
+  const url = safeText(value);
+
+  if (!url) return "";
+
+  try {
+    const parsed = new URL(url, window.location.href);
+
+    if (parsed.protocol === "https:" || parsed.protocol === "http:") {
+      return parsed.href;
+    }
+
+    return "";
+  } catch {
+    return "";
+  }
+}
+
+function isHexColor(value) {
+  return /^#[0-9A-Fa-f]{6}$/.test(safeText(value));
+}
 
 function setVisible(id, visible) {
   const element = $(id);
-  if (element) element.style.display = visible ? "" : "none";
+
+  if (!element) return;
+
+  element.style.display = visible ? "" : "none";
 }
-function safeUrl(url) {
-  try {
-    const parsed = new URL(url, window.location.href);
-    return ["http:", "https:"].includes(parsed.protocol) ? parsed.href : "";
-  } catch { return ""; }
+
+function showPage() {
+  $("app").classList.remove("is-loading");
+  $("app").classList.add("is-ready");
+
+  $("loadingScreen").classList.add("hide");
 }
-function applyDesign(data) {
-  const theme = THEMES[data.theme] || THEMES.pink;
-  const accent = /^#[0-9a-fA-F]{6}$/.test(data.accentColor || "") ? data.accentColor : theme.accent;
-  const page = /^#[0-9a-fA-F]{6}$/.test(data.pageColor || "") ? data.pageColor : theme.bg;
-  document.body.style.background = page;
-  document.body.style.color = theme.text;
+
+function showError() {
+  $("loadingScreen").textContent = "Could not load profile.";
+
+  setTimeout(() => {
+    showPage();
+  }, 500);
+}
+
+function setImage(image, url) {
+  if (!url) {
+    image.removeAttribute("src");
+    image.classList.remove("visible");
+    return;
+  }
+
+  image.src = url;
+  image.classList.add("visible");
+
+  image.onerror = () => {
+    image.removeAttribute("src");
+    image.classList.remove("visible");
+  };
+}
+
+function applyPublicDesign(data) {
+  const accent = isHexColor(data.accentColor)
+    ? data.accentColor
+    : "#b85a7d";
+
+  const pageColor = isHexColor(data.pageColor)
+    ? data.pageColor
+    : "#f5f3ee";
+
+  document.body.style.background = pageColor;
+
+  document.documentElement.style.setProperty("--accent", accent);
   document.documentElement.style.setProperty("--pink", accent);
-  document.documentElement.style.setProperty("--pink-dark", accent);
+
   const banner = $("profileBanner");
-  const bannerUrl = safeUrl(data.banner || "");
-  if (bannerUrl) banner.style.backgroundImage = `linear-gradient(rgba(0,0,0,.10),rgba(0,0,0,.16)), url("${bannerUrl.replaceAll('"', '%22')}")`;
-  const heights = { compact: "155px", normal: "205px", large: "270px" };
-  if (banner) banner.style.height = heights[data.bannerHeight] || heights.normal;
-  const photo = $("profilePhoto"), ring = document.querySelector(".ring-wrap");
-  const radius = data.photoShape === "square" ? "0" : data.photoShape === "rounded" ? "18px" : "50%";
-  if (photo) photo.style.borderRadius = radius;
-  if (ring) ring.style.borderRadius = radius;
-  if (data.cardStyle === "soft") $("mainCard").style.background = "#fff5f8";
-  else if (data.cardStyle === "minimal") { $("mainCard").style.boxShadow = "none"; $("mainCard").style.borderColor = "transparent"; }
+  const bannerUrl = safeUrl(data.banner);
+
+  if (bannerUrl) {
+    const escapedUrl = bannerUrl.replace(/"/g, "%22");
+
+    banner.style.backgroundImage =
+      `linear-gradient(rgba(0,0,0,.10), rgba(0,0,0,.16)), url("${escapedUrl}")`;
+  }
+
+  const bannerHeightMap = {
+    compact: "155px",
+    normal: "205px",
+    large: "270px"
+  };
+
+  banner.style.height =
+    bannerHeightMap[data.bannerHeight] || "205px";
+
+  const photoShapeMap = {
+    circle: "50%",
+    rounded: "18px",
+    square: "0"
+  };
+
+  const shape = photoShapeMap[data.photoShape] || "50%";
+
+  $("profilePhoto").style.borderRadius = shape;
+  document.querySelector(".ring-wrap").style.borderRadius = shape;
+
+  const card = $("mainCard");
+
+  card.style.background = "";
+  card.style.borderColor = "";
+  card.style.boxShadow = "";
+
+  if (data.cardStyle === "soft") {
+    card.style.background = "#fff6f8";
+  }
+
+  if (data.cardStyle === "minimal") {
+    card.style.borderColor = "transparent";
+    card.style.boxShadow = "none";
+  }
+
   setVisible("quoteBox", data.showQuote !== false);
   setVisible("socialSection", data.showSocials !== false);
   setVisible("whatsappSection", data.showWhatsApp !== false);
   setVisible("memorySection", data.showMemories !== false);
-  if ($("aboutTitle") && data.aboutTitle) $("aboutTitle").textContent = data.aboutTitle;
-  if ($("aboutText") && data.aboutText) $("aboutText").textContent = data.aboutText;
-  if ($("memoryTitle") && data.memoryTitle) $("memoryTitle").textContent = data.memoryTitle;
-  if ($("memorySubtitle") && data.memorySubtitle) $("memorySubtitle").textContent = data.memorySubtitle;
-  if ($("footerName")) $("footerName").textContent = data.footerText || data.name || "Arushi Patel";
 }
+
 function setupWhatsApp(data, profileRef) {
-  const button = $("waBtn"), form = $("waRequestForm"), emailInput = $("waGmail"), submit = $("waSubmit"), message = $("waMsg");
-  if (!button || !form || !emailInput || !submit || !message) return;
-  const saved = (localStorage.getItem("myWaEmail_" + PROFILE_SLUG) || "").toLowerCase();
-  const unlocked = (data.waUnlocked || []).includes(saved);
-  if (unlocked && data.waNumber) {
-    button.classList.remove("locked"); button.classList.add("whatsapp"); button.lastElementChild.textContent = "Chat on WhatsApp";
-    button.onclick = () => window.open(`https://wa.me/${String(data.waNumber).replace(/\D/g, "")}`, "_blank", "noopener");
+  const waButton = $("waBtn");
+  const waForm = $("waRequestForm");
+  const emailInput = $("waGmail");
+  const submitButton = $("waSubmit");
+  const message = $("waMsg");
+
+  const savedEmail = (
+    localStorage.getItem(`myWaEmail_${PROFILE_SLUG}`) || ""
+  ).toLowerCase();
+
+  const unlockedEmails = Array.isArray(data.waUnlocked)
+    ? data.waUnlocked
+    : [];
+
+  const isUnlocked = unlockedEmails.includes(savedEmail);
+
+  const phoneNumber = safeText(data.waNumber).replace(/\D/g, "");
+
+  if (isUnlocked && phoneNumber) {
+    waButton.classList.remove("locked");
+    waButton.classList.add("whatsapp");
+
+    waButton.lastElementChild.textContent = "Chat on WhatsApp";
+
+    waButton.onclick = () => {
+      window.open(
+        `https://wa.me/${phoneNumber}`,
+        "_blank",
+        "noopener"
+      );
+    };
+
     return;
   }
-  button.classList.add("locked"); button.classList.remove("whatsapp"); button.lastElementChild.textContent = "WhatsApp Locked";
-  button.onclick = () => form.classList.toggle("hidden");
-  submit.onclick = async () => {
+
+  waButton.classList.add("locked");
+  waButton.classList.remove("whatsapp");
+  waButton.lastElementChild.textContent = "WhatsApp Locked";
+
+  waButton.onclick = () => {
+    waForm.classList.toggle("hidden");
+  };
+
+  submitButton.onclick = async () => {
     const email = emailInput.value.trim().toLowerCase();
-    if (!/^[^\s@]+@gmail\.com$/i.test(email)) { message.textContent = "Enter a valid Gmail address."; message.style.color = "#d94658"; return; }
+
+    if (!/^[^\s@]+@gmail\.com$/i.test(email)) {
+      message.textContent = "Enter a valid Gmail address.";
+      message.style.color = "#d94658";
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending...";
+
     try {
-      await updateDoc(profileRef, { waRequests: arrayUnion({ email, time: new Date().toLocaleString() }) });
-      localStorage.setItem("myWaEmail_" + PROFILE_SLUG, email);
-      message.textContent = "Request sent. Please wait for approval."; message.style.color = "#24945f";
-    } catch (error) { console.error(error); message.textContent = "Could not send request."; message.style.color = "#d94658"; }
+      await updateDoc(profileRef, {
+        waRequests: arrayUnion({
+          email,
+          time: new Date().toLocaleString()
+        })
+      });
+
+      localStorage.setItem(`myWaEmail_${PROFILE_SLUG}`, email);
+
+      message.textContent = "Request sent. Please wait for approval.";
+      message.style.color = "#24945f";
+    } catch (error) {
+      console.error("WhatsApp request error:", error);
+
+      message.textContent = "Could not send request.";
+      message.style.color = "#d94658";
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Send Request";
+    }
   };
 }
+
 async function renderProfile() {
   try {
     const profileRef = doc(db, "profiles", PROFILE_SLUG);
-    const snap = await getDoc(profileRef);
-    if (!snap.exists()) throw new Error("Profile document not found.");
-    const data = snap.data();
-    document.title = data.name || "Profile";
-    $("pageTitle").textContent = data.name || "Profile";
-    $("userName").textContent = data.name || "";
-    $("statusText").textContent = data.statusText || "";
-    $("dailyQuote").textContent = data.quote || "";
-    $("profilePhoto").src = safeUrl(data.photo) || "https://via.placeholder.com/160";
+
+    const snapshot = await getDoc(profileRef);
+
+    if (!snapshot.exists()) {
+      throw new Error(`Profile not found: profiles/${PROFILE_SLUG}`);
+    }
+
+    const data = snapshot.data();
+
+    const name = safeText(data.name);
+    const status = safeText(data.statusText);
+    const quote = safeText(data.quote);
+
+    document.title = name || "Profile";
+    $("pageTitle").textContent = name || "Profile";
+
+    $("userName").textContent = name;
+    $("statusText").textContent = status;
+
+    $("aboutTitle").textContent = safeText(data.aboutTitle);
+    $("aboutText").textContent = safeText(data.aboutText);
+
+    $("memoryTitle").textContent = safeText(data.memoryTitle);
+    $("memorySubtitle").textContent = safeText(data.memorySubtitle);
+
+    $("dailyQuote").textContent = quote;
+
+    $("footerName").textContent =
+      safeText(data.footerText) || name;
+
+    setImage(
+      $("profilePhoto"),
+      safeUrl(data.photo)
+    );
+
+    const statusDot = $("statusDot");
+
+    statusDot.className = "status-dot";
+
+    if (data.onlineStatus === "away") {
+      statusDot.classList.add("away");
+    }
+
+    if (data.onlineStatus === "offline") {
+      statusDot.classList.add("offline");
+    }
+
+    statusDot.classList.add("visible");
+
     $("snapLink").href = safeUrl(data.snap) || "#";
     $("discordLink").href = safeUrl(data.discord) || "#";
     $("instaLink").href = safeUrl(data.insta) || "#";
-    const dot = $("statusDot"); dot.className = "status-dot"; if (data.onlineStatus === "away") dot.classList.add("away"); if (data.onlineStatus === "offline") dot.classList.add("offline");
-    applyDesign(data); setupWhatsApp(data, profileRef);
+
+    applyPublicDesign(data);
+    setupWhatsApp(data, profileRef);
+
+    showPage();
   } catch (error) {
     console.error("Error loading profile:", error);
-    $("userName").textContent = "Error loading profile";
+
+    $("userName").textContent = "Profile unavailable";
+    $("aboutTitle").textContent = "";
+    $("aboutText").textContent = "";
+
+    showError();
   }
 }
+
 document.addEventListener("DOMContentLoaded", renderProfile);
