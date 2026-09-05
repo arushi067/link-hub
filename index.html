@@ -3,34 +3,663 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#ff8ebe">
+  <meta name="theme-color" content="#ff78ad">
+
   <title id="pageTitle">Arushi Patel</title>
+
   <link rel="stylesheet" href="style.css">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
   <style>
-    :root{--ink:#51273a;--pink:#ff4f91;--purple:#7568ff}*{box-sizing:border-box}body{min-height:100svh;overflow-x:hidden;font-family:Poppins,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}.emoji-ios{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
-    #mainCard.card{position:relative;z-index:2;width:min(390px,calc(100vw - 38px));margin:clamp(24px,6vh,64px) auto 30px;padding:30px 28px 24px;overflow:hidden;border:1px solid rgba(255,255,255,.7);border-radius:30px;background:linear-gradient(145deg,rgba(255,255,255,.48),rgba(255,225,240,.28));box-shadow:0 22px 54px rgba(131,36,83,.2),inset 0 1px rgba(255,255,255,.75);backdrop-filter:blur(10px);transform:perspective(1000px) rotateX(1.5deg);transition:transform .25s,box-shadow .25s}#mainCard.card::before{content:"";position:absolute;z-index:-1;inset:9px -8px -12px 9px;border-radius:30px;background:linear-gradient(135deg,rgba(255,73,151,.22),rgba(117,104,255,.15));filter:blur(2px)}#mainCard.card::after{content:"";position:absolute;z-index:-1;top:0;left:10%;width:80%;height:19%;border-radius:0 0 50% 50%;background:linear-gradient(180deg,rgba(255,255,255,.18),transparent);pointer-events:none}@media(hover:hover){#mainCard.card:hover{transform:perspective(1000px) rotateY(-1.5deg) translateY(-5px);box-shadow:0 30px 65px rgba(131,36,83,.25),inset 0 1px rgba(255,255,255,.75)}}
-    .ring-wrap{position:relative;z-index:3;filter:drop-shadow(0 8px 11px rgba(205,44,110,.2))}.ring{opacity:.85}#profilePhoto{position:relative;z-index:4!important;display:block!important;filter:none!important;opacity:1!important;mix-blend-mode:normal!important;box-shadow:none!important;background:transparent!important}.status-dot{z-index:5!important}
-    .links{gap:12px!important}.link-btn{display:flex!important;align-items:center!important;justify-content:center!important;gap:11px!important;min-height:48px}.link-btn .icon{display:grid!important;place-items:center!important;width:22px!important;height:22px!important;font-size:19px!important}.snap .icon::before{content:"\f2ab";font-family:"Font Awesome 6 Brands";font-weight:400}.discord .icon::before{content:"\f392";font-family:"Font Awesome 6 Brands";font-weight:400}.insta .icon::before{content:"\f16d";font-family:"Font Awesome 6 Brands";font-weight:400}.whatsapp .icon::before{content:"\f232";font-family:"Font Awesome 6 Brands";font-weight:400}
-    .memories-arrow{position:relative;display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:48px;margin:17px 0 1px;overflow:hidden;border:1px solid rgba(255,255,255,.74);border-radius:15px;background:linear-gradient(135deg,rgba(255,255,255,.7),rgba(255,210,231,.5));box-shadow:0 10px 20px rgba(165,45,95,.1),inset 0 1px rgba(255,255,255,.85);color:var(--ink);font-size:13px;font-weight:800;text-decoration:none;transition:.2s}.memories-arrow::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 27%,rgba(255,255,255,.8) 48%,transparent 70%);transform:translateX(-130%);transition:transform .55s}.memories-arrow:hover::before{transform:translateX(130%)}.memories-arrow:hover{transform:translateY(-2px);box-shadow:0 15px 25px rgba(165,45,95,.18)}.memories-arrow>*{position:relative}.gallery-badge{display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#ff6fa7,#9175ff);color:#fff;font-size:14px}.arrow-icon{display:grid;place-items:center;width:23px;height:23px;border-radius:50%;background:rgba(255,79,145,.13);color:var(--pink);font-size:17px}.memory-hint{margin-top:7px;color:rgba(81,39,58,.57);font-size:9px;font-weight:700;letter-spacing:.06em;text-align:center}
-    @media(max-width:600px){body{padding:0;background-size:cover}#mainCard.card{width:calc(100vw - 28px);margin:16px auto 18px;padding:22px 19px 18px;border-radius:25px;transform:none}.ring-wrap{transform:scale(.88);margin:-7px auto -4px}#userName{font-size:24px!important}.status-text{font-size:11px!important}.quote-box{margin:14px 0!important;padding:12px!important}.quote-box p{font-size:13px!important}.link-btn{min-height:45px!important;font-size:13px!important}.links{gap:9px!important}.whatsapp-section{margin-top:9px!important}.memories-arrow{min-height:45px;margin-top:14px;font-size:12px}.memory-hint{font-size:8px}footer{margin-top:17px!important;font-size:11px!important}.particles{opacity:.75!important}.aurora{opacity:.88!important}}
+    :root {
+      --pink: #ff5d9e;
+      --pink-dark: #e83e82;
+      --purple: #765cff;
+      --ink: #2d2631;
+      --muted: #756a72;
+      --card: rgba(255, 255, 255, 0.92);
+      --border: rgba(81, 40, 59, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100svh;
+      margin: 0;
+      padding: 28px 16px;
+      overflow-x: hidden;
+      font-family: "Poppins", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    }
+
+    .emoji-ios {
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    }
+
+    /*
+      The existing aurora and particles remain in the background.
+      They are deliberately kept behind the profile.
+    */
+    .aurora,
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: -5;
+    }
+
+    /*
+      Main profile container.
+      The banner fills the top section and content sits below.
+    */
+    #mainCard.card {
+      position: relative;
+      width: min(780px, 100%);
+      min-height: auto;
+      margin: 0 auto;
+      padding: 0 0 26px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 24px;
+      background: var(--card);
+      box-shadow:
+        0 25px 70px rgba(99, 31, 66, 0.25),
+        0 8px 22px rgba(99, 31, 66, 0.12);
+      backdrop-filter: blur(12px);
+    }
+
+    /*
+      Banner fallback.
+      Later, your updated script.js will replace this background
+      with the banner URL saved from the admin panel.
+    */
+    .profile-banner {
+      position: relative;
+      width: 100%;
+      height: 230px;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(24, 10, 16, 0.28),
+          rgba(24, 10, 16, 0.04),
+          rgba(24, 10, 16, 0.25)
+        ),
+        url("https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=1600&q=85")
+        center / cover no-repeat;
+    }
+
+    .profile-banner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 55%,
+        rgba(255, 255, 255, 0.95) 100%
+      );
+      pointer-events: none;
+    }
+
+    .profile-content {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 570px);
+      margin: -54px auto 0;
+      padding: 0 25px;
+      text-align: center;
+    }
+
+    /*
+      Profile photo stays fully clear.
+      No white reflection, filter, opacity effect, or blend mode
+      is placed above the real image.
+    */
+    .ring-wrap {
+      position: relative;
+      z-index: 5;
+      display: inline-flex;
+      width: 128px;
+      height: 128px;
+      margin-bottom: 10px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 10px 28px rgba(52, 20, 35, 0.22);
+    }
+
+    .ring {
+      position: absolute;
+      inset: -4px;
+      z-index: 1;
+      border: 3px solid var(--pink);
+      border-radius: 50%;
+      opacity: 1;
+      pointer-events: none;
+    }
+
+    #profilePhoto {
+      position: relative;
+      z-index: 3;
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 5px solid #ffffff;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center;
+      filter: none !important;
+      opacity: 1 !important;
+      mix-blend-mode: normal !important;
+      box-shadow: none !important;
+      background: #ffffff !important;
+    }
+
+    .status-dot {
+      position: absolute;
+      z-index: 5 !important;
+      right: 5px;
+      bottom: 8px;
+      width: 22px;
+      height: 22px;
+      border: 3px solid #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
+    }
+
+    #userName {
+      margin: 4px 0 3px;
+      color: var(--ink);
+      font-family: "Playfair Display", serif;
+      font-size: 31px;
+      line-height: 1.2;
+    }
+
+    .status-text {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .quote-box {
+      position: relative;
+      margin: 0 0 20px;
+      padding: 15px 18px 15px 48px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff7fa;
+      color: #55404c;
+      text-align: left;
+    }
+
+    .quote-mark {
+      position: absolute;
+      top: 2px;
+      left: 17px;
+      color: var(--pink);
+      font-family: Georgia, serif;
+      font-size: 43px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    #dailyQuote {
+      margin: 0;
+      font-family: "Quicksand", sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .links {
+      display: grid;
+      gap: 11px;
+    }
+
+    .link-btn {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 12px;
+      width: 100%;
+      min-height: 50px;
+      border-radius: 13px;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 9px 16px rgba(50, 20, 40, 0.13);
+      transition: transform 0.18s ease, filter 0.18s ease;
+    }
+
+    .link-btn:hover {
+      filter: brightness(1.04);
+      transform: translateY(-2px);
+    }
+
+    .link-btn .icon {
+      display: grid !important;
+      place-items: center;
+      width: 23px;
+      height: 23px;
+      font-size: 20px;
+    }
+
+    .snap {
+      background: linear-gradient(135deg, #ffe900, #ffd400) !important;
+      color: #161616 !important;
+    }
+
+    .discord {
+      background: linear-gradient(135deg, #6375f8, #465be8) !important;
+    }
+
+    .insta {
+      background: linear-gradient(135deg, #ff9837, #ef3c77, #744fd4) !important;
+    }
+
+    .whatsapp {
+      margin-top: 11px;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .whatsapp.locked {
+      background: linear-gradient(135deg, #9da0ad, #767987) !important;
+      color: #ffffff !important;
+    }
+
+    .whatsapp.whatsapp {
+      background: linear-gradient(135deg, #2ccf75, #13a75a) !important;
+    }
+
+    .snap .icon::before {
+      content: "\f2ab";
+      font-family: "Font Awesome 6 Brands";
+      font-weight: 400;
+    }
+
+    .discord .icon::before {
+      content: "\f392";
+      font-family: "Font Awesome 6 Brands";
+      font-weight: 400;
+    }
+
+    .insta .icon::before {
+      content: "\f16d";
+      font-family: "Font Awesome 6 Brands";
+      font-weight: 400;
+    }
+
+    .whatsapp .icon::before {
+      content: "\f232";
+      font-family: "Font Awesome 6 Brands";
+      font-weight: 400;
+    }
+
+    .wa-form {
+      margin-top: 12px;
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff8fb;
+    }
+
+    .wa-note {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .wa-form input {
+      width: 100%;
+      margin-bottom: 9px;
+      padding: 12px 13px;
+      border: 1px solid rgba(81, 40, 59, 0.18);
+      border-radius: 10px;
+      outline: none;
+      color: var(--ink);
+      background: #ffffff;
+    }
+
+    .wa-form input:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 3px rgba(255, 93, 158, 0.12);
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 11px;
+      border: 0;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      color: #ffffff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .wa-msg {
+      min-height: 17px;
+      margin: 8px 0 0;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .memories-arrow {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 49px;
+      margin-top: 17px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 93, 158, 0.2);
+      border-radius: 13px;
+      background: linear-gradient(135deg, #fff6fa, #ffe5f1);
+      color: #633047;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .memories-arrow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px rgba(180, 45, 104, 0.15);
+    }
+
+    .gallery-badge {
+      display: grid;
+      place-items: center;
+      width: 27px;
+      height: 27px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #ff6fa9, #856cff);
+      color: #ffffff;
+      font-size: 14px;
+    }
+
+    .arrow-icon {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255, 93, 158, 0.13);
+      color: var(--pink-dark);
+      font-size: 18px;
+      transition: transform 0.18s ease;
+    }
+
+    .memories-arrow:hover .arrow-icon {
+      transform: translateX(4px);
+    }
+
+    .memory-hint {
+      margin: 8px 0 0;
+      color: #9c7d8d;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    footer {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 20px;
+      color: #8d6879;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /*
+      Mobile optimization:
+      Shorter banner, smaller photo, tighter spacing.
+      Background remains clearly visible around the profile card.
+    */
+    @media (max-width: 600px) {
+      body {
+        padding: 13px 12px 22px;
+      }
+
+      #mainCard.card {
+        width: 100%;
+        border-radius: 19px;
+      }
+
+      .profile-banner {
+        height: 150px;
+      }
+
+      .profile-content {
+        margin-top: -43px;
+        padding: 0 16px;
+      }
+
+      .ring-wrap {
+        width: 102px;
+        height: 102px;
+        margin-bottom: 6px;
+      }
+
+      .ring {
+        inset: -3px;
+        border-width: 2px;
+      }
+
+      .status-dot {
+        right: 2px;
+        bottom: 5px;
+        width: 19px;
+        height: 19px;
+        border-width: 3px;
+      }
+
+      #userName {
+        font-size: 26px;
+      }
+
+      .status-text {
+        margin-bottom: 16px;
+        font-size: 10px;
+      }
+
+      .quote-box {
+        margin-bottom: 15px;
+        padding: 12px 13px 12px 39px;
+        border-radius: 13px;
+      }
+
+      .quote-mark {
+        top: 2px;
+        left: 13px;
+        font-size: 34px;
+      }
+
+      #dailyQuote {
+        font-size: 12px;
+      }
+
+      .links {
+        gap: 9px;
+      }
+
+      .link-btn {
+        min-height: 45px;
+        border-radius: 11px;
+        font-size: 13px;
+      }
+
+      .link-btn .icon {
+        font-size: 18px;
+      }
+
+      .whatsapp {
+        margin-top: 9px;
+      }
+
+      .memories-arrow {
+        min-height: 45px;
+        margin-top: 14px;
+        border-radius: 11px;
+        font-size: 12px;
+      }
+
+      .memory-hint {
+        font-size: 8px;
+      }
+
+      footer {
+        margin-top: 16px;
+        font-size: 11px;
+      }
+    }
   </style>
 </head>
+
 <body id="bodyRoot">
-  <div class="aurora" id="auroraLayer"><div class="aurora-shape shape1"></div><div class="aurora-shape shape2"></div><div class="aurora-shape shape3"></div></div>
+
+  <div class="aurora" id="auroraLayer">
+    <div class="aurora-shape shape1"></div>
+    <div class="aurora-shape shape2"></div>
+    <div class="aurora-shape shape3"></div>
+  </div>
+
   <div class="particles" id="particles"></div>
+
   <main class="card" id="mainCard">
-    <div class="ring-wrap"><div class="ring" id="ringEl"></div><img id="profilePhoto" src="https://via.placeholder.com/160" alt="Profile photo"><span class="status-dot" id="statusDot"></span></div>
-    <h1 id="userName">Loading...</h1><p class="status-text" id="statusText"></p>
-    <div class="quote-box" id="quoteBox"><span class="quote-mark">“</span><p id="dailyQuote">Loading today’s quote...</p></div>
-    <div class="links" id="linksWrap"><a href="#" id="snapLink" class="link-btn snap" target="_blank" rel="noopener"><span class="icon" aria-hidden="true"></span><span>Snapchat</span></a><a href="#" id="discordLink" class="link-btn discord" target="_blank" rel="noopener"><span class="icon" aria-hidden="true"></span><span>Discord</span></a><a href="#" id="instaLink" class="link-btn insta" target="_blank" rel="noopener"><span class="icon" aria-hidden="true"></span><span>Instagram</span></a></div>
-    <div class="whatsapp-section"><button id="waBtn" class="link-btn whatsapp locked" type="button"><span class="icon" aria-hidden="true"></span><span>WhatsApp Locked</span></button><div id="waRequestForm" class="wa-form hidden"><p class="wa-note">Enter your Gmail to request access. Approved manually.</p><input type="email" id="waGmail" placeholder="you@gmail.com" autocomplete="email"><button id="waSubmit" class="btn-primary" type="button">Send Request</button><p id="waMsg" class="wa-msg"></p></div></div>
-    <a href="memories.html" class="memories-arrow" aria-label="Open memory gallery"><span class="gallery-badge emoji-ios">📸</span><span>Explore Memory Gallery</span><span class="arrow-icon" aria-hidden="true">→</span></a><p class="memory-hint">TAP TO OPEN THE PHOTO STORY</p>
-    <footer><span class="emoji-ios">💗</span><span id="footerName">Arushi Patel</span><span class="emoji-ios">💗</span></footer>
+
+    <!-- Banner image area -->
+    <div class="profile-banner" id="profileBanner"></div>
+
+    <section class="profile-content">
+
+      <div class="ring-wrap">
+        <div class="ring" id="ringEl"></div>
+
+        <img
+          id="profilePhoto"
+          src="https://via.placeholder.com/160"
+          alt="Profile photo"
+        >
+
+        <span class="status-dot" id="statusDot"></span>
+      </div>
+
+      <h1 id="userName">Loading...</h1>
+
+      <p class="status-text" id="statusText"></p>
+
+      <div class="quote-box" id="quoteBox">
+        <span class="quote-mark">“</span>
+        <p id="dailyQuote">Loading today’s quote...</p>
+      </div>
+
+      <div class="links" id="linksWrap">
+
+        <a
+          href="#"
+          id="snapLink"
+          class="link-btn snap"
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="icon" aria-hidden="true"></span>
+          <span>Snapchat</span>
+        </a>
+
+        <a
+          href="#"
+          id="discordLink"
+          class="link-btn discord"
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="icon" aria-hidden="true"></span>
+          <span>Discord</span>
+        </a>
+
+        <a
+          href="#"
+          id="instaLink"
+          class="link-btn insta"
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="icon" aria-hidden="true"></span>
+          <span>Instagram</span>
+        </a>
+
+      </div>
+
+      <div class="whatsapp-section">
+
+        <button
+          id="waBtn"
+          class="link-btn whatsapp locked"
+          type="button"
+        >
+          <span class="icon" aria-hidden="true"></span>
+          <span>WhatsApp Locked</span>
+        </button>
+
+        <div id="waRequestForm" class="wa-form hidden">
+          <p class="wa-note">
+            Enter your Gmail to request access. Approval is manual.
+          </p>
+
+          <input
+            type="email"
+            id="waGmail"
+            placeholder="you@gmail.com"
+            autocomplete="email"
+          >
+
+          <button id="waSubmit" class="btn-primary" type="button">
+            Send Request
+          </button>
+
+          <p id="waMsg" class="wa-msg"></p>
+        </div>
+
+      </div>
+
+      <a
+        href="memories.html"
+        class="memories-arrow"
+        aria-label="Open memory gallery"
+      >
+        <span class="gallery-badge emoji-ios">📸</span>
+        <span>Explore Memory Gallery</span>
+        <span class="arrow-icon" aria-hidden="true">→</span>
+      </a>
+
+      <p class="memory-hint">
+        TAP TO OPEN THE PHOTO STORY
+      </p>
+
+      <footer>
+        <span class="emoji-ios">💗</span>
+        <span id="footerName">Arushi Patel</span>
+        <span class="emoji-ios">💗</span>
+      </footer>
+
+    </section>
   </main>
+
   <script type="module" src="script.js"></script>
+
 </body>
 </html>
