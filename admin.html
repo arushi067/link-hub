@@ -4,26 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex,nofollow">
-  <title>Arushi Admin Panel</title>
+  <meta name="theme-color" content="#f4f1ed">
+
+  <title>Arushi Admin</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --page: #f5f1f3;
-      --paper: #ffffff;
-      --ink: #251d22;
-      --muted: #74666d;
-      --line: #e8dfe3;
-      --pink: #e84e91;
-      --pink-soft: #fff0f6;
-      --pink-dark: #bd286a;
-      --green: #249b65;
-      --red: #d94156;
-      --shadow: 0 12px 30px rgba(70, 35, 50, 0.10);
+      --page: #f4f1ed;
+      --paper: #fffefa;
+      --ink: #252124;
+      --muted: #766e71;
+      --line: #e4ddd8;
+      --pink: #d94b83;
+      --pink-dark: #bb3269;
+      --pink-soft: #fff1f6;
+      --green: #24945f;
+      --red: #d94658;
+      --shadow: 0 10px 28px rgba(47, 34, 39, 0.10);
     }
 
     * {
@@ -36,10 +38,7 @@
     body {
       min-height: 100vh;
       color: var(--ink);
-      background:
-        radial-gradient(circle at top right, #ffd8e9 0, transparent 27%),
-        radial-gradient(circle at bottom left, #f7dce9 0, transparent 25%),
-        var(--page);
+      background: var(--page);
     }
 
     button,
@@ -49,53 +48,60 @@
       font: inherit;
     }
 
+    button {
+      cursor: pointer;
+    }
+
     .hidden {
       display: none !important;
     }
 
-    /* Login */
+    /* =========================
+       LOGIN
+    ========================= */
 
     .login-wrap {
       display: grid;
       min-height: 100vh;
-      padding: 22px;
+      padding: 20px;
       place-items: center;
     }
 
     .login-card {
-      width: min(100%, 410px);
-      padding: 34px 30px 30px;
+      width: min(100%, 400px);
+      padding: 34px 30px 29px;
       border: 1px solid var(--line);
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.93);
+      border-radius: 14px;
+      background: var(--paper);
       box-shadow: var(--shadow);
       text-align: center;
     }
 
     .brand-mark {
       display: grid;
-      width: 58px;
-      height: 58px;
+      width: 56px;
+      height: 56px;
       margin: 0 auto 15px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #ff82b5, #d94488);
+      border-radius: 50%;
+      background: var(--pink);
       color: #ffffff;
       font-family: "Playfair Display", serif;
-      font-size: 29px;
+      font-size: 25px;
+      font-weight: 700;
       place-items: center;
-      box-shadow: 0 10px 20px rgba(220, 60, 125, 0.22);
     }
 
     .login-card h1 {
       font-family: "Playfair Display", serif;
       font-size: 27px;
+      font-weight: 600;
     }
 
     .sub {
       margin: 8px 0 23px;
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     .field {
@@ -107,7 +113,7 @@
     .panel label {
       display: block;
       margin-bottom: 7px;
-      color: #51424a;
+      color: #51484b;
       font-size: 12px;
       font-weight: 700;
     }
@@ -117,18 +123,13 @@
     .panel textarea,
     .panel select {
       width: 100%;
-      border: 1px solid #dfd3d8;
-      border-radius: 10px;
+      border: 1px solid #ddd5d4;
+      border-radius: 8px;
       outline: none;
       background: #ffffff;
       color: var(--ink);
-      padding: 12px 13px;
-      transition: border-color 0.18s, box-shadow 0.18s;
-    }
-
-    .panel textarea {
-      min-height: 100px;
-      resize: vertical;
+      padding: 11px 12px;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
 
     .field input:focus,
@@ -136,20 +137,24 @@
     .panel textarea:focus,
     .panel select:focus {
       border-color: var(--pink);
-      box-shadow: 0 0 0 3px rgba(232, 78, 145, 0.12);
+      box-shadow: 0 0 0 3px rgba(217, 75, 131, 0.12);
+    }
+
+    .panel textarea {
+      min-height: 105px;
+      resize: vertical;
     }
 
     .btn-primary {
       width: 100%;
       border: 0;
-      border-radius: 10px;
+      border-radius: 8px;
       background: var(--pink);
       color: #ffffff;
-      padding: 12px 15px;
+      padding: 12px 14px;
       font-size: 13px;
       font-weight: 700;
-      cursor: pointer;
-      transition: background 0.18s, transform 0.18s;
+      transition: background 0.18s ease, transform 0.18s ease;
     }
 
     .btn-primary:hover {
@@ -164,19 +169,18 @@
     }
 
     .btn-secondary {
-      border: 1px solid #decfd5;
-      border-radius: 9px;
+      border: 1px solid #ddd5d4;
+      border-radius: 8px;
       background: #ffffff;
-      color: #55434b;
+      color: #4e4447;
       padding: 9px 13px;
       font-size: 12px;
       font-weight: 700;
-      cursor: pointer;
-      transition: background 0.18s;
+      transition: background 0.18s ease;
     }
 
     .btn-secondary:hover {
-      background: #fff2f7;
+      background: #fff2f6;
     }
 
     .msg {
@@ -194,15 +198,18 @@
     .status-box {
       margin-top: 13px;
       padding: 10px;
-      border: 1px solid #eee1e7;
-      border-radius: 9px;
-      background: #fff8fb;
+      border: 1px solid #eadce2;
+      border-radius: 8px;
+      background: #fff9fb;
       color: var(--muted);
       font-size: 11px;
+      line-height: 1.5;
       text-align: left;
     }
 
-    /* Dashboard */
+    /* =========================
+       DASHBOARD LAYOUT
+    ========================= */
 
     .dashboard {
       width: min(1160px, 100%);
@@ -215,14 +222,14 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 21px;
+      margin-bottom: 22px;
     }
 
     .eyebrow {
       color: var(--pink-dark);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.13em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
@@ -230,18 +237,20 @@
       margin-top: 3px;
       font-family: "Playfair Display", serif;
       font-size: 29px;
+      font-weight: 600;
     }
 
     .layout {
       display: grid;
-      grid-template-columns: 222px minmax(0, 1fr);
+      grid-template-columns: 220px minmax(0, 1fr);
       gap: 18px;
+      align-items: start;
     }
 
     .sidebar,
     .panel {
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.90);
+      background: var(--paper);
       box-shadow: var(--shadow);
     }
 
@@ -250,7 +259,7 @@
       top: 16px;
       height: max-content;
       padding: 10px;
-      border-radius: 16px;
+      border-radius: 12px;
     }
 
     .sidebar-title {
@@ -258,7 +267,7 @@
       color: var(--muted);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.10em;
       text-transform: uppercase;
     }
 
@@ -273,19 +282,18 @@
       gap: 10px;
       width: 100%;
       border: 0;
-      border-radius: 9px;
+      border-radius: 8px;
       background: transparent;
-      color: #675861;
+      color: #62575b;
       padding: 11px 12px;
       font-size: 13px;
       font-weight: 700;
       text-align: left;
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s;
+      transition: background 0.18s ease, color 0.18s ease;
     }
 
     .tab-btn:hover {
-      background: #fff2f7;
+      background: #fff2f6;
       color: var(--pink-dark);
     }
 
@@ -298,6 +306,7 @@
       display: inline-grid;
       width: 20px;
       color: var(--pink);
+      font-size: 15px;
       place-items: center;
     }
 
@@ -306,7 +315,7 @@
     }
 
     .panel {
-      border-radius: 17px;
+      border-radius: 12px;
       padding: 27px;
     }
 
@@ -321,6 +330,7 @@
     .panel-head h2 {
       font-family: "Playfair Display", serif;
       font-size: 21px;
+      font-weight: 600;
     }
 
     .panel-head p,
@@ -350,35 +360,63 @@
       margin-top: 20px;
     }
 
-    .photo-preview {
-      display: block;
-      width: 96px;
-      height: 96px;
-      margin-top: 11px;
-      border: 2px solid #f1dbe5;
-      border-radius: 14px;
-      object-fit: cover;
-    }
-
-    .banner-preview {
-      display: block;
-      width: 100%;
-      height: 155px;
-      margin-top: 11px;
-      border: 1px solid #ebdce2;
-      border-radius: 13px;
-      background: #f7edf1;
-      object-fit: cover;
-    }
-
     .section-divider {
       height: 1px;
       margin: 24px 0;
       background: var(--line);
     }
 
+    .photo-preview {
+      display: block;
+      width: 96px;
+      height: 96px;
+      margin-top: 11px;
+      border: 2px solid #f0dbe4;
+      border-radius: 50%;
+      background: #f4eef0;
+      object-fit: cover;
+    }
+
+    .banner-preview {
+      display: block;
+      width: 100%;
+      height: 165px;
+      margin-top: 11px;
+      border: 1px solid #e5dadb;
+      border-radius: 9px;
+      background: #f3eded;
+      object-fit: cover;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 10px;
+      padding: 12px;
+      border: 1px solid #ebe0e1;
+      border-radius: 8px;
+      background: #fffafb;
+    }
+
+    .checkbox-row input {
+      width: 17px;
+      height: 17px;
+      margin-top: 1px;
+      accent-color: var(--pink);
+    }
+
+    .checkbox-row label {
+      margin: 0;
+      color: #574b4f;
+      cursor: pointer;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
     h3 {
-      margin-bottom: 10px;
+      margin-bottom: 11px;
+      color: #41373a;
       font-size: 14px;
     }
 
@@ -390,21 +428,14 @@
       gap: 10px;
       margin-bottom: 8px;
       padding: 12px;
-      border: 1px solid #eee1e6;
-      border-radius: 11px;
-      background: #fffafb;
+      border: 1px solid #ebe2e2;
+      border-radius: 9px;
+      background: #fffafa;
       font-size: 13px;
     }
 
     .request-item small {
       color: var(--muted);
-    }
-
-    .item-photo {
-      width: 45px;
-      height: 45px;
-      border-radius: 9px;
-      object-fit: cover;
     }
 
     .item-main {
@@ -420,12 +451,19 @@
       white-space: nowrap;
     }
 
+    .item-photo {
+      width: 45px;
+      height: 45px;
+      border-radius: 7px;
+      object-fit: cover;
+    }
+
     .approve-btn,
     .deny-btn,
     .revoke-btn,
     .revoke-btn-wa {
       border: 0;
-      border-radius: 8px;
+      border-radius: 7px;
       color: #ffffff;
       padding: 7px 10px;
       font-size: 11px;
@@ -450,27 +488,9 @@
       text-align: center;
     }
 
-    .checkbox-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 6px;
-      padding: 12px;
-      border: 1px solid #ebdce2;
-      border-radius: 10px;
-      background: #fff9fb;
-    }
-
-    .checkbox-row input {
-      width: 17px;
-      height: 17px;
-      accent-color: var(--pink);
-    }
-
-    .checkbox-row label {
-      margin: 0;
-      cursor: pointer;
-    }
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 760px) {
       .dashboard {
@@ -525,6 +545,8 @@
 
 <body>
 
+  <!-- LOGIN -->
+
   <div id="loginScreen" class="login-wrap">
     <section class="login-card" aria-labelledby="loginTitle">
       <div class="brand-mark">A</div>
@@ -532,7 +554,7 @@
       <h1 id="loginTitle">Admin Login</h1>
 
       <p class="sub">
-        Manage your public profile, banner, links, gallery, and visitor access.
+        Manage your profile, banner, writing, links, memories, and access requests.
       </p>
 
       <div class="field">
@@ -567,6 +589,8 @@
     </section>
   </div>
 
+  <!-- DASHBOARD -->
+
   <div id="dashboard" class="dashboard hidden">
 
     <header class="topbar">
@@ -581,6 +605,8 @@
     </header>
 
     <div class="layout">
+
+      <!-- SIDEBAR -->
 
       <aside class="sidebar">
         <p class="sidebar-title">Manage profile</p>
@@ -633,19 +659,28 @@
           <div class="panel-head">
             <div>
               <h2>Profile details</h2>
-              <p>Manage the basic information shown to visitors.</p>
+              <p>These details appear at the top of your public profile.</p>
             </div>
           </div>
 
           <div class="form-grid">
+
             <div>
               <label for="fName">Display name</label>
-              <input id="fName" type="text" placeholder="Arushi Patel">
+              <input
+                id="fName"
+                type="text"
+                placeholder="Arushi Patel"
+              >
             </div>
 
             <div>
               <label for="fStatus">Status text</label>
-              <input id="fStatus" type="text" placeholder="Nothing special ✨">
+              <input
+                id="fStatus"
+                type="text"
+                placeholder="Nothing special ✨"
+              >
             </div>
 
             <div>
@@ -665,10 +700,11 @@
                 placeholder="https://.../profile.jpg"
               >
             </div>
+
           </div>
 
           <p class="hint-text">
-            Use a direct image URL. JPG, PNG, WEBP, and GIF links are supported.
+            Use a direct image URL. JPG, PNG, WEBP, and GIF links work.
           </p>
 
           <img
@@ -687,8 +723,11 @@
         <section id="tab-design" class="panel tab-panel hidden">
           <div class="panel-head">
             <div>
-              <h2>Public design</h2>
-              <p>Customize the classic banner-style layout of your public profile.</p>
+              <h2>Public profile design</h2>
+              <p>
+                Customize the banner, writing, memory area, colors, and visibility
+                of sections on the public index page.
+              </p>
             </div>
           </div>
 
@@ -704,7 +743,7 @@
               >
 
               <p class="hint-text">
-                Paste a direct image link. JPG, PNG, WEBP, and animated GIF banner links are supported.
+                Paste a direct JPG, PNG, WEBP, or animated GIF link.
               </p>
 
               <img
@@ -715,12 +754,12 @@
             </div>
 
             <div>
-              <label for="fBannerHeight">Banner size</label>
+              <label for="fBannerHeight">Banner height</label>
 
               <select id="fBannerHeight">
-                <option value="compact">Compact — best for mobile</option>
-                <option value="normal">Normal — recommended</option>
-                <option value="large">Large — cinematic look</option>
+                <option value="compact">Compact</option>
+                <option value="normal">Normal</option>
+                <option value="large">Large</option>
               </select>
             </div>
 
@@ -739,9 +778,29 @@
 
               <select id="fCardStyle">
                 <option value="classic">Classic white</option>
-                <option value="glass">Soft glass</option>
                 <option value="minimal">Minimal clean</option>
+                <option value="soft">Soft pink</option>
               </select>
+            </div>
+
+            <div>
+              <label for="fAccentColor">Accent color</label>
+
+              <input
+                id="fAccentColor"
+                type="text"
+                placeholder="#d94b83"
+              >
+            </div>
+
+            <div>
+              <label for="fPageColor">Page background color</label>
+
+              <input
+                id="fPageColor"
+                type="text"
+                placeholder="#f5f3ee"
+              >
             </div>
 
             <div>
@@ -754,32 +813,76 @@
               >
             </div>
 
-            <div>
-              <label for="fAccentColor">Accent color</label>
+            <div class="wide">
+              <label for="fAboutTitle">About section heading</label>
 
               <input
-                id="fAccentColor"
+                id="fAboutTitle"
                 type="text"
-                placeholder="#ff5d9e"
+                placeholder="Welcome to my little corner of the internet."
+              >
+            </div>
+
+            <div class="wide">
+              <label for="fAboutText">About section text</label>
+
+              <textarea
+                id="fAboutText"
+                placeholder="Write something about yourself, your interests, games, memories, or anything you want visitors to know."
+              ></textarea>
+            </div>
+
+            <div>
+              <label for="fMemoryTitle">Memory section title</label>
+
+              <input
+                id="fMemoryTitle"
+                type="text"
+                placeholder="Gaming Memories"
               >
             </div>
 
             <div>
-              <label for="fCustomBackground">Custom page background</label>
+              <label for="fMemorySubtitle">Memory section subtitle</label>
 
               <input
-                id="fCustomBackground"
-                type="url"
-                placeholder="Optional background image URL"
+                id="fMemorySubtitle"
+                type="text"
+                placeholder="A few snapshots from games and good moments."
               >
             </div>
 
           </div>
 
           <div class="checkbox-row">
+            <input id="fShowQuote" type="checkbox" checked>
+
+            <label for="fShowQuote">
+              Show the daily quote section on the public profile.
+            </label>
+          </div>
+
+          <div class="checkbox-row">
+            <input id="fShowSocials" type="checkbox" checked>
+
+            <label for="fShowSocials">
+              Show Snapchat, Discord, and Instagram links.
+            </label>
+          </div>
+
+          <div class="checkbox-row">
+            <input id="fShowWhatsApp" type="checkbox" checked>
+
+            <label for="fShowWhatsApp">
+              Show the WhatsApp access-request button.
+            </label>
+          </div>
+
+          <div class="checkbox-row">
             <input id="fShowMemories" type="checkbox" checked>
+
             <label for="fShowMemories">
-              Show the “Explore Memory Gallery” button on the public profile.
+              Show the right-side Gaming Memories section.
             </label>
           </div>
 
@@ -794,7 +897,7 @@
           <div class="panel-head">
             <div>
               <h2>Daily quote</h2>
-              <p>Update the quote displayed under your profile.</p>
+              <p>Update the quote shown in the About section.</p>
             </div>
           </div>
 
@@ -816,11 +919,12 @@
           <div class="panel-head">
             <div>
               <h2>Theme and animation</h2>
-              <p>Select the color mood and background animation.</p>
+              <p>Choose the overall color mood and optional old background animation.</p>
             </div>
           </div>
 
           <div class="form-grid">
+
             <div>
               <label for="fTheme">Color theme</label>
 
@@ -843,6 +947,7 @@
                 <option value="none">No animation</option>
               </select>
             </div>
+
           </div>
 
           <button id="saveThemeBtn" class="btn-primary" type="button">
@@ -850,17 +955,18 @@
           </button>
         </section>
 
-        <!-- LINKS -->
+        <!-- SOCIAL LINKS -->
 
         <section id="tab-links" class="panel tab-panel hidden">
           <div class="panel-head">
             <div>
               <h2>Social links</h2>
-              <p>Add the links displayed as buttons on your public profile.</p>
+              <p>Add the links displayed as colored buttons on your public profile.</p>
             </div>
           </div>
 
           <div class="form-grid">
+
             <div>
               <label for="fSnap">Snapchat URL</label>
 
@@ -901,6 +1007,7 @@
                 placeholder="919999999999"
               >
             </div>
+
           </div>
 
           <button id="saveLinksBtn" class="btn-primary" type="button">
@@ -913,12 +1020,16 @@
         <section id="tab-memories" class="panel tab-panel hidden">
           <div class="panel-head">
             <div>
-              <h2>Memory gallery</h2>
-              <p>These images automatically appear on your Memories page.</p>
+              <h2>Memories</h2>
+              <p>
+                Add a direct image or GIF URL. Each memory appears automatically
+                in the Gaming Memories area on the right side of your public page.
+              </p>
             </div>
           </div>
 
           <div class="form-grid">
+
             <div class="wide">
               <label for="fMemUrl">Memory image or GIF URL</label>
 
@@ -929,7 +1040,7 @@
               >
 
               <p class="hint-text">
-                Paste a direct image/GIF link, not the image host’s webpage link.
+                Paste the direct media URL, not the image-host page URL.
               </p>
 
               <img
@@ -940,7 +1051,7 @@
             </div>
 
             <div class="wide">
-              <label for="fMemCaption">Caption</label>
+              <label for="fMemCaption">Memory caption</label>
 
               <input
                 id="fMemCaption"
@@ -948,6 +1059,7 @@
                 placeholder="Game night with the squad"
               >
             </div>
+
           </div>
 
           <button id="addMemoryBtn" class="btn-primary" type="button">
@@ -967,16 +1079,18 @@
           <div class="panel-head">
             <div>
               <h2>WhatsApp access</h2>
-              <p>Approve, deny, or revoke visitor requests.</p>
+              <p>Approve, deny, or revoke visitor access requests.</p>
             </div>
           </div>
 
           <h3>Pending requests</h3>
+
           <div id="requestsList"></div>
 
           <div class="section-divider"></div>
 
           <h3>Unlocked users</h3>
+
           <div id="unlockedList"></div>
         </section>
 
@@ -985,5 +1099,6 @@
   </div>
 
   <script type="module" src="admin.js"></script>
+
 </body>
 </html>
