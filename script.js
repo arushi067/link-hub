@@ -2,118 +2,96 @@ import { db } from "./firebase-config.js";
 import { doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const PROFILE_SLUG = "arushi";
+const $ = (id) => document.getElementById(id);
 
 const THEMES = {
-  pink:   { bg: "linear-gradient(135deg,#ffdeeb,#ffc2d9,#ffe4ef,#ffb6d1)", text: "#5c2a3d", accent1: "#ff6fa3", accent2: "#ff3d80", cardBg: "rgba(255,255,255,0.75)" },
-  dark:   { bg: "#0d0d1a", text: "#eee", accent1: "#ff5fa2", accent2: "#7f5fff", cardBg: "rgba(20,20,35,0.65)" },
-  ocean:  { bg: "linear-gradient(135deg,#d0f0ff,#a0d8ff,#c2eaff)", text: "#0a2540", accent1: "#2196f3", accent2: "#00bcd4", cardBg: "rgba(255,255,255,0.8)" },
-  sunset: { bg: "linear-gradient(135deg,#ffdca8,#ff9a76,#ff6f61)", text: "#4a1e1e", accent1: "#ff7e5f", accent2: "#feb47b", cardBg: "rgba(255,255,255,0.78)" }
+  pink: { bg: "#f5f3ee", text: "#252124", accent: "#d94b83" },
+  dark: { bg: "#19171b", text: "#f7f2f4", accent: "#ff72a8" },
+  ocean: { bg: "#edf6f7", text: "#18363a", accent: "#318ea0" },
+  sunset: { bg: "#fff2e8", text: "#43251f", accent: "#e86f4e" }
 };
 
-function applyTheme(themeName) {
-  const t = THEMES[themeName] || THEMES.pink;
-  document.body.style.background = t.bg;
-  document.body.style.color = t.text;
-  document.documentElement.style.setProperty("--accent1", t.accent1);
-  document.documentElement.style.setProperty("--accent2", t.accent2);
-  document.documentElement.style.setProperty("--card-bg", t.cardBg);
-  document.documentElement.style.setProperty("--text-color", t.text);
+function setVisible(id, visible) {
+  const element = $(id);
+  if (element) element.style.display = visible ? "" : "none";
 }
-
-function applyAnimation(anim) {
-  const particles = document.getElementById("particles");
-  particles.innerHTML = "";
-  if (anim === "none") return;
-  const count = window.innerWidth < 500 ? 25 : 45;
-  for (let i = 0; i < count; i++) {
-    const el = document.createElement("div");
-    el.className = anim === "hearts" ? "particle heart" : anim === "stars" ? "particle star" : "particle bubble";
-    el.style.left = Math.random() * 100 + "%";
-    el.style.animationDelay = (Math.random() * 5) + "s";
-    el.style.animationDuration = (4 + Math.random() * 6) + "s";
-    if (anim === "hearts") el.textContent = "💗";
-    particles.appendChild(el);
-  }
-}
-
-async function renderProfile() {
+function safeUrl(url) {
   try {
-    const ref = doc(db, "profiles", PROFILE_SLUG);
-    const snap = await getDoc(ref);
-
-    if (!snap.exists()) {
-      document.getElementById("userName").textContent = "Profile not found";
-      console.warn("No document at profiles/" + PROFILE_SLUG);
-      return;
-    }
-
-    const d = snap.data();
-    console.log("Profile data loaded:", d);
-
-    document.getElementById("pageTitle").textContent = d.name || "Profile";
-    document.getElementById("userName").textContent = d.name || "";
-    document.getElementById("footerName").textContent = d.name || "";
-    document.getElementById("statusText").textContent = d.statusText || "";
-    document.getElementById("profilePhoto").src = d.photo || "https://via.placeholder.com/160";
-    document.getElementById("dailyQuote").textContent = d.quote || "";
-    document.getElementById("snapLink").href = d.snap || "#";
-    document.getElementById("discordLink").href = d.discord || "#";
-    document.getElementById("instaLink").href = d.insta || "#";
-
-    const dot = document.getElementById("statusDot");
-    dot.className = "status-dot";
-    if (d.onlineStatus === "away") dot.classList.add("away");
-    if (d.onlineStatus === "offline") dot.classList.add("offline");
-
-    applyTheme(d.theme || "pink");
-    applyAnimation(d.animation || "blobs");
-    setupWhatsApp(d, ref);
-  } catch (error) {
-    console.error("Error loading profile:", error.message);
-    document.getElementById("userName").textContent = "Error loading profile";
-  }
+    const parsed = new URL(url, window.location.href);
+    return ["http:", "https:"].includes(parsed.protocol) ? parsed.href : "";
+  } catch { return ""; }
 }
-
-function setupWhatsApp(data, ref) {
-  const waBtn = document.getElementById("waBtn");
-  const waForm = document.getElementById("waRequestForm");
-  const waGmail = document.getElementById("waGmail");
-  const waSubmit = document.getElementById("waSubmit");
-  const waMsg = document.getElementById("waMsg");
-
-  const savedEmail = localStorage.getItem("myWaEmail_" + PROFILE_SLUG);
-  const unlocked = (data.waUnlocked || []).includes((savedEmail || "").toLowerCase());
-
-  if (unlocked) {
-    waBtn.innerHTML = '<span>✅ Chat on WhatsApp</span>';
-    waBtn.classList.remove("locked");
-    waBtn.classList.add("whatsapp");
-    waBtn.onclick = () => window.open(`https://wa.me/${data.waNumber}`, "_blank");
+function applyDesign(data) {
+  const theme = THEMES[data.theme] || THEMES.pink;
+  const accent = /^#[0-9a-fA-F]{6}$/.test(data.accentColor || "") ? data.accentColor : theme.accent;
+  const page = /^#[0-9a-fA-F]{6}$/.test(data.pageColor || "") ? data.pageColor : theme.bg;
+  document.body.style.background = page;
+  document.body.style.color = theme.text;
+  document.documentElement.style.setProperty("--pink", accent);
+  document.documentElement.style.setProperty("--pink-dark", accent);
+  const banner = $("profileBanner");
+  const bannerUrl = safeUrl(data.banner || "");
+  if (bannerUrl) banner.style.backgroundImage = `linear-gradient(rgba(0,0,0,.10),rgba(0,0,0,.16)), url("${bannerUrl.replaceAll('"', '%22')}")`;
+  const heights = { compact: "155px", normal: "205px", large: "270px" };
+  if (banner) banner.style.height = heights[data.bannerHeight] || heights.normal;
+  const photo = $("profilePhoto"), ring = document.querySelector(".ring-wrap");
+  const radius = data.photoShape === "square" ? "0" : data.photoShape === "rounded" ? "18px" : "50%";
+  if (photo) photo.style.borderRadius = radius;
+  if (ring) ring.style.borderRadius = radius;
+  if (data.cardStyle === "soft") $("mainCard").style.background = "#fff5f8";
+  else if (data.cardStyle === "minimal") { $("mainCard").style.boxShadow = "none"; $("mainCard").style.borderColor = "transparent"; }
+  setVisible("quoteBox", data.showQuote !== false);
+  setVisible("socialSection", data.showSocials !== false);
+  setVisible("whatsappSection", data.showWhatsApp !== false);
+  setVisible("memorySection", data.showMemories !== false);
+  if ($("aboutTitle") && data.aboutTitle) $("aboutTitle").textContent = data.aboutTitle;
+  if ($("aboutText") && data.aboutText) $("aboutText").textContent = data.aboutText;
+  if ($("memoryTitle") && data.memoryTitle) $("memoryTitle").textContent = data.memoryTitle;
+  if ($("memorySubtitle") && data.memorySubtitle) $("memorySubtitle").textContent = data.memorySubtitle;
+  if ($("footerName")) $("footerName").textContent = data.footerText || data.name || "Arushi Patel";
+}
+function setupWhatsApp(data, profileRef) {
+  const button = $("waBtn"), form = $("waRequestForm"), emailInput = $("waGmail"), submit = $("waSubmit"), message = $("waMsg");
+  if (!button || !form || !emailInput || !submit || !message) return;
+  const saved = (localStorage.getItem("myWaEmail_" + PROFILE_SLUG) || "").toLowerCase();
+  const unlocked = (data.waUnlocked || []).includes(saved);
+  if (unlocked && data.waNumber) {
+    button.classList.remove("locked"); button.classList.add("whatsapp"); button.lastElementChild.textContent = "Chat on WhatsApp";
+    button.onclick = () => window.open(`https://wa.me/${String(data.waNumber).replace(/\D/g, "")}`, "_blank", "noopener");
     return;
   }
-
-  waBtn.onclick = () => waForm.classList.toggle("hidden");
-
-  waSubmit.onclick = async () => {
-    const email = waGmail.value.trim().toLowerCase();
-    if (!email || !email.includes("@gmail.com")) {
-      waMsg.textContent = "Please enter a valid Gmail address.";
-      waMsg.style.color = "#e74c3c";
-      return;
-    }
+  button.classList.add("locked"); button.classList.remove("whatsapp"); button.lastElementChild.textContent = "WhatsApp Locked";
+  button.onclick = () => form.classList.toggle("hidden");
+  submit.onclick = async () => {
+    const email = emailInput.value.trim().toLowerCase();
+    if (!/^[^\s@]+@gmail\.com$/i.test(email)) { message.textContent = "Enter a valid Gmail address."; message.style.color = "#d94658"; return; }
     try {
-      await updateDoc(ref, {
-        waRequests: arrayUnion({ email, time: new Date().toLocaleString() })
-      });
+      await updateDoc(profileRef, { waRequests: arrayUnion({ email, time: new Date().toLocaleString() }) });
       localStorage.setItem("myWaEmail_" + PROFILE_SLUG, email);
-      waMsg.textContent = "Request sent! Approval coming soon 💌";
-      waMsg.style.color = "#25D366";
-    } catch (error) {
-      console.error("Request error:", error.message);
-      waMsg.textContent = "Error sending request: " + error.message;
-      waMsg.style.color = "#e74c3c";
-    }
+      message.textContent = "Request sent. Please wait for approval."; message.style.color = "#24945f";
+    } catch (error) { console.error(error); message.textContent = "Could not send request."; message.style.color = "#d94658"; }
   };
 }
-
+async function renderProfile() {
+  try {
+    const profileRef = doc(db, "profiles", PROFILE_SLUG);
+    const snap = await getDoc(profileRef);
+    if (!snap.exists()) throw new Error("Profile document not found.");
+    const data = snap.data();
+    document.title = data.name || "Profile";
+    $("pageTitle").textContent = data.name || "Profile";
+    $("userName").textContent = data.name || "";
+    $("statusText").textContent = data.statusText || "";
+    $("dailyQuote").textContent = data.quote || "";
+    $("profilePhoto").src = safeUrl(data.photo) || "https://via.placeholder.com/160";
+    $("snapLink").href = safeUrl(data.snap) || "#";
+    $("discordLink").href = safeUrl(data.discord) || "#";
+    $("instaLink").href = safeUrl(data.insta) || "#";
+    const dot = $("statusDot"); dot.className = "status-dot"; if (data.onlineStatus === "away") dot.classList.add("away"); if (data.onlineStatus === "offline") dot.classList.add("offline");
+    applyDesign(data); setupWhatsApp(data, profileRef);
+  } catch (error) {
+    console.error("Error loading profile:", error);
+    $("userName").textContent = "Error loading profile";
+  }
+}
 document.addEventListener("DOMContentLoaded", renderProfile);
