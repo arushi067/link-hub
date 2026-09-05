@@ -4,55 +4,986 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex,nofollow">
-  <title>Arushi Admin</title>
+  <title>Arushi Admin Panel</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
   <style>
-    :root{--bg:#111323;--panel:rgba(28,31,54,.82);--panel-2:#202440;--line:rgba(255,255,255,.11);--text:#f8f8fd;--muted:#aeb1c8;--pink:#ff64b4;--purple:#7668ff;--green:#32d583;--red:#ff5d6c;--shadow:0 24px 70px rgba(0,0,0,.32)}
-    *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif} body{min-height:100vh;color:var(--text);background:radial-gradient(circle at 15% 5%,#433270 0,transparent 30%),radial-gradient(circle at 90% 100%,#4c214b 0,transparent 33%),var(--bg)}
-    button,input,textarea,select{font:inherit}.hidden{display:none!important}.login-wrap{min-height:100vh;display:grid;place-items:center;padding:24px}.login-card{width:min(100%,410px);padding:38px 32px;border:1px solid var(--line);border-radius:26px;background:var(--panel);backdrop-filter:blur(18px);box-shadow:var(--shadow);text-align:center}.brand-mark{width:62px;height:62px;margin:0 auto 16px;display:grid;place-items:center;border-radius:20px;background:linear-gradient(135deg,var(--pink),var(--purple));font-size:29px;box-shadow:0 12px 30px rgba(255,100,180,.3)}h1{font-size:24px;line-height:1.2}.sub{margin:9px 0 24px;font-size:13px;color:var(--muted)}
-    .field{margin-bottom:12px;text-align:left}.field label,.panel label{display:block;margin:0 0 7px;font-size:12px;font-weight:600;color:#d9daeb}.field input,.panel input,.panel textarea,.panel select{width:100%;border:1px solid var(--line);border-radius:12px;outline:none;background:rgba(255,255,255,.065);padding:12px 13px;color:var(--text);transition:.2s}.panel textarea{min-height:92px;resize:vertical}.panel select option{background:#1d2039}.field input:focus,.panel input:focus,.panel textarea:focus,.panel select:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,100,180,.12)}
-    .btn-primary,.btn-secondary,.tab-btn{border:0;cursor:pointer;transition:.2s}.btn-primary{width:100%;padding:12px;border-radius:12px;background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;font-weight:700;box-shadow:0 10px 24px rgba(112,88,255,.25)}.btn-primary:hover{transform:translateY(-2px);filter:brightness(1.06)}.btn-primary:disabled{cursor:not-allowed;opacity:.6;transform:none}.btn-secondary{padding:10px 14px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.06);color:#fff;font-size:12px;font-weight:600}.btn-secondary:hover{background:rgba(255,255,255,.13)}.msg{min-height:19px;margin-top:11px;color:#ff8994;font-size:12px}.msg.success{color:var(--green)}.status-box{margin-top:14px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--muted);font-size:11px;text-align:left}
-    .dashboard{width:min(1120px,100%);margin:auto;padding:26px 20px 60px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}.eyebrow{color:#d8b6ff;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.topbar h1{margin-top:3px;font-size:27px}.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:18px}.sidebar,.panel{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(15px);box-shadow:var(--shadow)}.sidebar{height:max-content;padding:12px;border-radius:18px;position:sticky;top:16px}.sidebar-title{padding:9px 10px 12px;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}.tabs{display:grid;gap:5px}.tab-btn{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:11px;text-align:left;background:transparent;color:#c4c6d6;font-size:13px;font-weight:600}.tab-btn:hover{background:rgba(255,255,255,.06);color:#fff}.tab-btn.active{background:linear-gradient(135deg,rgba(255,100,180,.24),rgba(118,104,255,.28));color:#fff}.tab-icon{width:20px;text-align:center}.content{min-width:0}.panel{border-radius:20px;padding:25px}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:20px}.panel-head h2{font-size:18px}.panel-head p,.hint-text{margin-top:4px;color:var(--muted);font-size:12px}.hint-text a{color:#ff92c8}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.form-grid .wide{grid-column:1/-1}.panel .btn-primary{margin-top:20px}.photo-preview{display:block;width:94px;height:94px;margin-top:11px;object-fit:cover;border:2px solid rgba(255,255,255,.18);border-radius:16px;background:#252945}.section-divider{height:1px;margin:23px 0;background:var(--line)}h3{font-size:14px;margin-bottom:11px}.request-item,.unlocked-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;margin-bottom:8px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.045);font-size:13px}.request-item small{color:var(--muted)}.item-photo{width:45px;height:45px;border-radius:10px;object-fit:cover}.item-main{display:flex;align-items:center;gap:10px;min-width:0}.item-main span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.approve-btn,.deny-btn,.revoke-btn,.revoke-btn-wa{padding:7px 10px;border:0;border-radius:8px;color:#fff;font-size:11px;font-weight:700;cursor:pointer}.approve-btn{background:#1dbb6b}.deny-btn,.revoke-btn,.revoke-btn-wa{background:#d94757}.empty-note{padding:24px 0;color:var(--muted);font-size:13px;text-align:center}
-    @media(max-width:760px){.dashboard{padding:18px 13px 40px}.layout{grid-template-columns:1fr}.sidebar{position:static;overflow:auto}.tabs{display:flex;width:max-content}.tab-btn{white-space:nowrap}.sidebar{padding:9px}.sidebar-title{display:none}.panel{padding:18px}.form-grid{grid-template-columns:1fr}.form-grid .wide{grid-column:auto}.topbar h1{font-size:22px}.login-card{padding:32px 22px}}
+    :root {
+      --page: #f5f1f3;
+      --paper: #ffffff;
+      --ink: #251d22;
+      --muted: #74666d;
+      --line: #e8dfe3;
+      --pink: #e84e91;
+      --pink-soft: #fff0f6;
+      --pink-dark: #bd286a;
+      --green: #249b65;
+      --red: #d94156;
+      --shadow: 0 12px 30px rgba(70, 35, 50, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "DM Sans", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top right, #ffd8e9 0, transparent 27%),
+        radial-gradient(circle at bottom left, #f7dce9 0, transparent 25%),
+        var(--page);
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Login */
+
+    .login-wrap {
+      display: grid;
+      min-height: 100vh;
+      padding: 22px;
+      place-items: center;
+    }
+
+    .login-card {
+      width: min(100%, 410px);
+      padding: 34px 30px 30px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.93);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 15px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ff82b5, #d94488);
+      color: #ffffff;
+      font-family: "Playfair Display", serif;
+      font-size: 29px;
+      place-items: center;
+      box-shadow: 0 10px 20px rgba(220, 60, 125, 0.22);
+    }
+
+    .login-card h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 27px;
+    }
+
+    .sub {
+      margin: 8px 0 23px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .field {
+      margin-bottom: 13px;
+      text-align: left;
+    }
+
+    .field label,
+    .panel label {
+      display: block;
+      margin-bottom: 7px;
+      color: #51424a;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .field input,
+    .panel input,
+    .panel textarea,
+    .panel select {
+      width: 100%;
+      border: 1px solid #dfd3d8;
+      border-radius: 10px;
+      outline: none;
+      background: #ffffff;
+      color: var(--ink);
+      padding: 12px 13px;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+
+    .panel textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .panel input:focus,
+    .panel textarea:focus,
+    .panel select:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 3px rgba(232, 78, 145, 0.12);
+    }
+
+    .btn-primary {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      background: var(--pink);
+      color: #ffffff;
+      padding: 12px 15px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.18s;
+    }
+
+    .btn-primary:hover {
+      background: var(--pink-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+      transform: none;
+    }
+
+    .btn-secondary {
+      border: 1px solid #decfd5;
+      border-radius: 9px;
+      background: #ffffff;
+      color: #55434b;
+      padding: 9px 13px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+
+    .btn-secondary:hover {
+      background: #fff2f7;
+    }
+
+    .msg {
+      min-height: 18px;
+      margin-top: 10px;
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .msg.success {
+      color: var(--green);
+    }
+
+    .status-box {
+      margin-top: 13px;
+      padding: 10px;
+      border: 1px solid #eee1e7;
+      border-radius: 9px;
+      background: #fff8fb;
+      color: var(--muted);
+      font-size: 11px;
+      text-align: left;
+    }
+
+    /* Dashboard */
+
+    .dashboard {
+      width: min(1160px, 100%);
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 21px;
+    }
+
+    .eyebrow {
+      color: var(--pink-dark);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .topbar h1 {
+      margin-top: 3px;
+      font-family: "Playfair Display", serif;
+      font-size: 29px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 222px minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .sidebar,
+    .panel {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.90);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 16px;
+      height: max-content;
+      padding: 10px;
+      border-radius: 16px;
+    }
+
+    .sidebar-title {
+      padding: 9px 10px 12px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .tabs {
+      display: grid;
+      gap: 4px;
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: #675861;
+      padding: 11px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .tab-btn:hover {
+      background: #fff2f7;
+      color: var(--pink-dark);
+    }
+
+    .tab-btn.active {
+      background: var(--pink-soft);
+      color: var(--pink-dark);
+    }
+
+    .tab-icon {
+      display: inline-grid;
+      width: 20px;
+      color: var(--pink);
+      place-items: center;
+    }
+
+    .content {
+      min-width: 0;
+    }
+
+    .panel {
+      border-radius: 17px;
+      padding: 27px;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .panel-head h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 21px;
+    }
+
+    .panel-head p,
+    .hint-text {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .hint-text a {
+      color: var(--pink-dark);
+      font-weight: 700;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-grid .wide {
+      grid-column: 1 / -1;
+    }
+
+    .panel .btn-primary {
+      margin-top: 20px;
+    }
+
+    .photo-preview {
+      display: block;
+      width: 96px;
+      height: 96px;
+      margin-top: 11px;
+      border: 2px solid #f1dbe5;
+      border-radius: 14px;
+      object-fit: cover;
+    }
+
+    .banner-preview {
+      display: block;
+      width: 100%;
+      height: 155px;
+      margin-top: 11px;
+      border: 1px solid #ebdce2;
+      border-radius: 13px;
+      background: #f7edf1;
+      object-fit: cover;
+    }
+
+    .section-divider {
+      height: 1px;
+      margin: 24px 0;
+      background: var(--line);
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .request-item,
+    .unlocked-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      padding: 12px;
+      border: 1px solid #eee1e6;
+      border-radius: 11px;
+      background: #fffafb;
+      font-size: 13px;
+    }
+
+    .request-item small {
+      color: var(--muted);
+    }
+
+    .item-photo {
+      width: 45px;
+      height: 45px;
+      border-radius: 9px;
+      object-fit: cover;
+    }
+
+    .item-main {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .item-main span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .approve-btn,
+    .deny-btn,
+    .revoke-btn,
+    .revoke-btn-wa {
+      border: 0;
+      border-radius: 8px;
+      color: #ffffff;
+      padding: 7px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .approve-btn {
+      background: var(--green);
+    }
+
+    .deny-btn,
+    .revoke-btn,
+    .revoke-btn-wa {
+      background: var(--red);
+    }
+
+    .empty-note {
+      padding: 25px 0;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 6px;
+      padding: 12px;
+      border: 1px solid #ebdce2;
+      border-radius: 10px;
+      background: #fff9fb;
+    }
+
+    .checkbox-row input {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--pink);
+    }
+
+    .checkbox-row label {
+      margin: 0;
+      cursor: pointer;
+    }
+
+    @media (max-width: 760px) {
+      .dashboard {
+        padding: 18px 12px 40px;
+      }
+
+      .topbar h1 {
+        font-size: 23px;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        overflow-x: auto;
+        padding: 8px;
+      }
+
+      .sidebar-title {
+        display: none;
+      }
+
+      .tabs {
+        display: flex;
+        width: max-content;
+      }
+
+      .tab-btn {
+        white-space: nowrap;
+      }
+
+      .panel {
+        padding: 19px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid .wide {
+        grid-column: auto;
+      }
+
+      .login-card {
+        padding: 30px 21px 25px;
+      }
+    }
   </style>
 </head>
+
 <body>
+
   <div id="loginScreen" class="login-wrap">
     <section class="login-card" aria-labelledby="loginTitle">
-      <div class="brand-mark">✦</div>
+      <div class="brand-mark">A</div>
+
       <h1 id="loginTitle">Admin Login</h1>
-      <p class="sub">Manage your profile, links, memories and requests.</p>
-      <div class="field"><label for="loginEmail">Email</label><input id="loginEmail" type="email" placeholder="admin@email.com" autocomplete="email"></div>
-      <div class="field"><label for="loginPass">Password</label><input id="loginPass" type="password" placeholder="Your password" autocomplete="current-password"></div>
-      <button id="loginBtn" class="btn-primary" type="button">Log in securely</button>
+
+      <p class="sub">
+        Manage your public profile, banner, links, gallery, and visitor access.
+      </p>
+
+      <div class="field">
+        <label for="loginEmail">Email address</label>
+        <input
+          id="loginEmail"
+          type="email"
+          placeholder="admin@email.com"
+          autocomplete="email"
+        >
+      </div>
+
+      <div class="field">
+        <label for="loginPass">Password</label>
+        <input
+          id="loginPass"
+          type="password"
+          placeholder="Your password"
+          autocomplete="current-password"
+        >
+      </div>
+
+      <button id="loginBtn" class="btn-primary" type="button">
+        Log in securely
+      </button>
+
       <p id="loginMsg" class="msg" role="alert"></p>
-      <div id="statusBox" class="status-box">Checking Firebase connection…</div>
+
+      <div id="statusBox" class="status-box">
+        Checking Firebase connection…
+      </div>
     </section>
   </div>
 
   <div id="dashboard" class="dashboard hidden">
-    <header class="topbar"><div><p class="eyebrow">Arushi Real</p><h1>Profile Control Center</h1></div><button id="logoutBtn" class="btn-secondary" type="button">Log out</button></header>
+
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Arushi Real</p>
+        <h1>Profile Studio</h1>
+      </div>
+
+      <button id="logoutBtn" class="btn-secondary" type="button">
+        Log out
+      </button>
+    </header>
+
     <div class="layout">
-      <aside class="sidebar"><p class="sidebar-title">Workspace</p><nav class="tabs" aria-label="Admin sections">
-        <button class="tab-btn active" data-tab="profile" type="button"><span class="tab-icon">◉</span> Profile</button>
-        <button class="tab-btn" data-tab="quote" type="button"><span class="tab-icon">❝</span> Daily quote</button>
-        <button class="tab-btn" data-tab="theme" type="button"><span class="tab-icon">✦</span> Theme</button>
-        <button class="tab-btn" data-tab="links" type="button"><span class="tab-icon">↗</span> Social links</button>
-        <button class="tab-btn" data-tab="memories" type="button"><span class="tab-icon">▣</span> Memories</button>
-        <button class="tab-btn" data-tab="requests" type="button"><span class="tab-icon">⌁</span> Requests</button>
-      </nav></aside>
+
+      <aside class="sidebar">
+        <p class="sidebar-title">Manage profile</p>
+
+        <nav class="tabs" aria-label="Admin sections">
+
+          <button class="tab-btn active" data-tab="profile" type="button">
+            <span class="tab-icon">●</span>
+            Profile
+          </button>
+
+          <button class="tab-btn" data-tab="design" type="button">
+            <span class="tab-icon">✦</span>
+            Public design
+          </button>
+
+          <button class="tab-btn" data-tab="quote" type="button">
+            <span class="tab-icon">❝</span>
+            Daily quote
+          </button>
+
+          <button class="tab-btn" data-tab="theme" type="button">
+            <span class="tab-icon">◌</span>
+            Theme
+          </button>
+
+          <button class="tab-btn" data-tab="links" type="button">
+            <span class="tab-icon">↗</span>
+            Social links
+          </button>
+
+          <button class="tab-btn" data-tab="memories" type="button">
+            <span class="tab-icon">▣</span>
+            Memories
+          </button>
+
+          <button class="tab-btn" data-tab="requests" type="button">
+            <span class="tab-icon">⌁</span>
+            Requests
+          </button>
+
+        </nav>
+      </aside>
+
       <main class="content">
-        <section id="tab-profile" class="panel tab-panel"><div class="panel-head"><div><h2>Profile details</h2><p>These details appear on your public profile card.</p></div></div><div class="form-grid"><div><label for="fName">Display name</label><input id="fName" type="text" placeholder="Arushi Patel"></div><div><label for="fStatus">Status text</label><input id="fStatus" type="text" placeholder="Online / vibing"></div><div><label for="fOnline">Online status</label><select id="fOnline"><option value="online">Online</option><option value="away">Away</option><option value="offline">Offline</option></select></div><div><label for="fPhotoUrl">Profile photo URL</label><input id="fPhotoUrl" type="url" placeholder="https://.../photo.jpg"></div></div><p class="hint-text">Use a direct image URL from an image host such as <a href="https://imgbb.com" target="_blank" rel="noopener">imgbb.com</a>.</p><img id="fPhotoPreview" class="photo-preview hidden" alt="Profile preview"><button id="saveProfileBtn" class="btn-primary" type="button">Save profile</button></section>
-        <section id="tab-quote" class="panel tab-panel hidden"><div class="panel-head"><div><h2>Daily quote</h2><p>Update the quote shown beneath your profile.</p></div></div><label for="fQuote">Quote</label><textarea id="fQuote" placeholder="Type today's quote..."></textarea><button id="saveQuoteBtn" class="btn-primary" type="button">Save quote</button></section>
-        <section id="tab-theme" class="panel tab-panel hidden"><div class="panel-head"><div><h2>Profile appearance</h2><p>Choose the public profile color theme and background movement.</p></div></div><div class="form-grid"><div><label for="fTheme">Color theme</label><select id="fTheme"><option value="pink">Classic Pink</option><option value="dark">Dark Cosmic</option><option value="ocean">Ocean Blue</option><option value="sunset">Sunset Orange</option></select></div><div><label for="fAnimation">Background animation</label><select id="fAnimation"><option value="blobs">Floating Blobs</option><option value="stars">Twinkling Stars</option><option value="hearts">Floating Hearts</option><option value="bubbles">Rising Bubbles</option><option value="none">None</option></select></div></div><button id="saveThemeBtn" class="btn-primary" type="button">Save appearance</button></section>
-        <section id="tab-links" class="panel tab-panel hidden"><div class="panel-head"><div><h2>Social links</h2><p>Leave a field empty if you do not want to share it.</p></div></div><div class="form-grid"><div><label for="fSnap">Snapchat URL</label><input id="fSnap" type="url" placeholder="https://snapchat.com/add/username"></div><div><label for="fDiscord">Discord invite</label><input id="fDiscord" type="url" placeholder="https://discord.gg/xxxx"></div><div><label for="fInsta">Instagram URL</label><input id="fInsta" type="url" placeholder="https://instagram.com/username"></div><div><label for="fWaNumber">WhatsApp number</label><input id="fWaNumber" type="text" inputmode="numeric" placeholder="919999999999"></div></div><button id="saveLinksBtn" class="btn-primary" type="button">Save social links</button></section>
-        <section id="tab-memories" class="panel tab-panel hidden"><div class="panel-head"><div><h2>Memory gallery</h2><p>Add photos that automatically appear on the Memories page.</p></div></div><div class="form-grid"><div class="wide"><label for="fMemUrl">Memory image URL</label><input id="fMemUrl" type="url" placeholder="https://.../memory.jpg"><p class="hint-text">Paste a direct image URL, not an image-host page URL.</p><img id="fMemPreview" class="photo-preview hidden" alt="Memory preview"></div><div class="wide"><label for="fMemCaption">Caption</label><input id="fMemCaption" type="text" placeholder="Game night with the squad"></div></div><button id="addMemoryBtn" class="btn-primary" type="button">Add memory</button><div class="section-divider"></div><h3>Current memories</h3><div id="memoriesList"></div></section>
-        <section id="tab-requests" class="panel tab-panel hidden"><div class="panel-head"><div><h2>WhatsApp access</h2><p>Approve, deny or revoke visitor access requests.</p></div></div><h3>Pending requests</h3><div id="requestsList"></div><div class="section-divider"></div><h3>Unlocked users</h3><div id="unlockedList"></div></section>
+
+        <!-- PROFILE -->
+
+        <section id="tab-profile" class="panel tab-panel">
+          <div class="panel-head">
+            <div>
+              <h2>Profile details</h2>
+              <p>Manage the basic information shown to visitors.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div>
+              <label for="fName">Display name</label>
+              <input id="fName" type="text" placeholder="Arushi Patel">
+            </div>
+
+            <div>
+              <label for="fStatus">Status text</label>
+              <input id="fStatus" type="text" placeholder="Nothing special ✨">
+            </div>
+
+            <div>
+              <label for="fOnline">Online status</label>
+              <select id="fOnline">
+                <option value="online">Online</option>
+                <option value="away">Away</option>
+                <option value="offline">Offline</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="fPhotoUrl">Profile photo URL</label>
+              <input
+                id="fPhotoUrl"
+                type="url"
+                placeholder="https://.../profile.jpg"
+              >
+            </div>
+          </div>
+
+          <p class="hint-text">
+            Use a direct image URL. JPG, PNG, WEBP, and GIF links are supported.
+          </p>
+
+          <img
+            id="fPhotoPreview"
+            class="photo-preview hidden"
+            alt="Profile preview"
+          >
+
+          <button id="saveProfileBtn" class="btn-primary" type="button">
+            Save profile
+          </button>
+        </section>
+
+        <!-- PUBLIC DESIGN -->
+
+        <section id="tab-design" class="panel tab-panel hidden">
+          <div class="panel-head">
+            <div>
+              <h2>Public design</h2>
+              <p>Customize the classic banner-style layout of your public profile.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+
+            <div class="wide">
+              <label for="fBannerUrl">Banner image or GIF URL</label>
+
+              <input
+                id="fBannerUrl"
+                type="url"
+                placeholder="https://.../banner.jpg or https://.../banner.gif"
+              >
+
+              <p class="hint-text">
+                Paste a direct image link. JPG, PNG, WEBP, and animated GIF banner links are supported.
+              </p>
+
+              <img
+                id="fBannerPreview"
+                class="banner-preview hidden"
+                alt="Banner preview"
+              >
+            </div>
+
+            <div>
+              <label for="fBannerHeight">Banner size</label>
+
+              <select id="fBannerHeight">
+                <option value="compact">Compact — best for mobile</option>
+                <option value="normal">Normal — recommended</option>
+                <option value="large">Large — cinematic look</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="fPhotoShape">Profile photo shape</label>
+
+              <select id="fPhotoShape">
+                <option value="circle">Circle</option>
+                <option value="rounded">Rounded square</option>
+                <option value="square">Square</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="fCardStyle">Profile card style</label>
+
+              <select id="fCardStyle">
+                <option value="classic">Classic white</option>
+                <option value="glass">Soft glass</option>
+                <option value="minimal">Minimal clean</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="fFooterText">Footer text</label>
+
+              <input
+                id="fFooterText"
+                type="text"
+                placeholder="Arushi Patel"
+              >
+            </div>
+
+            <div>
+              <label for="fAccentColor">Accent color</label>
+
+              <input
+                id="fAccentColor"
+                type="text"
+                placeholder="#ff5d9e"
+              >
+            </div>
+
+            <div>
+              <label for="fCustomBackground">Custom page background</label>
+
+              <input
+                id="fCustomBackground"
+                type="url"
+                placeholder="Optional background image URL"
+              >
+            </div>
+
+          </div>
+
+          <div class="checkbox-row">
+            <input id="fShowMemories" type="checkbox" checked>
+            <label for="fShowMemories">
+              Show the “Explore Memory Gallery” button on the public profile.
+            </label>
+          </div>
+
+          <button id="saveDesignBtn" class="btn-primary" type="button">
+            Save public design
+          </button>
+        </section>
+
+        <!-- QUOTE -->
+
+        <section id="tab-quote" class="panel tab-panel hidden">
+          <div class="panel-head">
+            <div>
+              <h2>Daily quote</h2>
+              <p>Update the quote displayed under your profile.</p>
+            </div>
+          </div>
+
+          <label for="fQuote">Quote</label>
+
+          <textarea
+            id="fQuote"
+            placeholder="Type today's quote..."
+          ></textarea>
+
+          <button id="saveQuoteBtn" class="btn-primary" type="button">
+            Save quote
+          </button>
+        </section>
+
+        <!-- THEME -->
+
+        <section id="tab-theme" class="panel tab-panel hidden">
+          <div class="panel-head">
+            <div>
+              <h2>Theme and animation</h2>
+              <p>Select the color mood and background animation.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div>
+              <label for="fTheme">Color theme</label>
+
+              <select id="fTheme">
+                <option value="pink">Classic Pink</option>
+                <option value="dark">Dark Cosmic</option>
+                <option value="ocean">Ocean Blue</option>
+                <option value="sunset">Sunset Orange</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="fAnimation">Background animation</label>
+
+              <select id="fAnimation">
+                <option value="blobs">Floating blobs</option>
+                <option value="stars">Twinkling stars</option>
+                <option value="hearts">Floating hearts</option>
+                <option value="bubbles">Rising bubbles</option>
+                <option value="none">No animation</option>
+              </select>
+            </div>
+          </div>
+
+          <button id="saveThemeBtn" class="btn-primary" type="button">
+            Save theme
+          </button>
+        </section>
+
+        <!-- LINKS -->
+
+        <section id="tab-links" class="panel tab-panel hidden">
+          <div class="panel-head">
+            <div>
+              <h2>Social links</h2>
+              <p>Add the links displayed as buttons on your public profile.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div>
+              <label for="fSnap">Snapchat URL</label>
+
+              <input
+                id="fSnap"
+                type="url"
+                placeholder="https://snapchat.com/add/username"
+              >
+            </div>
+
+            <div>
+              <label for="fDiscord">Discord invite</label>
+
+              <input
+                id="fDiscord"
+                type="url"
+                placeholder="https://discord.gg/xxxx"
+              >
+            </div>
+
+            <div>
+              <label for="fInsta">Instagram URL</label>
+
+              <input
+                id="fInsta"
+                type="url"
+                placeholder="https://instagram.com/username"
+              >
+            </div>
+
+            <div>
+              <label for="fWaNumber">WhatsApp number</label>
+
+              <input
+                id="fWaNumber"
+                type="text"
+                inputmode="numeric"
+                placeholder="919999999999"
+              >
+            </div>
+          </div>
+
+          <button id="saveLinksBtn" class="btn-primary" type="button">
+            Save social links
+          </button>
+        </section>
+
+        <!-- MEMORIES -->
+
+        <section id="tab-memories" class="panel tab-panel hidden">
+          <div class="panel-head">
+            <div>
+              <h2>Memory gallery</h2>
+              <p>These images automatically appear on your Memories page.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="wide">
+              <label for="fMemUrl">Memory image or GIF URL</label>
+
+              <input
+                id="fMemUrl"
+                type="url"
+                placeholder="https://.../memory.jpg or https://.../memory.gif"
+              >
+
+              <p class="hint-text">
+                Paste a direct image/GIF link, not the image host’s webpage link.
+              </p>
+
+              <img
+                id="fMemPreview"
+                class="photo-preview hidden"
+                alt="Memory preview"
+              >
+            </div>
+
+            <div class="wide">
+              <label for="fMemCaption">Caption</label>
+
+              <input
+                id="fMemCaption"
+                type="text"
+                placeholder="Game night with the squad"
+              >
+            </div>
+          </div>
+
+          <button id="addMemoryBtn" class="btn-primary" type="button">
+            Add memory
+          </button>
+
+          <div class="section-divider"></div>
+
+          <h3>Current memories</h3>
+
+          <div id="memoriesList"></div>
+        </section>
+
+        <!-- REQUESTS -->
+
+        <section id="tab-requests" class="panel tab-panel hidden">
+          <div class="panel-head">
+            <div>
+              <h2>WhatsApp access</h2>
+              <p>Approve, deny, or revoke visitor requests.</p>
+            </div>
+          </div>
+
+          <h3>Pending requests</h3>
+          <div id="requestsList"></div>
+
+          <div class="section-divider"></div>
+
+          <h3>Unlocked users</h3>
+          <div id="unlockedList"></div>
+        </section>
+
       </main>
     </div>
   </div>
+
   <script type="module" src="admin.js"></script>
 </body>
 </html>
