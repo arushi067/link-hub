@@ -33,10 +33,6 @@
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       min-height: 100vh;
       margin: 0;
@@ -57,8 +53,8 @@
     }
 
     /*
-      Prevents hard-coded/default content from flashing on refresh.
-      JavaScript changes .is-loading to .is-ready after Firebase data loads.
+      Hide all page content while Firebase loads.
+      This prevents old/default text flashing on refresh.
     */
     #app {
       opacity: 0;
@@ -81,8 +77,6 @@
       color: var(--muted);
       font-family: "DM Mono", monospace;
       font-size: 12px;
-      letter-spacing: 0.04em;
-      transition: opacity 0.25s ease, visibility 0.25s ease;
     }
 
     .loading-screen.hide {
@@ -101,7 +95,7 @@
     }
 
     /* =========================
-       LEFT PROFILE CARD
+       LEFT PROFILE
     ========================= */
 
     #mainCard.card {
@@ -112,13 +106,8 @@
       border-radius: 12px;
       background: var(--paper);
       box-shadow: var(--shadow);
-      transition: background 0.2s ease, box-shadow 0.2s ease;
     }
 
-    /*
-      Banner starts neutral.
-      script.js inserts your saved banner/GIF URL.
-    */
     .profile-banner {
       width: 100%;
       height: 205px;
@@ -126,17 +115,12 @@
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
-      transition: height 0.2s ease;
     }
 
     .profile-main {
       padding: 0 20px 25px;
     }
 
-    /*
-      Profile photo overlaps the banner.
-      No white shading or visual layer covers the photo.
-    */
     .ring-wrap {
       position: relative;
       display: flex;
@@ -144,11 +128,9 @@
       height: 106px;
       margin-top: -48px;
       margin-bottom: 13px;
-      overflow: visible;
       border-radius: 50%;
       background: var(--paper);
       box-shadow: 0 5px 15px rgba(40, 30, 34, 0.12);
-      transition: border-radius 0.2s ease;
     }
 
     .ring {
@@ -157,7 +139,6 @@
       z-index: 1;
       border: 2px solid var(--paper);
       border-radius: inherit;
-      pointer-events: none;
     }
 
     #profilePhoto {
@@ -174,8 +155,6 @@
       opacity: 1 !important;
       mix-blend-mode: normal !important;
       box-shadow: none !important;
-      background: transparent !important;
-      transition: border-radius 0.2s ease;
     }
 
     #profilePhoto.visible {
@@ -193,7 +172,6 @@
       border: 3px solid var(--paper);
       border-radius: 50%;
       background: #2fca76;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.14);
     }
 
     .status-dot.visible {
@@ -210,7 +188,6 @@
 
     #userName {
       margin: 0 0 4px;
-      color: var(--text);
       font-family: "Fraunces", serif;
       font-size: 27px;
       font-weight: 600;
@@ -219,7 +196,7 @@
 
     .status-text {
       min-height: 16px;
-      margin: 0 0 20px;
+      margin: 0 0 14px;
       color: var(--muted);
       font-size: 11px;
       font-weight: 600;
@@ -228,7 +205,32 @@
     }
 
     /* =========================
-       ABOUT
+       QUOTE DIRECTLY UNDER NAME
+    ========================= */
+
+    .quote-box {
+      margin: 0 0 20px;
+      padding: 12px 14px;
+      border-left: 3px solid var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .quote-mark {
+      display: none;
+    }
+
+    #dailyQuote {
+      margin: 0;
+      color: #5d4d53;
+      font-family: "Fraunces", serif;
+      font-size: 12px;
+      font-style: italic;
+      font-weight: 500;
+      line-height: 1.65;
+    }
+
+    /* =========================
+       ABOUT SECTION
     ========================= */
 
     .about {
@@ -255,7 +257,7 @@
     }
 
     #aboutText {
-      margin: 0 0 16px;
+      margin: 0;
       color: #514a4c;
       font-family: "Fraunces", serif;
       font-size: 14px;
@@ -265,43 +267,15 @@
     }
 
     /* =========================
-       DAILY QUOTE
-    ========================= */
-
-    .quote-box {
-      margin: 18px 0;
-      padding: 12px 14px;
-      border-left: 3px solid var(--accent);
-      background: var(--accent-soft);
-    }
-
-    .quote-mark {
-      display: none;
-    }
-
-    #dailyQuote {
-      margin: 0;
-      color: #5d4d53;
-      font-family: "Fraunces", serif;
-      font-size: 12px;
-      font-style: italic;
-      font-weight: 500;
-      line-height: 1.65;
-    }
-
-    /* =========================
-       CLEAN LINK SECTION
+       SIMPLE LINKS
     ========================= */
 
     .social {
+      margin-top: 20px;
       padding-top: 18px;
       border-top: 1px solid var(--line);
     }
 
-    /*
-      Simple outline logo buttons.
-      No bright app-colored backgrounds.
-    */
     .links {
       display: flex;
       flex-wrap: wrap;
@@ -339,8 +313,8 @@
     }
 
     /*
-      App names are hidden only visually.
-      aria-label keeps the buttons accessible.
+      Hides the app name visually.
+      The aria-label still identifies every button.
     */
     .links .link-btn > span:last-child {
       display: none;
@@ -349,123 +323,24 @@
     .snap .icon::before {
       content: "\f2ab";
       font-family: "Font Awesome 6 Brands";
-      font-weight: 400;
     }
 
     .discord .icon::before {
       content: "\f392";
       font-family: "Font Awesome 6 Brands";
-      font-weight: 400;
     }
 
     .insta .icon::before {
       content: "\f16d";
       font-family: "Font Awesome 6 Brands";
-      font-weight: 400;
     }
 
-    /* =========================
-       WHATSAPP
-    ========================= */
-
-    .whatsapp-section {
-      margin-top: 12px;
-    }
-
-    .whatsapp {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 9px;
-      width: 100%;
-      min-height: 42px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #ffffff;
-      color: #4a4244;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.18s ease, border-color 0.18s ease;
-    }
-
-    .whatsapp:hover {
-      border-color: var(--accent);
-      transform: translateY(-1px);
-    }
-
-    .whatsapp .icon {
-      display: grid;
-      width: 20px;
-      height: 20px;
-      color: #26a85f;
-      font-size: 19px;
-      place-items: center;
-    }
-
-    .whatsapp .icon::before {
-      content: "\f232";
-      font-family: "Font Awesome 6 Brands";
-      font-weight: 400;
-    }
-
-    .whatsapp.locked .icon {
-      color: #7c777a;
-    }
-
-    .whatsapp.whatsapp {
-      border-color: #2aa563;
-      color: #238b52;
-    }
-
-    .wa-form {
-      margin-top: 10px;
-      padding: 13px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fffafa;
-    }
-
-    .wa-note {
-      margin: 0 0 9px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.55;
-    }
-
-    .wa-form input {
-      width: 100%;
-      margin-bottom: 8px;
-      padding: 10px;
-      border: 1px solid #ded7d8;
-      border-radius: 7px;
-      outline: none;
-      background: #ffffff;
-      color: var(--text);
-    }
-
-    .wa-form input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(184, 90, 125, 0.10);
-    }
-
-    .btn-primary {
-      width: 100%;
-      border: 0;
-      border-radius: 7px;
-      background: var(--accent);
-      color: #ffffff;
-      padding: 10px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .wa-msg {
-      min-height: 15px;
-      margin: 8px 0 0;
-      font-size: 11px;
-      font-weight: 600;
+    /*
+      WhatsApp is intentionally not displayed.
+      The hidden elements remain below so script.js does not crash.
+    */
+    #whatsappSection {
+      display: none !important;
     }
 
     footer {
@@ -502,9 +377,6 @@
       line-height: 1.6;
     }
 
-    /*
-      memories.js creates each .polaroid from the Firestore memories array.
-    */
     .board {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -518,12 +390,11 @@
       background: var(--paper);
       box-shadow: 0 5px 16px rgba(40, 30, 34, 0.05);
       cursor: pointer;
-      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      transition: transform 0.18s ease;
     }
 
     .polaroid:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 22px rgba(40, 30, 34, 0.10);
     }
 
     .polaroid .tape {
@@ -557,7 +428,7 @@
     }
 
     /* =========================
-       MEMORY IMAGE POPUP
+       MEMORY POPUP
     ========================= */
 
     .lightbox {
@@ -629,7 +500,7 @@
     }
 
     /* =========================
-       RESPONSIVE
+       MOBILE
     ========================= */
 
     @media (max-width: 820px) {
@@ -727,12 +598,10 @@
 
 <body id="bodyRoot">
 
-  <!-- Visible only while Firebase profile data is loading -->
   <div class="loading-screen" id="loadingScreen">
     Loading profile…
   </div>
 
-  <!-- Entire profile remains hidden until JavaScript adds is-ready -->
   <div id="app" class="is-loading">
 
     <div class="page-layout">
@@ -741,7 +610,6 @@
 
       <main class="card" id="mainCard">
 
-        <!-- Banner or GIF URL comes from Firebase -->
         <div class="profile-banner" id="profileBanner"></div>
 
         <div class="profile-main">
@@ -749,16 +617,23 @@
           <div class="ring-wrap">
             <div class="ring" id="ringEl"></div>
 
-            <!-- Source is filled only by script.js -->
             <img id="profilePhoto" src="" alt="Profile photo">
 
             <span class="status-dot" id="statusDot"></span>
           </div>
 
-          <!-- All personal values are inserted from Firebase -->
           <h1 id="userName"></h1>
 
           <p class="status-text" id="statusText"></p>
+
+          <!-- QUOTE IS NOW DIRECTLY UNDER STATUS -->
+
+          <div class="quote-box" id="quoteBox">
+            <span class="quote-mark">“</span>
+            <p id="dailyQuote"></p>
+          </div>
+
+          <!-- ABOUT -->
 
           <section class="about">
             <p class="small-title">About</p>
@@ -766,14 +641,9 @@
             <h2 id="aboutTitle"></h2>
 
             <p id="aboutText"></p>
-
-            <div class="quote-box" id="quoteBox">
-              <span class="quote-mark">“</span>
-              <p id="dailyQuote"></p>
-            </div>
           </section>
 
-          <!-- SIMPLE SOCIAL LINKS -->
+          <!-- SIMPLE APP ICONS -->
 
           <section class="social" id="socialSection">
             <p class="small-title">Links</p>
@@ -821,6 +691,8 @@
 
             </div>
 
+            <!-- Hidden only to avoid breaking current script.js -->
+
             <div class="whatsapp-section" id="whatsappSection">
 
               <button
@@ -861,7 +733,7 @@
         </div>
       </main>
 
-      <!-- RIGHT FIRESTORE MEMORY GALLERY -->
+      <!-- RIGHT MEMORY SECTION -->
 
       <section class="memory-area" id="memorySection">
 
@@ -869,7 +741,6 @@
 
         <p id="memorySubtitle"></p>
 
-        <!-- memories.js adds memory cards here -->
         <main class="board" id="board" aria-live="polite">
 
           <p class="empty-note" id="boardLoading">
@@ -893,7 +764,7 @@
     </div>
   </div>
 
-  <!-- MEMORY POPUP -->
+  <!-- MEMORY LIGHTBOX -->
 
   <div
     class="lightbox"
