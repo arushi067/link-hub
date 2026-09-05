@@ -20,12 +20,12 @@
     :root {
       --page: #f5f3ee;
       --white: #fffefa;
-      --text: #232023;
+      --text: #252124;
       --muted: #766f72;
-      --line: #e4ded8;
-      --pink: #dc4f87;
-      --pink-soft: #fff2f6;
-      --shadow: 0 8px 24px rgba(40, 30, 34, 0.08);
+      --line: #e3ddd7;
+      --pink: #d94b83;
+      --pink-soft: #fff1f5;
+      --shadow: 0 8px 22px rgba(40, 30, 34, 0.08);
     }
 
     * {
@@ -40,7 +40,10 @@
       font-family: "DM Sans", sans-serif;
     }
 
-    /* Remove the old animated/AI-style background */
+    /*
+      Disable the old pink animated background.
+      This keeps the design clean and classic.
+    */
     .aurora,
     .particles {
       display: none !important;
@@ -49,17 +52,19 @@
     .page-layout {
       display: grid;
       grid-template-columns: 370px minmax(0, 1fr);
-      gap: 45px;
+      gap: 46px;
       width: min(1120px, 100%);
       margin: 0 auto;
       align-items: start;
     }
 
-    /* LEFT PROFILE CARD */
+    /* =========================
+       LEFT PROFILE CARD
+    ========================= */
 
     #mainCard.card {
       position: sticky;
-      top: 25px;
+      top: 24px;
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 12px;
@@ -73,7 +78,7 @@
       background:
         linear-gradient(
           rgba(0, 0, 0, 0.10),
-          rgba(0, 0, 0, 0.12)
+          rgba(0, 0, 0, 0.16)
         ),
         url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=85")
         center / cover no-repeat;
@@ -83,7 +88,10 @@
       padding: 0 20px 25px;
     }
 
-    /* Profile photo overlaps the banner */
+    /*
+      Discord-style profile photo:
+      half over the banner and half over the profile body.
+    */
     .ring-wrap {
       position: relative;
       display: flex;
@@ -101,6 +109,7 @@
       z-index: 1;
       border: 2px solid #ffffff;
       border-radius: 50%;
+      pointer-events: none;
     }
 
     #profilePhoto {
@@ -112,6 +121,7 @@
       border: 4px solid var(--white);
       border-radius: 50%;
       object-fit: cover;
+      object-position: center;
       filter: none !important;
       opacity: 1 !important;
       mix-blend-mode: normal !important;
@@ -145,13 +155,13 @@
     }
 
     .about {
-      padding-top: 20px;
+      padding-top: 19px;
       border-top: 1px solid var(--line);
     }
 
     .small-title {
-      margin: 0 0 12px;
-      color: #a58e94;
+      margin: 0 0 11px;
+      color: #a28890;
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.12em;
@@ -167,7 +177,7 @@
     }
 
     .about p {
-      margin: 0 0 16px;
+      margin: 0 0 15px;
       color: #51494b;
       font-family: "Playfair Display", serif;
       font-size: 16px;
@@ -188,13 +198,16 @@
 
     #dailyQuote {
       margin: 0;
+      font-family: "DM Sans", sans-serif;
       font-size: 12px;
       font-style: italic;
       font-weight: 600;
       line-height: 1.55;
     }
 
-    /* SOCIAL LINKS */
+    /* =========================
+       SOCIAL BUTTONS
+    ========================= */
 
     .social {
       padding-top: 18px;
@@ -213,7 +226,7 @@
       align-items: center !important;
       justify-content: center !important;
       gap: 6px;
-      min-height: 64px;
+      min-height: 63px;
       border-radius: 9px;
       color: #ffffff;
       font-size: 10px;
@@ -235,8 +248,8 @@
     }
 
     .snap {
-      background: #ffdf00 !important;
-      color: #1d1d1d !important;
+      background: #ffdc00 !important;
+      color: #181818 !important;
     }
 
     .discord {
@@ -282,12 +295,12 @@
     }
 
     .whatsapp.locked {
-      background: #77747c !important;
+      background: #79767d !important;
       color: #ffffff !important;
     }
 
     .whatsapp.whatsapp {
-      background: #25b866 !important;
+      background: #28b968 !important;
       color: #ffffff !important;
     }
 
@@ -340,88 +353,157 @@
       text-align: center;
     }
 
-    /* RIGHT SIDE */
+    /* =========================
+       RIGHT MEMORY SECTION
+    ========================= */
 
-    .right-side {
+    .memory-area {
+      min-width: 0;
       padding-top: 4px;
     }
 
-    .right-side h2 {
+    .memory-area h2 {
       margin: 0 0 6px;
       font-family: "Playfair Display", serif;
       font-size: 38px;
       font-weight: 600;
     }
 
-    .right-side > p {
+    .memory-area > p {
       margin: 0 0 23px;
       color: var(--muted);
       font-size: 13px;
     }
 
-    .memory-preview {
+    /*
+      The memory cards are created automatically by memories.js.
+    */
+    .board {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
     }
 
-    .memory-box {
+    .polaroid {
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 10px;
       background: var(--white);
-      color: inherit;
-      text-decoration: none;
       box-shadow: 0 5px 16px rgba(40, 30, 34, 0.05);
+      cursor: pointer;
       transition: transform 0.18s ease;
     }
 
-    .memory-box:hover {
+    .polaroid:hover {
       transform: translateY(-3px);
     }
 
-    .memory-box img {
+    .polaroid .tape {
+      display: none;
+    }
+
+    .polaroid img {
       display: block;
       width: 100%;
       aspect-ratio: 4 / 5;
       object-fit: cover;
-      background: #e9e4df;
+      background: #e7e1dc;
     }
 
-    .memory-box div {
+    .polaroid .cap {
+      margin: 0;
       padding: 13px;
-    }
-
-    .memory-box h3 {
-      margin: 0 0 4px;
+      color: var(--text);
       font-family: "Playfair Display", serif;
       font-size: 18px;
       font-weight: 600;
     }
 
-    .memory-box p {
+    .empty-note {
+      grid-column: 1 / -1;
       margin: 0;
+      padding: 25px 0;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .gallery-link {
-      display: inline-block;
-      margin-top: 20px;
-      border-bottom: 1px solid var(--pink);
-      color: var(--text);
-      padding-bottom: 4px;
       font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
+      text-align: center;
     }
 
-    .gallery-link:hover {
-      color: var(--pink);
+    /* =========================
+       IMAGE LIGHTBOX
+    ========================= */
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      background: rgba(20, 16, 18, 0.88);
     }
 
-    /* MOBILE */
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      display: block;
+      max-width: min(850px, 82vw);
+      max-height: 80vh;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .lb-close,
+    .lb-nav {
+      position: absolute;
+      border: 0;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .lb-close {
+      top: 18px;
+      right: 22px;
+      background: transparent;
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .lb-nav {
+      top: 50%;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.16);
+      font-size: 25px;
+      transform: translateY(-50%);
+    }
+
+    .lb-prev {
+      left: 22px;
+    }
+
+    .lb-next {
+      right: 22px;
+    }
+
+    .lb-caption {
+      position: absolute;
+      right: 20px;
+      bottom: 22px;
+      left: 20px;
+      margin: 0;
+      color: #ffffff;
+      font-family: "Playfair Display", serif;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 820px) {
       body {
@@ -471,29 +553,42 @@
         font-size: 15px;
       }
 
-      .right-side h2 {
+      .memory-area h2 {
         font-size: 31px;
       }
 
-      .memory-preview {
+      .board {
         grid-template-columns: 1fr;
       }
 
-      .memory-box {
+      .polaroid {
         display: grid;
         grid-template-columns: 42% 58%;
       }
 
-      .memory-box img {
+      .polaroid img {
         height: 100%;
         min-height: 150px;
         aspect-ratio: auto;
       }
 
-      .memory-box div {
+      .polaroid .cap {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        align-items: center;
+        padding: 15px;
+      }
+
+      .lightbox img {
+        max-width: 95vw;
+        max-height: 72vh;
+      }
+
+      .lb-prev {
+        left: 8px;
+      }
+
+      .lb-next {
+        right: 8px;
       }
     }
   </style>
@@ -501,6 +596,7 @@
 
 <body id="bodyRoot">
 
+  <!-- Required by script.js -->
   <div class="aurora" id="auroraLayer"></div>
   <div class="particles" id="particles"></div>
 
@@ -553,17 +649,35 @@
 
           <div class="links" id="linksWrap">
 
-            <a href="#" id="snapLink" class="link-btn snap" target="_blank" rel="noopener">
+            <a
+              href="#"
+              id="snapLink"
+              class="link-btn snap"
+              target="_blank"
+              rel="noopener"
+            >
               <span class="icon"></span>
               <span>Snapchat</span>
             </a>
 
-            <a href="#" id="discordLink" class="link-btn discord" target="_blank" rel="noopener">
+            <a
+              href="#"
+              id="discordLink"
+              class="link-btn discord"
+              target="_blank"
+              rel="noopener"
+            >
               <span class="icon"></span>
               <span>Discord</span>
             </a>
 
-            <a href="#" id="instaLink" class="link-btn insta" target="_blank" rel="noopener">
+            <a
+              href="#"
+              id="instaLink"
+              class="link-btn insta"
+              target="_blank"
+              rel="noopener"
+            >
               <span class="icon"></span>
               <span>Instagram</span>
             </a>
@@ -572,7 +686,11 @@
 
           <div class="whatsapp-section">
 
-            <button id="waBtn" class="link-btn whatsapp locked" type="button">
+            <button
+              id="waBtn"
+              class="link-btn whatsapp locked"
+              type="button"
+            >
               <span class="icon"></span>
               <span>WhatsApp Locked</span>
             </button>
@@ -606,9 +724,9 @@
       </div>
     </main>
 
-    <!-- RIGHT MEMORIES -->
+    <!-- RIGHT FIRESTORE MEMORIES -->
 
-    <section class="right-side">
+    <section class="memory-area">
 
       <h2>Gaming Memories</h2>
 
@@ -616,42 +734,76 @@
         A few snapshots from games, adventures, and good moments.
       </p>
 
-      <div class="memory-preview">
+      <!-- memories.js automatically adds Firestore memories here -->
+      <main class="board" id="board" aria-live="polite">
 
-        <a href="memories.html" class="memory-box">
-          <img
-            src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80"
-            alt="Gaming setup"
-          >
+        <p class="empty-note" id="boardLoading">
+          Loading memories...
+        </p>
 
-          <div>
-            <h3>Game Nights</h3>
-            <p>Little moments from late night sessions.</p>
-          </div>
-        </a>
+        <p class="empty-note" id="boardEmpty" style="display:none;">
+          No memories added yet.
+        </p>
 
-        <a href="memories.html" class="memory-box">
-          <img
-            src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80"
-            alt="Game controller"
-          >
+        <p
+          class="empty-note"
+          id="boardError"
+          style="display:none;color:#d94b83;"
+        >
+          Could not load memories. Please try again later.
+        </p>
 
-          <div>
-            <h3>Favorite Games</h3>
-            <p>Stories, worlds, and memories worth keeping.</p>
-          </div>
-        </a>
-
-      </div>
-
-      <a href="memories.html" class="gallery-link">
-        View all memories →
-      </a>
+      </main>
 
     </section>
   </div>
 
+  <!-- Lightbox used by memories.js -->
+
+  <div
+    class="lightbox"
+    id="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Memory image preview"
+  >
+    <button
+      class="lb-close"
+      id="lbClose"
+      type="button"
+      aria-label="Close image preview"
+    >
+      ×
+    </button>
+
+    <button
+      class="lb-nav lb-prev"
+      id="lbPrev"
+      type="button"
+      aria-label="Previous memory"
+    >
+      ←
+    </button>
+
+    <img id="lbImg" src="" alt="">
+
+    <button
+      class="lb-nav lb-next"
+      id="lbNext"
+      type="button"
+      aria-label="Next memory"
+    >
+      →
+    </button>
+
+    <p id="lbCaption" class="lb-caption"></p>
+  </div>
+
+  <!-- Public profile data -->
   <script type="module" src="script.js"></script>
+
+  <!-- Firestore memory gallery -->
+  <script type="module" src="memories.js"></script>
 
 </body>
 </html>
