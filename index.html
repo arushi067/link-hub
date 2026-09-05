@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f8f6f1">
+  <meta name="theme-color" content="#f5f3ee">
 
   <title id="pageTitle">Arushi Patel</title>
 
@@ -18,15 +18,14 @@
 
   <style>
     :root {
-      --paper: #fffefb;
-      --page: #f7f5ef;
-      --ink: #1e1a1c;
-      --muted: #766f70;
-      --pink: #ef5b95;
-      --pink-dark: #d43d7b;
-      --line: #e9e3dc;
-      --soft-pink: #fff1f6;
-      --shadow: 0 14px 35px rgba(37, 28, 25, 0.10);
+      --page: #f5f3ee;
+      --white: #fffefa;
+      --text: #232023;
+      --muted: #766f72;
+      --line: #e4ded8;
+      --pink: #dc4f87;
+      --pink-soft: #fff2f6;
+      --shadow: 0 8px 24px rgba(40, 30, 34, 0.08);
     }
 
     * {
@@ -34,104 +33,66 @@
     }
 
     body {
-      min-height: 100svh;
       margin: 0;
-      padding: 38px 20px;
-      overflow-x: hidden;
+      padding: 34px 20px;
       background: var(--page);
-      color: var(--ink);
+      color: var(--text);
       font-family: "DM Sans", sans-serif;
     }
 
-    /*
-      Hide the old animated background layers for this clean,
-      classic paper-like profile design.
-    */
+    /* Remove the old animated/AI-style background */
     .aurora,
     .particles {
       display: none !important;
     }
 
-    /*
-      Main site layout:
-      left = profile card
-      right = memories / work cards
-    */
-    .site-layout {
+    .page-layout {
       display: grid;
       grid-template-columns: 370px minmax(0, 1fr);
-      gap: 48px;
-      width: min(1180px, 100%);
+      gap: 45px;
+      width: min(1120px, 100%);
       margin: 0 auto;
       align-items: start;
     }
 
-    /*
-      Existing mainCard ID is retained for script.js compatibility.
-    */
+    /* LEFT PROFILE CARD */
+
     #mainCard.card {
       position: sticky;
-      top: 24px;
-      width: 100%;
+      top: 25px;
       overflow: hidden;
       border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--paper);
+      border-radius: 12px;
+      background: var(--white);
       box-shadow: var(--shadow);
     }
 
-    /*
-      Default banner.
-      Later, the banner admin field can replace this background
-      using the #profileBanner ID.
-    */
     .profile-banner {
-      position: relative;
       width: 100%;
       height: 205px;
       background:
         linear-gradient(
-          180deg,
-          rgba(18, 13, 13, 0.05),
-          rgba(18, 13, 13, 0.25)
+          rgba(0, 0, 0, 0.10),
+          rgba(0, 0, 0, 0.12)
         ),
-        url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=85")
+        url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=85")
         center / cover no-repeat;
     }
 
-    .profile-banner::after {
-      content: "";
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      height: 44%;
-      background: linear-gradient(
-        to bottom,
-        transparent,
-        rgba(30, 22, 20, 0.16)
-      );
+    .profile-main {
+      padding: 0 20px 25px;
     }
 
-    .profile-body {
-      position: relative;
-      padding: 0 20px 26px;
-    }
-
-    /*
-      Discord-like overlapping profile photo.
-    */
+    /* Profile photo overlaps the banner */
     .ring-wrap {
       position: relative;
-      z-index: 3;
       display: flex;
-      width: 112px;
-      height: 112px;
-      margin-top: -52px;
+      width: 106px;
+      height: 106px;
+      margin-top: -48px;
       margin-bottom: 12px;
       border-radius: 50%;
-      background: var(--paper);
-      box-shadow: 0 8px 20px rgba(40, 25, 30, 0.15);
+      background: var(--white);
     }
 
     .ring {
@@ -140,7 +101,6 @@
       z-index: 1;
       border: 2px solid #ffffff;
       border-radius: 50%;
-      pointer-events: none;
     }
 
     #profilePhoto {
@@ -149,10 +109,9 @@
       display: block;
       width: 100%;
       height: 100%;
-      border: 4px solid var(--paper);
+      border: 4px solid var(--white);
       border-radius: 50%;
       object-fit: cover;
-      object-position: center;
       filter: none !important;
       opacity: 1 !important;
       mix-blend-mode: normal !important;
@@ -162,98 +121,69 @@
 
     .status-dot {
       position: absolute;
-      right: 2px;
-      bottom: 7px;
-      z-index: 5 !important;
+      right: 1px;
+      bottom: 5px;
+      z-index: 4 !important;
       width: 20px;
       height: 20px;
-      border: 3px solid var(--paper);
+      border: 3px solid var(--white);
       border-radius: 50%;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
 
     #userName {
       margin: 0 0 4px;
       font-family: "Playfair Display", serif;
-      font-size: 30px;
-      font-weight: 700;
-      line-height: 1.1;
+      font-size: 29px;
+      font-weight: 600;
     }
 
     .status-text {
-      margin: 0 0 16px;
+      margin: 0 0 20px;
       color: var(--muted);
       font-size: 12px;
       line-height: 1.5;
     }
 
-    .mini-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-bottom: 20px;
-    }
-
-    .mini-tag {
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: #ffffff;
-      color: #766469;
-      padding: 6px 9px;
-      font-size: 10px;
-      font-weight: 600;
-    }
-
-    .about-section {
-      margin-top: 5px;
-      padding-top: 21px;
+    .about {
+      padding-top: 20px;
       border-top: 1px solid var(--line);
     }
 
-    .section-label {
+    .small-title {
       margin: 0 0 12px;
-      color: #aa8a94;
+      color: #a58e94;
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
-    .about-section h2 {
+    .about h2 {
       margin: 0 0 13px;
       font-family: "Playfair Display", serif;
-      font-size: 21px;
+      font-size: 20px;
       font-weight: 600;
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
-    .about-section p {
-      margin: 0 0 14px;
-      color: #463c3f;
+    .about p {
+      margin: 0 0 16px;
+      color: #51494b;
       font-family: "Playfair Display", serif;
       font-size: 16px;
       line-height: 1.65;
     }
 
     .quote-box {
-      position: relative;
-      margin: 18px 0;
-      padding: 13px 14px 13px 38px;
+      margin: 17px 0;
+      padding: 12px 14px;
       border-left: 3px solid var(--pink);
-      border-radius: 0 10px 10px 0;
-      background: var(--soft-pink);
-      color: #5c4850;
-      text-align: left;
+      background: var(--pink-soft);
+      color: #5d4c52;
     }
 
     .quote-mark {
-      position: absolute;
-      top: 4px;
-      left: 12px;
-      color: var(--pink);
-      font-family: Georgia, serif;
-      font-size: 29px;
-      font-weight: 700;
+      display: none;
     }
 
     #dailyQuote {
@@ -261,15 +191,13 @@
       font-size: 12px;
       font-style: italic;
       font-weight: 600;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
-    /*
-      Compact colorful social button section.
-    */
-    .social-section {
-      margin-top: 19px;
-      padding-top: 20px;
+    /* SOCIAL LINKS */
+
+    .social {
+      padding-top: 18px;
       border-top: 1px solid var(--line);
     }
 
@@ -284,32 +212,31 @@
       flex-direction: column;
       align-items: center !important;
       justify-content: center !important;
-      gap: 5px;
-      min-height: 65px;
-      border-radius: 11px;
+      gap: 6px;
+      min-height: 64px;
+      border-radius: 9px;
       color: #ffffff;
       font-size: 10px;
       font-weight: 700;
       text-decoration: none;
-      transition: transform 0.18s ease, filter 0.18s ease;
+      transition: transform 0.18s ease;
     }
 
     .link-btn:hover {
-      filter: brightness(1.05);
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
 
     .link-btn .icon {
       display: grid !important;
       place-items: center;
-      width: 22px;
-      height: 22px;
-      font-size: 20px;
+      width: 21px;
+      height: 21px;
+      font-size: 19px;
     }
 
     .snap {
       background: #ffdf00 !important;
-      color: #181818 !important;
+      color: #1d1d1d !important;
     }
 
     .discord {
@@ -317,54 +244,50 @@
     }
 
     .insta {
-      background: linear-gradient(135deg, #f9a13d, #ed3d79, #7549d5) !important;
+      background: #d94d7f !important;
     }
 
     .snap .icon::before {
       content: "\f2ab";
       font-family: "Font Awesome 6 Brands";
-      font-weight: 400;
     }
 
     .discord .icon::before {
       content: "\f392";
       font-family: "Font Awesome 6 Brands";
-      font-weight: 400;
     }
 
     .insta .icon::before {
       content: "\f16d";
       font-family: "Font Awesome 6 Brands";
-      font-weight: 400;
     }
 
     .whatsapp-section {
-      margin-top: 9px;
+      margin-top: 10px;
     }
 
     .whatsapp {
       display: flex !important;
       flex-direction: row !important;
-      min-height: 45px;
       width: 100%;
+      min-height: 44px;
       border: 0;
-      border-radius: 10px;
+      border-radius: 9px;
       cursor: pointer;
     }
 
     .whatsapp .icon::before {
       content: "\f232";
       font-family: "Font Awesome 6 Brands";
-      font-weight: 400;
     }
 
     .whatsapp.locked {
-      background: #7d7a82 !important;
+      background: #77747c !important;
       color: #ffffff !important;
     }
 
     .whatsapp.whatsapp {
-      background: #28bf69 !important;
+      background: #25b866 !important;
       color: #ffffff !important;
     }
 
@@ -372,7 +295,7 @@
       margin-top: 10px;
       padding: 13px;
       border: 1px solid var(--line);
-      border-radius: 10px;
+      border-radius: 9px;
       background: #fffafa;
     }
 
@@ -387,15 +310,15 @@
       width: 100%;
       margin-bottom: 8px;
       padding: 10px;
-      border: 1px solid #ded4d6;
-      border-radius: 8px;
+      border: 1px solid #ded7d8;
+      border-radius: 7px;
       outline: none;
     }
 
     .btn-primary {
       width: 100%;
       border: 0;
-      border-radius: 8px;
+      border-radius: 7px;
       background: var(--pink);
       color: #ffffff;
       padding: 10px;
@@ -405,200 +328,172 @@
     }
 
     .wa-msg {
-      min-height: 16px;
+      min-height: 15px;
       margin: 8px 0 0;
       font-size: 11px;
-      font-weight: 600;
     }
 
     footer {
       margin-top: 20px;
-      color: #9a8a8d;
+      color: #978d90;
       font-size: 10px;
-      font-weight: 600;
       text-align: center;
     }
 
-    /*
-      RIGHT SIDE: Gaming memories / work.
-    */
-    .work-area {
-      min-width: 0;
-      padding-top: 6px;
+    /* RIGHT SIDE */
+
+    .right-side {
+      padding-top: 4px;
     }
 
-    .work-heading {
-      margin-bottom: 23px;
-    }
-
-    .work-heading h2 {
-      margin: 0 0 7px;
+    .right-side h2 {
+      margin: 0 0 6px;
       font-family: "Playfair Display", serif;
-      font-size: clamp(30px, 4vw, 42px);
-      font-weight: 700;
-      line-height: 1.1;
+      font-size: 38px;
+      font-weight: 600;
     }
 
-    .work-heading p {
-      margin: 0;
+    .right-side > p {
+      margin: 0 0 23px;
       color: var(--muted);
       font-size: 13px;
     }
 
-    .work-grid {
+    .memory-preview {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 17px;
+      gap: 16px;
     }
 
-    .memory-card {
-      display: block;
+    .memory-box {
       overflow: hidden;
       border: 1px solid var(--line);
-      border-radius: 12px;
-      background: var(--paper);
+      border-radius: 10px;
+      background: var(--white);
       color: inherit;
       text-decoration: none;
-      box-shadow: 0 8px 22px rgba(55, 39, 42, 0.08);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 5px 16px rgba(40, 30, 34, 0.05);
+      transition: transform 0.18s ease;
     }
 
-    .memory-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 16px 30px rgba(55, 39, 42, 0.14);
+    .memory-box:hover {
+      transform: translateY(-3px);
     }
 
-    .memory-card-image {
+    .memory-box img {
       display: block;
       width: 100%;
       aspect-ratio: 4 / 5;
       object-fit: cover;
-      background: #eadfe2;
+      background: #e9e4df;
     }
 
-    .memory-card-text {
-      padding: 15px;
+    .memory-box div {
+      padding: 13px;
     }
 
-    .memory-card-text h3 {
-      margin: 0 0 5px;
+    .memory-box h3 {
+      margin: 0 0 4px;
       font-family: "Playfair Display", serif;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 600;
     }
 
-    .memory-card-text p {
+    .memory-box p {
       margin: 0;
       color: var(--muted);
       font-size: 12px;
       line-height: 1.5;
     }
 
-    .all-memories {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      margin-top: 22px;
-      border-bottom: 2px solid var(--pink);
-      color: #3f3036;
-      padding-bottom: 5px;
+    .gallery-link {
+      display: inline-block;
+      margin-top: 20px;
+      border-bottom: 1px solid var(--pink);
+      color: var(--text);
+      padding-bottom: 4px;
       font-size: 13px;
       font-weight: 700;
       text-decoration: none;
-      transition: color 0.18s ease;
     }
 
-    .all-memories:hover {
-      color: var(--pink-dark);
-    }
-
-    .all-memories span {
+    .gallery-link:hover {
       color: var(--pink);
-      font-size: 19px;
-      line-height: 1;
     }
 
-    /*
-      Mobile:
-      Profile becomes first, memories stack underneath.
-    */
-    @media (max-width: 850px) {
+    /* MOBILE */
+
+    @media (max-width: 820px) {
       body {
-        padding: 20px 14px 35px;
+        padding: 18px 13px 32px;
       }
 
-      .site-layout {
+      .page-layout {
         grid-template-columns: 1fr;
-        gap: 32px;
-        width: min(620px, 100%);
+        gap: 30px;
+        width: min(600px, 100%);
       }
 
       #mainCard.card {
         position: relative;
         top: auto;
       }
-
-      .work-area {
-        padding-top: 0;
-      }
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 500px) {
       body {
-        padding: 12px 10px 28px;
+        padding: 10px;
       }
 
       .profile-banner {
         height: 155px;
       }
 
-      .profile-body {
-        padding: 0 16px 21px;
+      .profile-main {
+        padding: 0 16px 20px;
       }
 
       .ring-wrap {
-        width: 94px;
-        height: 94px;
-        margin-top: -45px;
+        width: 92px;
+        height: 92px;
+        margin-top: -43px;
       }
 
       #userName {
         font-size: 27px;
       }
 
-      .about-section h2 {
+      .about h2 {
         font-size: 19px;
       }
 
-      .about-section p {
+      .about p {
         font-size: 15px;
       }
 
-      .work-heading h2 {
+      .right-side h2 {
         font-size: 31px;
       }
 
-      .work-grid {
+      .memory-preview {
         grid-template-columns: 1fr;
-        gap: 14px;
       }
 
-      .memory-card {
+      .memory-box {
         display: grid;
         grid-template-columns: 42% 58%;
       }
 
-      .memory-card-image {
+      .memory-box img {
         height: 100%;
-        min-height: 165px;
+        min-height: 150px;
         aspect-ratio: auto;
       }
 
-      .memory-card-text {
+      .memory-box div {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 15px;
       }
     }
   </style>
@@ -606,24 +501,18 @@
 
 <body id="bodyRoot">
 
-  <!-- Existing IDs preserved for script.js -->
-  <div class="aurora" id="auroraLayer">
-    <div class="aurora-shape shape1"></div>
-    <div class="aurora-shape shape2"></div>
-    <div class="aurora-shape shape3"></div>
-  </div>
-
+  <div class="aurora" id="auroraLayer"></div>
   <div class="particles" id="particles"></div>
 
-  <div class="site-layout">
+  <div class="page-layout">
 
-    <!-- LEFT PROFILE SECTION -->
+    <!-- LEFT PROFILE -->
 
     <main class="card" id="mainCard">
 
       <div class="profile-banner" id="profileBanner"></div>
 
-      <section class="profile-body">
+      <div class="profile-main">
 
         <div class="ring-wrap">
           <div class="ring" id="ringEl"></div>
@@ -641,22 +530,16 @@
 
         <p class="status-text" id="statusText"></p>
 
-        <div class="mini-tags">
-          <span class="mini-tag">🎮 Gaming</span>
-          <span class="mini-tag">✨ Creating</span>
-          <span class="mini-tag">💗 Vibing</span>
-        </div>
-
-        <section class="about-section">
-          <p class="section-label">About me</p>
+        <section class="about">
+          <p class="small-title">About me</p>
 
           <h2>
-            Welcome to my little corner of the internet. 🌸
+            Welcome to my little corner of the internet.
           </h2>
 
           <p>
-            Here I share little moments, favorite games, memories,
-            and anything that makes life feel special.
+            I like sharing little memories, favorite games,
+            and things that make me happy.
           </p>
 
           <div class="quote-box" id="quoteBox">
@@ -665,41 +548,23 @@
           </div>
         </section>
 
-        <section class="social-section">
-          <p class="section-label">Find me online</p>
+        <section class="social">
+          <p class="small-title">Find me online</p>
 
           <div class="links" id="linksWrap">
 
-            <a
-              href="#"
-              id="snapLink"
-              class="link-btn snap"
-              target="_blank"
-              rel="noopener"
-            >
-              <span class="icon" aria-hidden="true"></span>
+            <a href="#" id="snapLink" class="link-btn snap" target="_blank" rel="noopener">
+              <span class="icon"></span>
               <span>Snapchat</span>
             </a>
 
-            <a
-              href="#"
-              id="discordLink"
-              class="link-btn discord"
-              target="_blank"
-              rel="noopener"
-            >
-              <span class="icon" aria-hidden="true"></span>
+            <a href="#" id="discordLink" class="link-btn discord" target="_blank" rel="noopener">
+              <span class="icon"></span>
               <span>Discord</span>
             </a>
 
-            <a
-              href="#"
-              id="instaLink"
-              class="link-btn insta"
-              target="_blank"
-              rel="noopener"
-            >
-              <span class="icon" aria-hidden="true"></span>
+            <a href="#" id="instaLink" class="link-btn insta" target="_blank" rel="noopener">
+              <span class="icon"></span>
               <span>Instagram</span>
             </a>
 
@@ -707,12 +572,8 @@
 
           <div class="whatsapp-section">
 
-            <button
-              id="waBtn"
-              class="link-btn whatsapp locked"
-              type="button"
-            >
-              <span class="icon" aria-hidden="true"></span>
+            <button id="waBtn" class="link-btn whatsapp locked" type="button">
+              <span class="icon"></span>
               <span>WhatsApp Locked</span>
             </button>
 
@@ -739,56 +600,52 @@
         </section>
 
         <footer>
-          Made with 💗 by <span id="footerName">Arushi Patel</span>
+          <span id="footerName">Arushi Patel</span>
         </footer>
 
-      </section>
+      </div>
     </main>
 
-    <!-- RIGHT GAMING MEMORY / WORK SECTION -->
+    <!-- RIGHT MEMORIES -->
 
-    <section class="work-area">
+    <section class="right-side">
 
-      <header class="work-heading">
-        <h2>Gaming Memories ✦</h2>
-        <p>
-          Small snapshots of games, fun moments, and favorite adventures.
-        </p>
-      </header>
+      <h2>Gaming Memories</h2>
 
-      <div class="work-grid">
+      <p>
+        A few snapshots from games, adventures, and good moments.
+      </p>
 
-        <a href="memories.html" class="memory-card">
+      <div class="memory-preview">
+
+        <a href="memories.html" class="memory-box">
           <img
-            class="memory-card-image"
-            src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=85"
+            src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80"
             alt="Gaming setup"
           >
 
-          <div class="memory-card-text">
-            <h3>Late Night Sessions</h3>
-            <p>Gaming, laughs, screenshots, and unforgettable wins.</p>
+          <div>
+            <h3>Game Nights</h3>
+            <p>Little moments from late night sessions.</p>
           </div>
         </a>
 
-        <a href="memories.html" class="memory-card">
+        <a href="memories.html" class="memory-box">
           <img
-            class="memory-card-image"
-            src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=85"
-            alt="Gaming controller"
+            src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80"
+            alt="Game controller"
           >
 
-          <div class="memory-card-text">
-            <h3>My Favorite Worlds</h3>
-            <p>Every game is a new place to explore and remember.</p>
+          <div>
+            <h3>Favorite Games</h3>
+            <p>Stories, worlds, and memories worth keeping.</p>
           </div>
         </a>
 
       </div>
 
-      <a href="memories.html" class="all-memories">
-        Explore the full memory gallery
-        <span>→</span>
+      <a href="memories.html" class="gallery-link">
+        View all memories →
       </a>
 
     </section>
