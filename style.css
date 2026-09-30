@@ -1,711 +1,101 @@
-/* ===================================================
-   CUTE RETRO NOTEBOOK & VINTAGE PC DESKTOP THEME
-=================================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --accent1: #ff6fa3;
+  --accent2: #ff3d80;
+  --card-bg: rgba(255,255,255,0.75);
+  --text-color: #5c2a3d;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 30px 20px; position: relative; overflow-x: hidden;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+.aurora { position: fixed; inset: 0; z-index: 0; overflow: hidden; filter: blur(70px); pointer-events: none; opacity: 0.5; }
+.aurora-shape { position: absolute; border-radius: 50%; animation: drift 16s ease-in-out infinite; }
+.shape1 { width: 380px; height: 380px; background: var(--accent1); top: -90px; left: -90px; animation-duration: 12s; }
+.shape2 { width: 420px; height: 420px; background: var(--accent2); bottom: -120px; right: -100px; animation-duration: 18s; }
+.shape3 { width: 320px; height: 320px; background: var(--accent1); top: 45%; left: 55%; animation-duration: 14s; }
+@keyframes drift { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(35px,-45px) scale(1.15);} }
+
+.particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.particle { position: absolute; bottom: -20px; opacity: 0; }
+.particle.bubble { width: 8px; height: 8px; background: rgba(255,255,255,0.6); border-radius: 50%; animation: floatUp 6s linear infinite; }
+.particle.star { width: 4px; height: 4px; background: #fff; border-radius: 50%; animation: twinkle 3s ease-in-out infinite; top: 10%; }
+.particle.heart { font-size: 16px; animation: floatUp 7s linear infinite; }
+@keyframes floatUp { 0%{transform:translateY(0); opacity:0;} 10%{opacity:0.9;} 100%{transform:translateY(-100vh); opacity:0;} }
+@keyframes twinkle { 0%,100%{opacity:0.1;} 50%{opacity:0.9;} }
+
+.card {
+  position: relative; z-index: 1;
+  background: var(--card-bg); backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 32px; padding: 46px 34px; max-width: 440px; width: 100%; text-align: center;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+  animation: cardIn 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes cardIn { from{opacity:0; transform:translateY(40px) scale(0.92);} to{opacity:1; transform:translateY(0) scale(1);} }
+
+.ring-wrap { position: relative; width: 140px; height: 140px; margin: 0 auto 22px; display: flex; align-items: center; justify-content: center; }
+.ring { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, var(--accent1), var(--accent2), var(--accent1)); animation: spin 6s linear infinite; padding: 4px; }
+.ring::before { content:""; position:absolute; inset:4px; border-radius:50%; background: var(--card-bg); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.ring-wrap img { position: relative; z-index: 2; width: 122px; height: 122px; border-radius: 50%; object-fit: cover; box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+
+.status-dot { position: absolute; bottom: 2px; right: 2px; z-index: 3; width: 22px; height: 22px; border-radius: 50%; background: #2ecc71; border: 3px solid var(--card-bg); animation: dotPulse 2s infinite; }
+.status-dot.away { background: #f1c40f; } .status-dot.offline { background: #95a5a6; animation: none; }
+@keyframes dotPulse { 0%{box-shadow:0 0 0 0 rgba(46,204,113,0.6);} 70%{box-shadow:0 0 0 12px rgba(46,204,113,0);} 100%{box-shadow:0 0 0 0 rgba(46,204,113,0);} }
+
+.card h1 {
+  font-size: 28px; font-weight: 800; font-family: 'Playfair Display', serif;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent1));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  margin-bottom: 6px; background-size: 200% auto; animation: shimmer 4s ease-in-out infinite;
+}
+@keyframes shimmer { 0%{background-position:0% center;} 50%{background-position:100% center;} 100%{background-position:0% center;} }
+.status-text { font-size: 13px; opacity: 0.75; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1.5px; }
+
+.quote-box { position: relative; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); border-radius: 18px; padding: 22px 20px 18px; margin-bottom: 28px; font-style: italic; font-size: 15px; line-height: 1.5; }
+.quote-mark { position: absolute; top: -6px; left: 14px; font-size: 40px; color: var(--accent1); opacity: 0.6; font-style: normal; }
+
+.links { display: flex; flex-direction: column; gap: 14px; margin-bottom: 22px; }
+.link-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 16px; text-decoration: none; font-weight: 600; font-size: 15px; color: #fff; border: none; cursor: pointer; transition: transform 0.25s, box-shadow 0.25s, filter 0.25s; width: 100%; position: relative; overflow: hidden; }
+.link-btn::before { content:""; position:absolute; top:0; left:-100%; width:100%; height:100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent); transition: left 0.5s; }
+.link-btn:hover::before { left: 100%; }
+.link-btn:hover { transform: translateY(-4px); filter: brightness(1.08); box-shadow: 0 12px 25px rgba(0,0,0,0.25); }
+.icon { font-size: 19px; }
+.snap { background: linear-gradient(135deg,#fffc00,#f5d800); color: #1a1a1a; }
+.discord { background: linear-gradient(135deg,#5865F2,#404EED); }
+.insta { background: linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4); }
+.whatsapp { background: linear-gradient(135deg,#25D366,#128C7E); }
+.whatsapp.locked { background: linear-gradient(135deg,#9a9aa8,#7a7a88); color: #fff; }
+.wa-form { margin-top: 16px; text-align: left; } .wa-form.hidden, .hidden { display: none !important; }
+.wa-note { font-size: 12px; opacity: 0.8; margin-bottom: 10px; }
+.wa-form input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.3); margin-bottom: 10px; font-family: inherit; background: rgba(255,255,255,0.2); color: var(--text-color); }
+.wa-msg { font-size: 13px; margin-top: 8px; font-weight: 600; }
+.btn-primary { background: linear-gradient(135deg, var(--accent1), var(--accent2)); color: #fff; border: none; padding: 13px; border-radius: 14px; font-weight: 600; cursor: pointer; width: 100%; transition: filter 0.2s, transform 0.2s; }
+.btn-primary:hover { filter: brightness(1.1); transform: translateY(-2px); }
+footer { margin-top: 26px; font-size: 12px; opacity: 0.7; letter-spacing: 1px; }
+.footer-heart { color: var(--accent2); animation: heartBeat 1.4s ease-in-out infinite; display: inline-block; }
+@keyframes heartBeat { 0%,100%{transform:scale(1);} 50%{transform:scale(1.3);} }
+
+@media (max-width: 480px) {
+  .card { padding: 30px 22px; border-radius: 22px; }
+  .card h1 { font-size: 23px; }
+  .ring-wrap { width: 120px; height: 120px; }
+  .ring-wrap img { width: 104px; height: 104px; }
+}
 
 :root {
-  --wood-board: #9e6138;
-  --wood-border: #75411e;
-  --paper-bg: #fcfcf9;
-  --grid-line: #dbe4ea;
-  --text-main: #58443e;
-  --text-muted: #8a736a;
-  --tag-green: #219653;
-  --accent-pink: #ff6599;
-  --accent-soft: #fff1f5;
-  --beige-pc: #ebe3d5;
-  --beige-pc-shadow: #c8bead;
-  --shadow-warm: 0 16px 36px rgba(92, 45, 18, 0.16);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  min-height: 100vh;
-  margin: 0;
-  padding: 40px 16px 60px;
-  background-color: #f0ebe4;
-  /* Soft background desk texture */
-  background-image: radial-gradient(#d3c6b8 1px, transparent 1px);
-  background-size: 24px 24px;
-  color: var(--text-main);
-  font-family: "Plus Jakarta Sans", sans-serif;
-  overflow-x: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-button, input {
-  font: inherit;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* ===================================================
-   LOADING STATE
-=================================================== */
-
-#app {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.35s ease;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-#app.is-ready {
-  opacity: 1;
-  visibility: visible;
-}
-
-.loading-screen {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: grid;
-  place-items: center;
-  background: #ede6dc;
-  color: #7b594b;
-  font-family: "VT323", monospace;
-  font-size: 22px;
-  letter-spacing: 0.1em;
-}
-
-.retro-load-box {
-  background: #fffdfa;
-  padding: 24px 34px;
-  border-radius: 12px;
-  border: 3px solid #7b594b;
-  box-shadow: 4px 4px 0 #7b594b;
-  text-align: center;
-}
-
-.pixel-spin {
-  font-size: 38px;
-  display: inline-block;
-  margin-bottom: 8px;
-  animation: pulse 1s infinite alternate;
-}
-
-@keyframes pulse {
-  from { transform: scale(0.9); }
-  to { transform: scale(1.15); }
-}
-
-.loading-screen.hide {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-/* ===================================================
-   CLIPBOARD & NOTEBOOK PAPER CANVAS (From reference)
-=================================================== */
-
-.notebook-wrapper {
-  position: relative;
-  width: min(1080px, 100%);
-  background: var(--paper-bg);
-  /* The cute blue grid line notebook paper */
-  background-image: 
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 22px 22px;
-  border: 14px solid var(--wood-board);
-  outline: 4px solid var(--wood-border);
-  border-radius: 42px;
-  box-shadow: 0 24px 60px rgba(78, 42, 17, 0.22);
-  padding: 50px 38px 45px;
-  margin-top: 20px;
-}
-
-/* Metallic/Gold top clip */
-.clipboard-top-clip {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 170px;
-  height: 48px;
-  background: linear-gradient(180deg, #d3c79a, #a59561);
-  border: 3px solid #5a4b27;
-  border-radius: 10px 10px 16px 16px;
-  z-index: 20;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.18);
-}
-
-.clipboard-top-clip::after {
-  content: "";
-  position: absolute;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50px;
-  height: 14px;
-  background: #f0ebe4;
-  border: 2px solid #5a4b27;
-  border-radius: 6px;
-}
-
-/* ===================================================
-   Y2K RETRO STICKERS & MOTIFS (Exact Reference look)
-=================================================== */
-
-.sticker {
-  position: absolute;
-  pointer-events: none;
-  z-index: 5;
-  user-select: none;
-}
-
-/* Code Tags */
-.tag-head { top: 22px; left: 35px; color: var(--tag-green); font-family: "DM Mono", monospace; font-size: 19px; font-weight: 700; transform: rotate(-4deg); }
-.tag-p { top: 75px; right: 200px; color: var(--tag-green); font-family: "DM Mono", monospace; font-size: 18px; font-weight: 700; }
-.tag-html { top: 180px; right: 38px; color: var(--tag-green); font-family: "DM Mono", monospace; font-size: 19px; font-weight: 700; }
-.tag-body { top: 320px; left: 240px; color: var(--tag-green); font-family: "DM Mono", monospace; font-size: 19px; font-weight: 700; }
-.tag-title { bottom: 180px; right: 40px; color: var(--tag-green); font-family: "DM Mono", monospace; font-size: 19px; font-weight: 700; }
-.win-404 { top: 25px; right: 55px; font-family: "VT323", monospace; font-size: 26px; font-weight: 800; color: #2e2625; }
-
-/* Pixelated icons */
-.retro-floppy { top: 85px; right: 105px; font-size: 30px; filter: drop-shadow(2px 3px 0 rgba(0,0,0,0.1)); }
-.retro-sound { top: 100px; left: 65px; font-size: 26px; }
-.retro-sadfile { top: 82px; left: 165px; font-size: 32px; border: 2px solid #333; padding: 2px 6px; border-radius: 4px; background: #fff; line-height: 1; display: flex; align-items: center; gap: 2px; }
-.retro-sadfile span { font-size: 14px; font-weight: 800; color: #c0392b; }
-
-/* Swim Swimming Goldfish stickers */
-.fish {
-  font-size: 34px;
-  filter: drop-shadow(0 4px 6px rgba(235, 94, 40, 0.35));
-  animation: floatFish 5s ease-in-out infinite alternate;
-}
-.fish-1 { top: 65px; right: 30px; animation-delay: 0.2s; }
-.fish-2 { top: 360px; right: 120px; transform: scaleX(-1) rotate(10deg); animation-delay: 1.2s; }
-.fish-3 { top: 430px; left: 30px; animation-delay: 0.7s; }
-.fish-4 { bottom: 210px; right: 100px; animation-delay: 1.8s; }
-
-@keyframes floatFish {
-  0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-8px) rotate(4deg); }
-  100% { transform: translateY(6px) rotate(-3deg); }
-}
-
-/* Retro Error Dialog Stack */
-.retro-stack {
-  top: 220px;
-  left: 20px;
-  width: 90px;
-  height: 90px;
-}
-.win-dialog {
-  width: 78px;
-  height: 48px;
-  background: #d8d8d8;
-  border: 2px solid #fff;
-  border-right-color: #404040;
-  border-bottom-color: #404040;
-  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
-  position: absolute;
-}
-.win-header {
-  background: #000080;
-  color: #fff;
-  font-size: 9px;
-  padding: 1px 4px;
-  font-family: sans-serif;
-  font-weight: bold;
-}
-.win-d1 { top: 0; left: 0; z-index: 1; }
-.win-d2 { top: 12px; left: 12px; z-index: 2; }
-.win-d3 { top: 24px; left: 24px; z-index: 3; }
-
-/* Stars */
-.yellow-star { top: -8px; right: 230px; font-size: 48px; color: #ffbc00; text-shadow: 2px 2px 0 #d99a00; }
-.yellow-star-bot { bottom: 35px; left: 40px; font-size: 42px; color: #ffbc00; text-shadow: 2px 2px 0 #d99a00; }
-
-/* ===================================================
-   PAGE LAYOUT
-=================================================== */
-
-.page-layout {
-  display: grid;
-  grid-template-columns: 320px minmax(0, 1fr);
-  gap: 36px;
-  align-items: start;
-  position: relative;
-  z-index: 10;
-}
-
-/* ===================================================
-   LEFT CARD (RETRO MAC-STYLE STICKY WINDOW)
-=================================================== */
-
-#mainCard.card {
-  position: sticky;
-  top: 24px;
-  border: 3px solid #6b4d3c;
-  border-radius: 18px;
-  background: #fffefb;
-  box-shadow: 6px 6px 0 rgba(107, 77, 60, 0.25);
-  overflow: hidden;
-}
-
-.mac-header {
-  background: #eedfd0;
-  border-bottom: 2px solid #6b4d3c;
-  padding: 7px 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.mac-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  display: inline-block;
-}
-.mac-dot.red { background: #ff5f56; border: 1px solid #cf3b33; }
-.mac-dot.yellow { background: #ffbd2e; border: 1px solid #d4981d; }
-.mac-dot.green { background: #27c93f; border: 1px solid #1a9e2d; }
-.mac-title {
-  margin-left: 8px;
-  font-family: "DM Mono", monospace;
-  font-size: 11px;
-  color: #705545;
-  font-weight: bold;
-}
-
-.profile-banner {
-  width: 100%;
-  height: 155px;
-  background: #decbbe;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  border-bottom: 2px dashed #bba496;
-}
-
-.profile-main {
-  padding: 0 18px 20px;
-}
-
-.ring-wrap {
-  position: relative;
-  display: flex;
-  width: 96px;
-  height: 96px;
-  margin: -48px auto 10px 0;
-  border-radius: 50%;
-  background: #fff;
-  border: 3px solid #6b4d3c;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-.ring {
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  pointer-events: none;
-}
-
-#profilePhoto {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  display: none;
-}
-
-#profilePhoto.visible {
-  display: block;
-}
-
-.status-dot {
-  position: absolute;
-  right: 2px;
-  bottom: 2px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #27ae60;
-  border: 3px solid #fff;
-  display: none;
-}
-.status-dot.visible { display: block; }
-.status-dot.away { background: #f39c12; }
-.status-dot.offline { background: #95a5a6; }
-
-#userName {
-  font-family: "Fredoka", cursive;
-  font-size: 26px;
-  color: #553c30;
-  margin-bottom: 4px;
-}
-
-.status-text {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-family: "DM Mono", monospace;
-  margin-bottom: 12px;
-}
-
-/* Vintage Cute Quote */
-.quote-box {
-  background: #fff7eb;
-  border: 2px dashed #e4cbaf;
-  border-radius: 12px;
-  padding: 10px 14px;
-  margin-bottom: 16px;
-  position: relative;
-}
-.quote-mark {
-  position: absolute;
-  top: 2px;
-  left: 6px;
-  font-size: 22px;
-  line-height: 1;
-  color: #e59c72;
-}
-#dailyQuote {
-  margin-left: 14px;
-  font-size: 12px;
-  font-style: italic;
-  color: #6d5446;
-}
-
-/* About */
-.about {
-  border-top: 2px dotted #e2d2c5;
-  padding-top: 14px;
-}
-.small-title {
-  font-family: "DM Mono", monospace;
-  font-size: 11px;
-  font-weight: 700;
-  color: #a4765d;
-  letter-spacing: 0.05em;
-  margin-bottom: 6px;
-}
-#aboutTitle {
-  font-family: "Fredoka", cursive;
-  font-size: 17px;
-  color: #4b362b;
-  margin-bottom: 6px;
-}
-#aboutText {
-  font-size: 13px;
-  line-height: 1.6;
-  color: #634f45;
-  white-space: pre-line;
-}
-
-/* Cute Buttons / Links */
-.social {
-  margin-top: 14px;
-  border-top: 2px dotted #e2d2c5;
-  padding-top: 14px;
-}
-.links {
-  display: flex;
-  gap: 10px;
-  margin-top: 8px;
-}
-.link-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  border: 2px solid #6b4d3c;
-  background: #fff;
-  box-shadow: 2px 3px 0 #6b4d3c;
-  color: #443229;
-  text-decoration: none;
-  font-size: 18px;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-.link-btn:hover {
-  transform: translate(-1px, -2px);
-  box-shadow: 3px 5px 0 #6b4d3c;
-}
-.links .link-btn > span:last-child {
-  display: none;
-}
-.snap { color: #f59f00; }
-.discord { color: #5865f2; }
-.insta { color: #e1306c; }
-
-footer {
-  margin-top: 16px;
-  font-family: "DM Mono", monospace;
-  font-size: 11px;
-  color: #9c8477;
-  text-align: center;
-}
-
-/* ===================================================
-   RIGHT SECTION: RETRO BEIGE COMPUTER DISPLAY
-=================================================== */
-
-.memory-area {
-  min-width: 0;
-}
-
-.screen-frame {
-  background: var(--beige-pc);
-  border: 5px solid #634b3d;
-  border-radius: 26px;
-  box-shadow: 
-    inset 0 0 0 6px var(--beige-pc-shadow),
-    6px 8px 0 rgba(99, 75, 61, 0.28);
-  padding: 22px 20px 24px;
-  position: relative;
-}
-
-.screen-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  padding: 0 4px;
-}
-
-.retro-play {
-  font-family: "DM Mono", monospace;
-  font-size: 14px;
-  font-weight: 700;
-  color: #272224;
-}
-
-.screen-headline-wrap {
-  text-align: center;
-}
-
-#memoryTitle {
-  font-family: "Fredoka", cursive;
-  font-size: 32px;
-  font-weight: 700;
-  color: #594236;
-  line-height: 1.2;
-}
-
-#memorySubtitle {
-  font-size: 13px;
-  color: #8c7163;
-  margin-top: 4px;
-}
-
-.screen-tag {
-  font-family: "DM Mono", monospace;
-  font-weight: bold;
-  color: var(--tag-green);
-  font-size: 16px;
-}
-
-/* Gallery inside PC Screen */
-.board {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  background: #fbf8f2;
-  border: 3px solid #7c6252;
-  border-radius: 14px;
-  padding: 16px;
-  box-shadow: inset 2px 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.polaroid {
-  background: #fff;
-  border: 2px solid #5a4539;
-  border-radius: 10px;
-  padding: 8px 8px 12px;
-  box-shadow: 3px 4px 0 #7b6151;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: block;
-}
-
-.polaroid:hover {
-  transform: translateY(-4px);
-  box-shadow: 4px 7px 0 #7b6151;
-}
-
-.polaroid img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid #eedfd0;
-  background: #ede6dc;
-}
-
-.polaroid .cap {
-  font-family: "Fredoka", cursive;
-  font-size: 15px;
-  color: #553c30;
-  margin-top: 8px;
-  padding: 0 4px;
-  line-height: 1.35;
-}
-
-.empty-note {
-  grid-column: 1 / -1;
-  font-family: "DM Mono", monospace;
-  font-size: 14px;
-  text-align: center;
-  padding: 30px;
-  color: #8f796c;
-}
-
-/* Vintage PC Keyboard Deco Base */
-.monitor-stand {
-  margin-top: 14px;
-  background: var(--beige-pc);
-  border: 4px solid #634b3d;
-  border-radius: 14px;
-  padding: 12px 16px;
-  box-shadow: 4px 6px 0 rgba(99, 75, 61, 0.25);
-}
-
-.pc-slot {
-  width: 50px;
-  height: 8px;
-  background: #463429;
-  border-radius: 4px;
-  margin: 0 auto 10px;
-}
-
-.keyboard-casing {
-  height: 24px;
-  background: #d8cebf;
-  border-radius: 6px;
-  border: 2px solid #846b5a;
-  background-image: repeating-linear-gradient(
-    90deg,
-    #eedfd0,
-    #eedfd0 18px,
-    #846b5a 18px,
-    #846b5a 21px
-  );
-}
-
-/* ===================================================
-   LIGHTBOX
-=================================================== */
-
-.lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background: rgba(36, 26, 21, 0.88);
-  backdrop-filter: blur(4px);
-  padding: 20px;
-}
-
-.lightbox.active {
-  display: flex;
-}
-
-.lightbox img {
-  max-width: min(850px, 86vw);
-  max-height: 75vh;
-  border-radius: 12px;
-  border: 6px solid #fff;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.lb-close, .lb-nav {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.25);
-  border: 2px solid #fff;
-  color: #fff;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.lb-close {
-  top: 20px;
-  right: 25px;
-  width: 44px;
-  height: 44px;
-  font-size: 26px;
-}
-
-.lb-nav {
-  top: 50%;
-  transform: translateY(-50%);
-  width: 46px;
-  height: 46px;
-  font-size: 22px;
-}
-
-.lb-prev { left: 24px; }
-.lb-next { right: 24px; }
-
-.lb-caption {
-  position: absolute;
-  bottom: 25px;
-  color: #fff;
-  font-family: "Fredoka", cursive;
-  font-size: 19px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-}
-
-/* ===================================================
-   RESPONSIVE (MOBILE & TABLET)
-=================================================== */
-
-@media (max-width: 860px) {
-  .page-layout {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  #mainCard.card {
-    position: relative;
-    top: auto;
-  }
-  .notebook-wrapper {
-    padding: 40px 18px 30px;
-    border-width: 10px;
-  }
-  .sticker.fish-2, .sticker.fish-4, .sticker.retro-stack {
-    display: none;
-  }
-}
-
-@media (max-width: 540px) {
-  body {
-    padding: 10px;
-  }
-  .notebook-wrapper {
-    border-radius: 24px;
-    border-width: 8px;
-    padding: 30px 12px 20px;
-  }
-  .board {
-    grid-template-columns: 1fr;
-  }
-  #memoryTitle {
-    font-size: 24px;
-  }
-  .tag-p, .tag-body, .retro-sound, .retro-sadfile {
-    display: none;
-  }
-}
+  --accent: #ff5fa2;
+  --secondary: #7f5fff;
+  --bg-color: #ffeef5;
+  --card-color: #fff0f6;
+}
+body { background: var(--bg-color); transition: background 0.5s ease; }
+.card { background: var(--card-color); transition: background 0.5s ease; }
+.ring-solid { border-style: solid; }
+.ring-dashed { border-style: dashed; }
+.ring-glow { border-style: solid; box-shadow: 0 0 20px var(--accent); }
+.link-btn.custom1, .link-btn.custom2 { background: linear-gradient(135deg, var(--accent), var(--secondary)); color: #fff; }
