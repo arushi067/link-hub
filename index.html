@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f5f3ee">
 
-  <title id="pageTitle"></title>
+  <title id="pageTitle">Loading</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -866,7 +866,7 @@
             id="boardEmpty"
             style="display:none;"
           >
-            
+            No memories added yet.
           </p>
 
           <p
@@ -930,6 +930,26 @@
   <!-- Firestore memories -->
 
   <script type="module" src="memories.js"></script>
+
+  <!-- FAIL-SAFE SCRIPT: Prevents infinite loading screen -->
+  <script>
+    window.addEventListener('load', () => {
+      // Give Firebase/script.js up to 2 seconds to load everything.
+      // If it hasn't finished by then, forcefully reveal the UI.
+      setTimeout(() => {
+        const app = document.getElementById('app');
+        const loader = document.getElementById('loadingScreen');
+        
+        if (app && !app.classList.contains('is-ready')) {
+          app.classList.add('is-ready');
+          app.classList.remove('is-loading');
+        }
+        if (loader && !loader.classList.contains('hide')) {
+          loader.classList.add('hide');
+        }
+      }, 2000); // 2000 milliseconds = 2 seconds
+    });
+  </script>
 
 </body>
 </html>
