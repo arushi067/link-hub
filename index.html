@@ -85,7 +85,7 @@
       background: var(--page);
       color: var(--muted);
       font-family: "DM Mono", monospace;
-      font-size: 12px;
+      font-size: 13px;
       letter-spacing: 0.04em;
       transition: opacity 0.25s ease, visibility 0.25s ease;
     }
@@ -94,6 +94,16 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
+    }
+
+    /* Loading Text Pulse Animation */
+    .pulse-text {
+      animation: pulse 1.2s infinite ease-in-out alternate;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.3; transform: scale(0.98); }
+      100% { opacity: 1; transform: scale(1.02); }
     }
 
     /* =========================
@@ -696,8 +706,8 @@
 
   <!-- Displayed only before Firebase finishes loading -->
 
-  <div class="loading-screen" id="loadingScreen">
-    Loading profile…
+  <div class="loading-screen pulse-text" id="loadingScreen">
+    Just a moment...
   </div>
 
   <!-- Public profile is hidden until script.js adds .is-ready -->
