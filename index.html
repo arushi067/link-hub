@@ -61,7 +61,7 @@
     }
 
     /* =========================
-       UNIFIED LOADING SCREEN 
+       UNIFIED LOADING SCREEN (BULLETPROOF)
     ========================= */
     .unified-loading-screen {
       position: fixed;
@@ -142,6 +142,7 @@
       align-items: center;
       justify-content: center;
     }
+
     .collage-wrapper {
       display: flex;
       align-items: center;
@@ -149,6 +150,8 @@
       flex-wrap: wrap;
       gap: 4px;
     }
+
+    /* Pure CSS Animation - NO JS TIMERS NEEDED */
     .letter-anim {
       opacity: 0;
       animation: smoothReveal 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
@@ -158,6 +161,7 @@
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
+    /* Base styling for collage letters */
     .cut {
       display: inline-block;
       padding: 8px 14px;
@@ -169,6 +173,7 @@
       text-transform: uppercase;
     }
 
+    /* Mismatched Collage Styles */
     .l-P { background: #5673d3; font-family: 'Manrope', sans-serif; transform: rotate(-5deg); }
     .l-O1 { background: #e9712a; font-family: 'Fraunces', serif; transform: rotate(4deg); padding: 6px 12px; color: #fff;}
     .l-R { background: #269641; font-family: 'DM Mono', monospace; transform: rotate(-2deg); }
@@ -187,9 +192,12 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
       opacity: 0;
-      animation: fadeInFooter 0.8s ease 2.7s forwards;
+      animation: fadeInFooter 0.8s ease 2.7s forwards; /* Fades in at 2.7s exactly */
     }
-    @keyframes fadeInFooter { to { opacity: 1; } }
+    @keyframes fadeInFooter {
+      to { opacity: 1; }
+    }
+
 
     /* =========================
        PAGE LAYOUT & MAIN APP
@@ -212,24 +220,16 @@
       background: var(--paper);
       box-shadow: var(--shadow);
       transition: background 0.2s ease, box-shadow 0.2s ease;
-      z-index: 10;
     }
 
-    /* Fallback animated gradient for banner just in case Firebase takes a while */
     .profile-banner {
       width: 100%;
       height: 205px;
-      background: linear-gradient(90deg, #e8e1dc, #d8cec6, #e8e1dc);
-      background-size: 200% 200%;
+      background: #e8e1dc;
       background-position: center;
+      background-size: cover;
       background-repeat: no-repeat;
-      animation: gradientShimmer 4s ease infinite;
       transition: height 0.2s ease;
-    }
-    @keyframes gradientShimmer {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
 
     .profile-main { padding: 0 20px 25px; }
@@ -246,6 +246,7 @@
       box-shadow: 0 5px 15px rgba(40, 30, 34, 0.12);
       transition: border-radius 0.2s ease;
     }
+
     .ring {
       position: absolute;
       inset: -3px;
@@ -254,6 +255,7 @@
       border-radius: inherit;
       pointer-events: none;
     }
+
     #profilePhoto {
       position: relative;
       z-index: 2;
@@ -287,6 +289,8 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.14);
     }
     .status-dot.visible { display: block; }
+    .status-dot.away { background: #f0ad35; }
+    .status-dot.offline { background: #999598; }
 
     #userName {
       min-height: 34px;
@@ -297,6 +301,7 @@
       font-weight: 600;
       line-height: 1.3;
     }
+
     .status-text {
       min-height: 16px;
       margin: 0 0 14px;
@@ -406,118 +411,109 @@
       text-align: center;
     }
 
-    /* =========================
-       PURE CSS ANIMATED STORY SECTION
-    ========================= */
-    .story-section {
-      min-width: 0;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-
-    /* The animation ONLY runs when #app gets the .is-ready class */
-    #app.is-ready .story-section {
-      animation: slideUpStory 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s forwards;
-    }
-
-    @keyframes slideUpStory {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .story-container {
-      position: relative;
-      width: 100%;
-      height: calc(100vh - 68px); 
-      min-height: 500px;
-      max-height: 850px;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      cursor: pointer;
-      /* Dynamic Base Aurora Background */
-      background: linear-gradient(-45deg, #ffb6c1, #b85a7d, #5673d3, #ffd166);
-      background-size: 400% 400%;
-      animation: auroraBg 15s ease infinite;
-    }
-
-    @keyframes auroraBg {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* CSS Animated Glowing Orbs/Shapes */
-    .css-shape {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.6;
-      animation: floatShape 12s infinite alternate ease-in-out;
-      transition: transform 0.5s ease;
-    }
-    
-    .shape-1 {
-      width: 400px; height: 400px;
-      background: rgba(255, 235, 59, 0.8); /* Yellow glow */
-      top: -15%; left: -15%;
-    }
-    .shape-2 {
-      width: 500px; height: 500px;
-      background: rgba(255, 0, 127, 0.7); /* Pink glow */
-      bottom: -20%; right: -20%;
-      animation-delay: -6s;
-    }
-    .shape-3 {
-      width: 350px; height: 350px;
-      background: rgba(35, 152, 255, 0.7); /* Blue glow */
-      top: 40%; left: 30%;
-      animation-delay: -3s;
-    }
-
-    @keyframes floatShape {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(40px, -40px) scale(1.1); }
-      100% { transform: translate(-30px, 30px) scale(0.9); }
-    }
-
-    /* Interactive Parallax Hover on the CSS Shapes */
-    .story-container:hover .shape-1 { transform: scale(1.3) translate(20px, 20px); }
-    .story-container:hover .shape-2 { transform: scale(1.2) translate(-20px, -20px); }
-    .story-container:hover .shape-3 { transform: scale(1.4) translate(-10px, 10px); }
-
-    /* Dark gradient at the bottom for text readability */
-    .story-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(20, 16, 18, 0.85) 0%, rgba(20, 16, 18, 0) 50%);
-      display: flex;
-      align-items: flex-end;
-      padding: 34px;
-      pointer-events: none;
-      z-index: 2; /* Keeps overlay above the animated shapes */
-    }
-
-    .story-title {
-      color: #fffefa;
+    .memory-area { min-width: 0; padding-top: 4px; }
+    #memoryTitle {
+      min-height: 44px;
+      margin: 0 0 6px;
+      color: var(--text);
       font-family: "Fraunces", serif;
-      font-size: 48px;
+      font-size: 34px;
       font-weight: 600;
+      line-height: 1.35;
+    }
+    #memorySubtitle {
+      min-height: 20px;
+      margin: 0 0 23px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .board { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .polaroid {
+      display: block;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--paper);
+      box-shadow: 0 5px 16px rgba(40, 30, 34, 0.05);
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .polaroid:hover { transform: translateY(-3px); box-shadow: 0 12px 22px rgba(40, 30, 34, 0.10); }
+    .polaroid .tape { display: none; }
+    .polaroid img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: center;
+      background: #e9e3df;
+    }
+    .polaroid .cap {
+      display: block;
       margin: 0;
-      letter-spacing: -0.01em;
-      text-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transform: translateY(15px);
-      opacity: 0;
+      padding: 13px;
+      color: var(--text);
+      font-family: "Fraunces", serif;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.45;
+      text-align: left;
+    }
+    .empty-note {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 25px 0;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
     }
 
-    /* Text slides up shortly after the main container */
-    #app.is-ready .story-title {
-      animation: slideUpStoryText 0.8s ease 0.5s forwards;
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      background: rgba(20, 16, 18, 0.88);
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      display: block;
+      max-width: min(850px, 82vw);
+      max-height: 80vh;
+      border-radius: 7px;
+      object-fit: contain;
     }
 
-    @keyframes slideUpStoryText {
-      to { opacity: 1; transform: translateY(0); }
+    .lb-close, .lb-nav { position: absolute; border: 0; color: #ffffff; cursor: pointer; }
+    .lb-close { top: 18px; right: 22px; background: transparent; font-size: 34px; line-height: 1; }
+    .lb-nav {
+      top: 50%;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.16);
+      font-size: 25px;
+      transform: translateY(-50%);
     }
-
+    .lb-prev { left: 22px; }
+    .lb-next { right: 22px; }
+    .lb-caption {
+      position: absolute;
+      right: 20px;
+      bottom: 22px;
+      left: 20px;
+      margin: 0;
+      color: #ffffff;
+      font-family: "Fraunces", serif;
+      font-size: 19px;
+      text-align: center;
+    }
 
     /* =========================
        TABLET & MOBILE
@@ -526,12 +522,11 @@
       body { padding: 18px 13px 32px; }
       .page-layout { grid-template-columns: 1fr; gap: 30px; width: min(600px, 100%); }
       #mainCard.card { position: relative; top: auto; }
-      .story-container { height: 500px; }
     }
-    
     @media (max-width: 500px) {
       body { padding: 10px; }
       
+      /* Mobile Loader Scales */
       .loader-profile { flex-direction: column; text-align: center; gap: 14px; }
       .loader-avatar-wrapper { width: 90px; height: 90px; }
       .loader-username { font-size: 24px; justify-content: center; }
@@ -548,19 +543,28 @@
       #userName { font-size: 24px; }
       #aboutTitle { font-size: 17px; }
       #aboutText { font-size: 14px; }
-      
-      /* Story sits right under profile automatically */
-      .story-container { height: 480px; }
-      .story-overlay { padding: 24px; }
-      .story-title { font-size: 38px; }
-      .css-shape { filter: blur(40px); } /* Scale down blur for mobile performance */
+      #memoryTitle { font-size: 28px; }
+      #memorySubtitle { margin-bottom: 17px; font-size: 12px; }
+      .board { grid-template-columns: 1fr; gap: 14px; }
+      .polaroid { width: 100%; }
+      .polaroid img { min-height: 0; aspect-ratio: 4 / 5; }
+      .polaroid .cap { padding: 14px 15px 16px; font-size: 16px; }
+      .lightbox { padding: 14px; }
+      .lightbox img { max-width: 95vw; max-height: 72vh; }
+      .lb-prev { left: 8px; }
+      .lb-next { right: 8px; }
+      .lb-caption { right: 14px; bottom: 15px; left: 14px; font-size: 17px; }
     }
   </style>
 </head>
 
 <body id="bodyRoot">
 
-  <!-- DUMMY LOADER: Prevents external script.js from ruining sequence -->
+  <!-- 
+    DUMMY LOADER FOR EXTERNAL SCRIPTS 
+    If script.js tries to instantly hide "loadingScreen", it targets this invisible div instead.
+    This prevents script.js from ruining the beautiful animation sequence!
+  -->
   <div id="loadingScreen" style="display: none;"></div>
 
   <!-- THE REAL UNIFIED LOADING SCREEN -->
@@ -569,7 +573,6 @@
     <!-- 1. Verified Profile -->
     <div class="loader-profile">
       <div class="loader-avatar-wrapper">
-        <!-- Kept the online placeholder link so it works without uploading -->
         <img src="https://i.ibb.co/2082XnHx/yellow-pfp.jpg" alt="Profile Loading">
       </div>
       <div class="loader-text-info">
@@ -584,7 +587,7 @@
       </div>
     </div>
 
-    <!-- 2. Portfolio Cutouts -->
+    <!-- 2. Portfolio Cutouts (Pure CSS Timings) -->
     <div class="portfolio-part" id="portfolioPart">
       <div class="collage-wrapper">
         <div class="letter-anim" style="animation-delay: 1.5s"><span class="cut l-P">P</span></div>
@@ -604,8 +607,6 @@
   <!-- MAIN APP PROFILE -->
   <div id="app" class="is-loading">
     <div class="page-layout">
-      
-      <!-- LEFT: Profile Card -->
       <main class="card" id="mainCard">
         <div class="profile-banner" id="profileBanner"></div>
         <div class="profile-main">
@@ -654,42 +655,24 @@
         </div>
       </main>
 
-      <!-- RIGHT: Pure CSS Animated Story Section -->
-      <section class="story-section" id="storySection">
-        <div class="story-container">
-          
-          <!-- Animated Pure CSS Background Elements (No images needed!) -->
-          <div class="css-shape shape-1"></div>
-          <div class="css-shape shape-2"></div>
-          <div class="css-shape shape-3"></div>
-
-          <div class="story-overlay">
-            <h2 class="story-title">Story</h2>
-          </div>
-        </div>
+      <section class="memory-area" id="memorySection">
+        <h2 id="memoryTitle"></h2>
+        <p id="memorySubtitle"></p>
+        <main class="board" id="board" aria-live="polite">
+          <p class="empty-note" id="boardLoading">Loading memories…</p>
+          <p class="empty-note" id="boardEmpty" style="display:none;">No memories added yet.</p>
+          <p class="empty-note" id="boardError" style="display:none;color:#b85a7d;">Could not load memories.</p>
+        </main>
       </section>
-
     </div>
   </div>
 
-  <!-- HIDDEN LEGACY ELEMENTS (Keeps script.js alive) -->
-  <div id="hidden-legacy-elements" style="display: none !important;" aria-hidden="true">
-    <section class="memory-area" id="memorySection">
-      <h2 id="memoryTitle"></h2>
-      <p id="memorySubtitle"></p>
-      <main class="board" id="board" aria-live="polite">
-        <p class="empty-note" id="boardLoading"></p>
-        <p class="empty-note" id="boardEmpty"></p>
-        <p class="empty-note" id="boardError"></p>
-      </main>
-    </section>
-    <div class="lightbox" id="lightbox">
-      <button class="lb-close" id="lbClose"></button>
-      <button class="lb-nav lb-prev" id="lbPrev"></button>
-      <img id="lbImg" src="" alt="">
-      <button class="lb-nav lb-next" id="lbNext"></button>
-      <p id="lbCaption" class="lb-caption"></p>
-    </div>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Memory image preview">
+    <button class="lb-close" id="lbClose" type="button" aria-label="Close image preview">×</button>
+    <button class="lb-nav lb-prev" id="lbPrev" type="button" aria-label="Previous memory">←</button>
+    <img id="lbImg" src="" alt="">
+    <button class="lb-nav lb-next" id="lbNext" type="button" aria-label="Next memory">→</button>
+    <p id="lbCaption" class="lb-caption"></p>
   </div>
 
   <script type="module" src="script.js"></script>
@@ -697,6 +680,7 @@
 
   <!-- SEQUENCE MANAGER -->
   <script>
+    // This executes immediately to ensure the sequence finishes perfectly
     setTimeout(() => {
       const realLoader = document.getElementById('realLoadingScreen');
       const app = document.getElementById('app');
@@ -711,7 +695,7 @@
         app.classList.add('is-ready');
         app.classList.remove('is-loading');
       }
-    }, 4500); // Intro Sequence ends exactly at 4.5s
+    }, 4500); // Intro Sequence takes exactly 4.5 seconds
   </script>
 
 </body>
