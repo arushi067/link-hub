@@ -61,7 +61,7 @@
     }
 
     /* =========================
-       UNIFIED LOADING SCREEN (BULLETPROOF)
+       UNIFIED LOADING SCREEN 
     ========================= */
     .unified-loading-screen {
       position: fixed;
@@ -151,7 +151,6 @@
       gap: 4px;
     }
 
-    /* Pure CSS Animation - NO JS TIMERS NEEDED */
     .letter-anim {
       opacity: 0;
       animation: smoothReveal 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
@@ -173,7 +172,6 @@
       text-transform: uppercase;
     }
 
-    /* Mismatched Collage Styles */
     .l-P { background: #5673d3; font-family: 'Manrope', sans-serif; transform: rotate(-5deg); }
     .l-O1 { background: #e9712a; font-family: 'Fraunces', serif; transform: rotate(4deg); padding: 6px 12px; color: #fff;}
     .l-R { background: #269641; font-family: 'DM Mono', monospace; transform: rotate(-2deg); }
@@ -290,6 +288,8 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.14);
     }
     .status-dot.visible { display: block; }
+    .status-dot.away { background: #f0ad35; }
+    .status-dot.offline { background: #999598; }
 
     #userName {
       min-height: 34px;
@@ -428,7 +428,6 @@
     .story-container {
       position: relative;
       width: 100%;
-      /* Tall elegant height for desktop */
       height: calc(100vh - 68px); 
       min-height: 500px;
       max-height: 850px;
@@ -446,11 +445,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      /* 
-         SMART CROP: 
-         Scaling by 1.15 and translating left/down pushes the top-right 
-         "Made with AI" watermark completely out of the visible frame! 
-      */
+      /* Scaling by 1.15 hides the "Made with AI" watermark */
       transform: scale(1.15) translate(-3%, 3%);
       transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
@@ -481,7 +476,6 @@
       text-shadow: 0 4px 12px rgba(0,0,0,0.3);
       transform: translateY(15px);
       opacity: 0;
-      /* Title slides up slightly after the main image container appears */
       animation: slideUpStoryText 0.8s ease 5s forwards;
     }
 
@@ -497,16 +491,12 @@
       body { padding: 18px 13px 32px; }
       .page-layout { grid-template-columns: 1fr; gap: 30px; width: min(600px, 100%); }
       #mainCard.card { position: relative; top: auto; }
-      
-      .story-container {
-        height: 500px; /* shorter for tablet */
-      }
+      .story-container { height: 500px; }
     }
     
     @media (max-width: 500px) {
       body { padding: 10px; }
       
-      /* Mobile Loader Scales */
       .loader-profile { flex-direction: column; text-align: center; gap: 14px; }
       .loader-avatar-wrapper { width: 90px; height: 90px; }
       .loader-username { font-size: 24px; justify-content: center; }
@@ -524,10 +514,8 @@
       #aboutTitle { font-size: 17px; }
       #aboutText { font-size: 14px; }
       
-      /* Story Mobile Adjustments (Sits right under profile automatically via CSS Grid) */
-      .story-container {
-        height: 480px; 
-      }
+      /* Story sits right under profile automatically */
+      .story-container { height: 480px; }
       .story-overlay { padding: 24px; }
       .story-title { font-size: 38px; }
     }
@@ -632,6 +620,7 @@
       <!-- RIGHT: Animated Story Section -->
       <section class="story-section" id="storySection">
         <div class="story-container">
+          <!-- Make sure this image file is saved in the exact same folder as your HTML file! -->
           <img class="story-image" src="Copilot_20261010_194015.png" alt="My Story">
           <div class="story-overlay">
             <h2 class="story-title">Story</h2>
@@ -642,7 +631,28 @@
     </div>
   </div>
 
+  <!-- HIDDEN LEGACY ELEMENTS (Crucial: Prevents your script.js and memories.js from crashing!) -->
+  <div id="hidden-legacy-elements" style="display: none !important;" aria-hidden="true">
+    <section class="memory-area" id="memorySection">
+      <h2 id="memoryTitle"></h2>
+      <p id="memorySubtitle"></p>
+      <main class="board" id="board" aria-live="polite">
+        <p class="empty-note" id="boardLoading"></p>
+        <p class="empty-note" id="boardEmpty"></p>
+        <p class="empty-note" id="boardError"></p>
+      </main>
+    </section>
+    <div class="lightbox" id="lightbox">
+      <button class="lb-close" id="lbClose"></button>
+      <button class="lb-nav lb-prev" id="lbPrev"></button>
+      <img id="lbImg" src="" alt="">
+      <button class="lb-nav lb-next" id="lbNext"></button>
+      <p id="lbCaption" class="lb-caption"></p>
+    </div>
+  </div>
+
   <script type="module" src="script.js"></script>
+  <script type="module" src="memories.js"></script>
 
   <!-- SEQUENCE MANAGER -->
   <script>
