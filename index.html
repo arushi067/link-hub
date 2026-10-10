@@ -7,7 +7,7 @@
   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f5f3ee">
+  <meta name="theme-color" content="#121417">
 
   <title id="pageTitle">Loading</title>
 
@@ -61,10 +61,6 @@
       display: none !important;
     }
 
-    /*
-      The real page is hidden until Firebase finishes loading.
-      This prevents saved/default text from flashing during refresh.
-    */
     #app {
       opacity: 0;
       visibility: hidden;
@@ -76,18 +72,20 @@
       visibility: visible;
     }
 
+    /* =========================
+       NEW ANIMATED LOADING SCREEN
+    ========================= */
+    
     .loading-screen {
       position: fixed;
       inset: 0;
       z-index: 1000;
-      display: grid;
-      place-items: center;
-      background: var(--page);
-      color: var(--muted);
-      font-family: "DM Mono", monospace;
-      font-size: 13px;
-      letter-spacing: 0.04em;
-      transition: opacity 0.25s ease, visibility 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #181a20 0%, #0d0f12 100%);
+      color: #ffffff;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
     }
 
     .loading-screen.hide {
@@ -96,14 +94,63 @@
       pointer-events: none;
     }
 
-    /* Loading Text Pulse Animation */
-    .pulse-text {
-      animation: pulse 1.2s infinite ease-in-out alternate;
+    .loader-profile {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      animation: elegantPulse 2.5s infinite ease-in-out alternate;
     }
 
-    @keyframes pulse {
-      0% { opacity: 0.3; transform: scale(0.98); }
-      100% { opacity: 1; transform: scale(1.02); }
+    .loader-avatar-wrapper {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px solid #ffb6c1; /* Light pink thin border */
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(255, 182, 193, 0.15);
+      flex-shrink: 0;
+    }
+
+    .loader-avatar-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .loader-text-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .loader-username {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 32px;
+      font-weight: 700;
+      font-family: "Manrope", sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .verified-badge {
+      width: 26px;
+      height: 26px;
+      fill: #2398ff;
+      filter: drop-shadow(0 0 8px rgba(35, 152, 255, 0.6));
+    }
+
+    .loader-displayname {
+      font-size: 19px;
+      color: #eaeaea;
+      font-weight: 500;
+      font-family: "Manrope", sans-serif;
+    }
+
+    @keyframes elegantPulse {
+      0% { transform: translateY(0px) scale(0.98); opacity: 0.85; }
+      100% { transform: translateY(-3px) scale(1.02); opacity: 1; }
     }
 
     /* =========================
@@ -119,10 +166,6 @@
       align-items: start;
     }
 
-    /* =========================
-       LEFT PROFILE CARD
-    ========================= */
-
     #mainCard.card {
       position: sticky;
       top: 24px;
@@ -134,10 +177,6 @@
       transition: background 0.2s ease, box-shadow 0.2s ease;
     }
 
-    /*
-      Banner is set by script.js from Firebase.
-      It begins neutral to avoid a hard-coded banner image showing.
-    */
     .profile-banner {
       width: 100%;
       height: 205px;
@@ -152,10 +191,6 @@
       padding: 0 20px 25px;
     }
 
-    /*
-      Profile picture overlaps the banner.
-      It is clean with no white visual layer over the actual photo.
-    */
     .ring-wrap {
       position: relative;
       display: flex;
@@ -246,13 +281,6 @@
       line-height: 1.5;
     }
 
-    /* =========================
-       QUOTE
-    ========================= */
-
-    /*
-      Quote is directly below the status text.
-    */
     .quote-box {
       margin: 0 0 20px;
       padding: 12px 14px;
@@ -274,10 +302,6 @@
       font-weight: 500;
       line-height: 1.65;
     }
-
-    /* =========================
-       ABOUT
-    ========================= */
 
     .about {
       padding-top: 19px;
@@ -315,20 +339,12 @@
       white-space: pre-line;
     }
 
-    /* =========================
-       SIMPLE LINKS
-    ========================= */
-
     .social {
       margin-top: 20px;
       padding-top: 18px;
       border-top: 1px solid var(--line);
     }
 
-    /*
-      Simple outline buttons:
-      Snapchat / Discord / Instagram logos only.
-    */
     .links {
       display: flex;
       flex-wrap: wrap;
@@ -365,36 +381,14 @@
       place-items: center;
     }
 
-    /*
-      Hides written button labels.
-      Each app still has aria-label and title for accessibility.
-    */
     .links .link-btn > span:last-child {
       display: none;
     }
 
-    .snap .icon::before {
-      content: "\f2ab";
-      font-family: "Font Awesome 6 Brands";
-      font-weight: 400;
-    }
+    .snap .icon::before { content: "\f2ab"; font-family: "Font Awesome 6 Brands"; font-weight: 400; }
+    .discord .icon::before { content: "\f392"; font-family: "Font Awesome 6 Brands"; font-weight: 400; }
+    .insta .icon::before { content: "\f16d"; font-family: "Font Awesome 6 Brands"; font-weight: 400; }
 
-    .discord .icon::before {
-      content: "\f392";
-      font-family: "Font Awesome 6 Brands";
-      font-weight: 400;
-    }
-
-    .insta .icon::before {
-      content: "\f16d";
-      font-family: "Font Awesome 6 Brands";
-      font-weight: 400;
-    }
-
-    /*
-      WhatsApp is completely hidden on the public page.
-      The elements remain in HTML so existing script.js does not fail.
-    */
     #whatsappSection {
       display: none !important;
     }
@@ -407,10 +401,6 @@
       font-size: 10px;
       text-align: center;
     }
-
-    /* =========================
-       RIGHT MEMORY GALLERY
-    ========================= */
 
     .memory-area {
       min-width: 0;
@@ -435,9 +425,6 @@
       line-height: 1.6;
     }
 
-    /*
-      memories.js dynamically creates .polaroid cards inside #board.
-    */
     .board {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -460,9 +447,7 @@
       box-shadow: 0 12px 22px rgba(40, 30, 34, 0.10);
     }
 
-    .polaroid .tape {
-      display: none;
-    }
+    .polaroid .tape { display: none; }
 
     .polaroid img {
       display: block;
@@ -495,10 +480,6 @@
       text-align: center;
     }
 
-    /* =========================
-       MEMORY IMAGE POPUP
-    ========================= */
-
     .lightbox {
       position: fixed;
       inset: 0;
@@ -510,9 +491,7 @@
       background: rgba(20, 16, 18, 0.88);
     }
 
-    .lightbox.active {
-      display: flex;
-    }
+    .lightbox.active { display: flex; }
 
     .lightbox img {
       display: block;
@@ -522,8 +501,7 @@
       object-fit: contain;
     }
 
-    .lb-close,
-    .lb-nav {
+    .lb-close, .lb-nav {
       position: absolute;
       border: 0;
       color: #ffffff;
@@ -548,13 +526,8 @@
       transform: translateY(-50%);
     }
 
-    .lb-prev {
-      left: 22px;
-    }
-
-    .lb-next {
-      right: 22px;
-    }
+    .lb-prev { left: 22px; }
+    .lb-next { right: 22px; }
 
     .lb-caption {
       position: absolute;
@@ -571,127 +544,69 @@
     /* =========================
        TABLET
     ========================= */
-
     @media (max-width: 820px) {
-      body {
-        padding: 18px 13px 32px;
-      }
-
+      body { padding: 18px 13px 32px; }
       .page-layout {
         grid-template-columns: 1fr;
         gap: 30px;
         width: min(600px, 100%);
       }
-
-      #mainCard.card {
-        position: relative;
-        top: auto;
-      }
+      #mainCard.card { position: relative; top: auto; }
     }
 
     /* =========================
        MOBILE
     ========================= */
-
     @media (max-width: 500px) {
-      body {
-        padding: 10px;
+      body { padding: 10px; }
+      
+      /* Mobile adjustments for the new loading screen */
+      .loader-profile {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
       }
-
-      .profile-banner {
-        height: 155px;
+      .loader-username {
+        font-size: 26px;
+        justify-content: center;
       }
+      .loader-displayname { font-size: 17px; }
 
-      .profile-main {
-        padding: 0 16px 20px;
-      }
-
+      .profile-banner { height: 155px; }
+      .profile-main { padding: 0 16px 20px; }
       .ring-wrap {
         width: 92px;
         height: 92px;
         margin-top: -43px;
       }
-
-      #userName {
-        font-size: 24px;
-      }
-
-      #aboutTitle {
-        min-height: auto;
-        font-size: 17px;
-      }
-
-      #aboutText {
-        min-height: auto;
-        font-size: 14px;
-      }
-
-      #memoryTitle {
-        min-height: auto;
-        font-size: 28px;
-      }
-
+      #userName { font-size: 24px; }
+      #aboutTitle { font-size: 17px; }
+      #aboutText { font-size: 14px; }
+      #memoryTitle { font-size: 28px; }
       #memorySubtitle {
         margin-bottom: 17px;
         font-size: 12px;
       }
-
-      /*
-        IMPORTANT MOBILE FIX:
-
-        Every memory card is vertical.
-        Image is at top.
-        Caption is directly below the image.
-        There is no side-by-side grid.
-      */
       .board {
-        display: grid;
         grid-template-columns: 1fr;
         gap: 14px;
       }
-
-      .polaroid {
-        display: block;
-        width: 100%;
-        overflow: hidden;
-      }
-
+      .polaroid { width: 100%; }
       .polaroid img {
-        display: block;
-        width: 100%;
-        height: auto;
         min-height: 0;
         aspect-ratio: 4 / 5;
-        object-fit: cover;
-        object-position: center;
       }
-
       .polaroid .cap {
-        display: block;
-        margin: 0;
         padding: 14px 15px 16px;
         font-size: 16px;
-        line-height: 1.45;
-        text-align: left;
       }
-
-      .lightbox {
-        padding: 14px;
-      }
-
+      .lightbox { padding: 14px; }
       .lightbox img {
         max-width: 95vw;
         max-height: 72vh;
       }
-
-      .lb-prev {
-        left: 8px;
-      }
-
-      .lb-next {
-        right: 8px;
-      }
-
+      .lb-prev { left: 8px; }
+      .lb-next { right: 8px; }
       .lb-caption {
         right: 14px;
         bottom: 15px;
@@ -704,13 +619,32 @@
 
 <body id="bodyRoot">
 
-  <!-- Displayed only before Firebase finishes loading -->
+  <!-- NEW ANIMATED LOADING SCREEN (MATCHES INSTAGRAM STYLE) -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader-profile">
+      
+      <!-- Rounded Profile Image with Light Pink Border -->
+      <div class="loader-avatar-wrapper">
+        <img src="https://i.ibb.co/2082XnHx/yellow-pfp.jpg" alt="Profile Loading">
+      </div>
 
-  <div class="loading-screen pulse-text" id="loadingScreen">
-    Just a moment...
+      <!-- Text Info (Username & Verified Badge) -->
+      <div class="loader-text-info">
+        <div class="loader-username">
+          fl0werr_bbyy
+          <!-- High Quality Verified Badge SVG -->
+          <svg class="verified-badge" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.666 2.005C11.862 1.956 12.138 1.956 12.334 2.005L14.774 2.615C14.975 2.665 15.228 2.76 15.397 2.906L17.279 4.536C17.433 4.669 17.65 4.886 17.783 5.04L19.413 6.923C19.559 7.091 19.654 7.344 19.704 7.545L20.314 9.985C20.363 10.181 20.363 10.457 20.314 10.653L19.704 13.093C19.654 13.294 19.559 13.547 19.413 13.715L17.783 15.598C17.65 15.752 17.433 15.969 17.279 16.102L15.397 17.732C15.228 17.878 14.975 17.973 14.774 18.023L12.334 18.633C12.138 18.682 11.862 18.682 11.666 18.633L9.226 18.023C9.025 17.973 8.772 17.878 8.603 17.732L6.721 16.102C6.567 15.969 6.35 15.752 6.217 15.598L4.587 13.715C4.441 13.547 4.346 13.294 4.296 13.093L3.686 10.653C3.637 10.457 3.637 10.181 3.686 9.985L4.296 7.545C4.346 7.344 4.441 7.091 4.587 6.923L6.217 5.04C6.35 4.886 6.567 4.669 6.721 4.536L8.603 2.906C8.772 2.76 9.025 2.665 9.226 2.615L11.666 2.005Z" fill="#1DA1F2"/>
+            <path d="M10.233 14.283L7.756 11.806L8.817 10.745L10.233 12.161L15.183 7.211L16.244 8.272L10.233 14.283Z" fill="white"/>
+          </svg>
+        </div>
+        <div class="loader-displayname">
+          Arushi 🤍🌸
+        </div>
+      </div>
+
+    </div>
   </div>
-
-  <!-- Public profile is hidden until script.js adds .is-ready -->
 
   <div id="app" class="is-loading">
 
@@ -720,13 +654,9 @@
 
       <main class="card" id="mainCard">
 
-        <!-- Banner or GIF is loaded from Firebase -->
-
         <div class="profile-banner" id="profileBanner"></div>
 
         <div class="profile-main">
-
-          <!-- Profile image overlaps banner -->
 
           <div class="ring-wrap">
             <div class="ring" id="ringEl"></div>
@@ -740,20 +670,14 @@
             <span class="status-dot" id="statusDot"></span>
           </div>
 
-          <!-- Loaded from Firebase -->
-
           <h1 id="userName"></h1>
 
           <p class="status-text" id="statusText"></p>
-
-          <!-- Quote is directly under name and status -->
 
           <div class="quote-box" id="quoteBox">
             <span class="quote-mark">“</span>
             <p id="dailyQuote"></p>
           </div>
-
-          <!-- About section -->
 
           <section class="about">
             <p class="small-title">About</p>
@@ -762,8 +686,6 @@
 
             <p id="aboutText"></p>
           </section>
-
-          <!-- Simple logo-only link section -->
 
           <section class="social" id="socialSection">
             <p class="small-title">Links</p>
@@ -811,11 +733,6 @@
 
             </div>
 
-            <!-- 
-              WhatsApp remains hidden.
-              These elements stay in HTML to prevent script.js errors.
-            -->
-
             <div class="whatsapp-section" id="whatsappSection">
 
               <button
@@ -862,8 +779,6 @@
         <h2 id="memoryTitle"></h2>
 
         <p id="memorySubtitle"></p>
-
-        <!-- memories.js inserts real Firestore memories here -->
 
         <main class="board" id="board" aria-live="polite">
 
@@ -933,19 +848,12 @@
     <p id="lbCaption" class="lb-caption"></p>
   </div>
 
-  <!-- Public profile / design data -->
-
   <script type="module" src="script.js"></script>
-
-  <!-- Firestore memories -->
-
   <script type="module" src="memories.js"></script>
 
-  <!-- FAIL-SAFE SCRIPT: Prevents infinite loading screen -->
+  <!-- FAIL-SAFE SCRIPT -->
   <script>
     window.addEventListener('load', () => {
-      // Give Firebase/script.js up to 2 seconds to load everything.
-      // If it hasn't finished by then, forcefully reveal the UI.
       setTimeout(() => {
         const app = document.getElementById('app');
         const loader = document.getElementById('loadingScreen');
@@ -957,7 +865,7 @@
         if (loader && !loader.classList.contains('hide')) {
           loader.classList.add('hide');
         }
-      }, 2000); // 2000 milliseconds = 2 seconds
+      }, 2500); 
     });
   </script>
 
