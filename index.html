@@ -58,7 +58,7 @@
     #app {
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.6s ease;
     }
     #app.is-ready {
       opacity: 1;
@@ -66,33 +66,37 @@
     }
 
     /* =========================
-       STEP 1: VERIFIED LOADING SCREEN
+       UNIFIED LOADING SCREEN
     ========================= */
-    .loading-screen {
+    .unified-loading-screen {
       position: fixed;
       inset: 0;
       z-index: 1000;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       background: linear-gradient(135deg, #181a20 0%, #0d0f12 100%);
       color: #ffffff;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
     }
-    .loading-screen.hide {
+    .unified-loading-screen.hide {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
+
+    /* --- Verified Profile Part --- */
     .loader-profile {
       display: flex;
       align-items: center;
       gap: 22px;
-      animation: elegantPulse 2s infinite ease-in-out alternate;
+      animation: elegantPulse 2.5s infinite ease-in-out alternate;
+      transition: transform 0.6s ease;
     }
     .loader-avatar-wrapper {
-      width: 120px;
-      height: 120px;
+      width: 105px;
+      height: 105px;
       border-radius: 50%;
       border: 2px solid #ffb6c1; 
       overflow: hidden;
@@ -108,58 +112,47 @@
     .loader-text-info {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
     .loader-username {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 700;
       font-family: "Manrope", sans-serif;
       letter-spacing: -0.02em;
     }
     .verified-badge {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       fill: #2398ff;
       filter: drop-shadow(0 0 8px rgba(35, 152, 255, 0.6));
     }
     .loader-displayname {
-      font-size: 19px;
+      font-size: 17px;
       color: #eaeaea;
       font-weight: 500;
       font-family: "Manrope", sans-serif;
     }
+
     @keyframes elegantPulse {
-      0% { transform: translateY(0px) scale(0.98); opacity: 0.85; }
-      100% { transform: translateY(-3px) scale(1.02); opacity: 1; }
+      0% { transform: translateY(0px) scale(0.99); opacity: 0.9; }
+      100% { transform: translateY(-2px) scale(1.01); opacity: 1; }
     }
 
-    /* =========================
-       STEP 2: PORTFOLIO CUTOUT ANIMATION
-    ========================= */
-    .portfolio-screen {
-      position: fixed;
-      inset: 0;
-      z-index: 999;
-      background: #000000;
+    /* --- Portfolio Collage Part --- */
+    .portfolio-part {
+      margin-top: 45px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      opacity: 0; /* Hidden initially */
     }
-    .portfolio-screen.show {
+    /* When JavaScript adds the .show class, the portfolio animates in */
+    .portfolio-part.show {
       opacity: 1;
-      visibility: visible;
-    }
-    .portfolio-screen.hide {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
     }
 
     .collage-wrapper {
@@ -167,61 +160,68 @@
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 3px;
+      gap: 4px;
     }
 
-    /* Paint Reveal Animation Wrapper */
     .letter-anim {
       opacity: 0;
-      transform: translateY(30px) scale(0.7);
-      animation: paintReveal 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      transform: translateY(20px);
     }
     
-    @keyframes paintReveal {
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    /* The simple & static smooth reveal for the letters */
+    .portfolio-part.show .letter-anim {
+      animation: smoothReveal 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+    
+    @keyframes smoothReveal {
+      0% { opacity: 0; transform: translateY(15px) scale(0.95); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     /* Base styling for collage letters */
     .cut {
       display: inline-block;
-      padding: 10px 18px;
-      font-size: 55px;
+      padding: 8px 14px;
+      font-size: 45px;
       font-weight: 800;
       color: #fff;
-      box-shadow: 2px 3px 8px rgba(0,0,0,0.6);
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.5);
       border-radius: 2px 5px 3px 4px;
       text-transform: uppercase;
     }
 
     /* Mismatched Collage Styles */
-    .l-P { background: #5673d3; font-family: 'Manrope', sans-serif; transform: rotate(-6deg); }
-    .l-O1 { background: #e9712a; font-family: 'Fraunces', serif; transform: rotate(5deg); padding: 8px 16px; color: #fff;}
-    .l-R { background: #269641; font-family: 'DM Mono', monospace; transform: rotate(-3deg); }
-    .l-T { background: #c33139; font-family: 'Manrope', sans-serif; transform: rotate(6deg); color: #f5cfcf; padding: 12px 20px;}
-    .l-F { background: #e3d2be; font-family: 'Fraunces', serif; transform: rotate(-4deg); color: #222; font-size: 65px; text-transform: lowercase; }
-    .l-O2 { background: #1a1a1a; font-family: 'Manrope', sans-serif; transform: rotate(3deg); border: 2px solid #555; }
-    .l-L { background: #e5b326; font-family: 'Manrope', sans-serif; transform: rotate(-5deg); color: #111; text-transform: lowercase;}
-    .l-I { background: #b0c0c9; font-family: 'Fraunces', serif; transform: rotate(6deg); color: #111; padding: 10px 14px;}
+    .l-P { background: #5673d3; font-family: 'Manrope', sans-serif; transform: rotate(-5deg); }
+    .l-O1 { background: #e9712a; font-family: 'Fraunces', serif; transform: rotate(4deg); padding: 6px 12px; color: #fff;}
+    .l-R { background: #269641; font-family: 'DM Mono', monospace; transform: rotate(-2deg); }
+    .l-T { background: #c33139; font-family: 'Manrope', sans-serif; transform: rotate(5deg); color: #f5cfcf; padding: 10px 16px;}
+    .l-F { background: #e3d2be; font-family: 'Fraunces', serif; transform: rotate(-3deg); color: #222; font-size: 52px; text-transform: lowercase; }
+    .l-O2 { background: #1a1a1a; font-family: 'Manrope', sans-serif; transform: rotate(2deg); border: 2px solid #555; }
+    .l-L { background: #e5b326; font-family: 'Manrope', sans-serif; transform: rotate(-4deg); color: #111; text-transform: lowercase;}
+    .l-I { background: #b0c0c9; font-family: 'Fraunces', serif; transform: rotate(5deg); color: #111; padding: 8px 12px;}
     .l-O3 { background: #c91b26; font-family: 'Manrope', sans-serif; transform: rotate(-2deg); }
 
-    /* Footer Text */
     .portfolio-footer {
-      margin-top: 45px;
+      margin-top: 30px;
       color: #ffffff;
       font-family: 'DM Mono', monospace;
-      font-size: 15px;
+      font-size: 13px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       opacity: 0;
-      animation: fadeInFooter 1s ease 1.5s forwards;
+    }
+    
+    .portfolio-part.show .portfolio-footer {
+      animation: fadeInFooter 0.8s ease 1.2s forwards;
     }
     
     @keyframes fadeInFooter {
       to { opacity: 1; }
     }
 
+
     /* =========================
-       PAGE LAYOUT & MAIN APP CSS
+       PAGE LAYOUT & MAIN APP
     ========================= */
     .page-layout {
       display: grid;
@@ -590,68 +590,44 @@
     @media (max-width: 500px) {
       body { padding: 10px; }
       
-      /* Scale down Portfolio Cutout text for Mobile */
-      .cut { font-size: 36px; padding: 7px 11px; }
-      .l-F { font-size: 44px; }
-      .portfolio-footer { font-size: 12px; margin-top: 30px;}
-
-      .loader-profile {
-        flex-direction: column;
-        text-align: center;
-        gap: 16px;
-      }
-      .loader-username { font-size: 26px; justify-content: center; }
-      .loader-displayname { font-size: 17px; }
+      /* Scale down Unified Loader for Mobile */
+      .loader-profile { flex-direction: column; text-align: center; gap: 14px; }
+      .loader-avatar-wrapper { width: 90px; height: 90px; }
+      .loader-username { font-size: 24px; justify-content: center; }
+      .loader-displayname { font-size: 15px; }
+      
+      .portfolio-part { margin-top: 35px; }
+      .cut { font-size: 28px; padding: 6px 10px; }
+      .l-F { font-size: 34px; }
+      .portfolio-footer { font-size: 11px; margin-top: 25px;}
 
       .profile-banner { height: 155px; }
       .profile-main { padding: 0 16px 20px; }
-      .ring-wrap {
-        width: 92px;
-        height: 92px;
-        margin-top: -43px;
-      }
+      .ring-wrap { width: 92px; height: 92px; margin-top: -43px; }
       #userName { font-size: 24px; }
       #aboutTitle { font-size: 17px; }
       #aboutText { font-size: 14px; }
       #memoryTitle { font-size: 28px; }
-      #memorySubtitle {
-        margin-bottom: 17px;
-        font-size: 12px;
-      }
-      .board {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
+      #memorySubtitle { margin-bottom: 17px; font-size: 12px; }
+      .board { grid-template-columns: 1fr; gap: 14px; }
       .polaroid { width: 100%; }
-      .polaroid img {
-        min-height: 0;
-        aspect-ratio: 4 / 5;
-      }
-      .polaroid .cap {
-        padding: 14px 15px 16px;
-        font-size: 16px;
-      }
+      .polaroid img { min-height: 0; aspect-ratio: 4 / 5; }
+      .polaroid .cap { padding: 14px 15px 16px; font-size: 16px; }
       .lightbox { padding: 14px; }
-      .lightbox img {
-        max-width: 95vw;
-        max-height: 72vh;
-      }
+      .lightbox img { max-width: 95vw; max-height: 72vh; }
       .lb-prev { left: 8px; }
       .lb-next { right: 8px; }
-      .lb-caption {
-        right: 14px;
-        bottom: 15px;
-        left: 14px;
-        font-size: 17px;
-      }
+      .lb-caption { right: 14px; bottom: 15px; left: 14px; font-size: 17px; }
     }
   </style>
 </head>
 
 <body id="bodyRoot">
 
-  <!-- STEP 1: VERIFIED LOADING SCREEN -->
-  <div class="loading-screen" id="loadingScreen">
+  <!-- UNIFIED LOADING SCREEN -->
+  <div class="unified-loading-screen" id="loadingScreen">
+    
+    <!-- 1. Verified Profile (Always visible first) -->
     <div class="loader-profile">
       <div class="loader-avatar-wrapper">
         <img src="https://i.ibb.co/2082XnHx/yellow-pfp.jpg" alt="Profile Loading">
@@ -667,26 +643,25 @@
         <div class="loader-displayname">Arushi 🤍🌸</div>
       </div>
     </div>
-  </div>
 
-  <!-- STEP 2: PORTFOLIO CUTOUT ANIMATION -->
-  <div class="portfolio-screen" id="portfolioScreen">
-    <div class="collage-wrapper">
-      <!-- Staggered animation delays for the pop-in effect -->
-      <div class="letter-anim" style="animation-delay: 0.1s"><span class="cut l-P">P</span></div>
-      <div class="letter-anim" style="animation-delay: 0.2s"><span class="cut l-O1">o</span></div>
-      <div class="letter-anim" style="animation-delay: 0.3s"><span class="cut l-R">r</span></div>
-      <div class="letter-anim" style="animation-delay: 0.4s"><span class="cut l-T">t</span></div>
-      <div class="letter-anim" style="animation-delay: 0.5s"><span class="cut l-F">f</span></div>
-      <div class="letter-anim" style="animation-delay: 0.6s"><span class="cut l-O2">o</span></div>
-      <div class="letter-anim" style="animation-delay: 0.7s"><span class="cut l-L">l</span></div>
-      <div class="letter-anim" style="animation-delay: 0.8s"><span class="cut l-I">i</span></div>
-      <div class="letter-anim" style="animation-delay: 0.9s"><span class="cut l-O3">o</span></div>
+    <!-- 2. Portfolio Cutouts (Animates in below profile) -->
+    <div class="portfolio-part" id="portfolioPart">
+      <div class="collage-wrapper">
+        <div class="letter-anim" style="animation-delay: 0.1s"><span class="cut l-P">P</span></div>
+        <div class="letter-anim" style="animation-delay: 0.2s"><span class="cut l-O1">o</span></div>
+        <div class="letter-anim" style="animation-delay: 0.3s"><span class="cut l-R">r</span></div>
+        <div class="letter-anim" style="animation-delay: 0.4s"><span class="cut l-T">t</span></div>
+        <div class="letter-anim" style="animation-delay: 0.5s"><span class="cut l-F">f</span></div>
+        <div class="letter-anim" style="animation-delay: 0.6s"><span class="cut l-O2">o</span></div>
+        <div class="letter-anim" style="animation-delay: 0.7s"><span class="cut l-L">l</span></div>
+        <div class="letter-anim" style="animation-delay: 0.8s"><span class="cut l-I">i</span></div>
+        <div class="letter-anim" style="animation-delay: 0.9s"><span class="cut l-O3">o</span></div>
+      </div>
+      <div class="portfolio-footer">Arushi Patel | Designer. 2026</div>
     </div>
-    <div class="portfolio-footer">Arushi Patel | Designer. 2026</div>
   </div>
 
-  <!-- STEP 3: MAIN APP PROFILE -->
+  <!-- MAIN APP PROFILE -->
   <div id="app" class="is-loading">
     <div class="page-layout">
       <main class="card" id="mainCard">
@@ -760,33 +735,30 @@
   <script type="module" src="script.js"></script>
   <script type="module" src="memories.js"></script>
 
-  <!-- SEQUENCE SCRIPT: Manages the 3 transitions seamlessly -->
+  <!-- SEQUENCE SCRIPT: Controls the unified loading screen timing -->
   <script>
     window.addEventListener('load', () => {
-      // 1. Show Instagram Loader for 2.2 seconds
+      // 1. After 1.5 seconds, reveal the PORTFOLIO cutout letters below the profile
       setTimeout(() => {
-        const loader = document.getElementById('loadingScreen');
-        const portfolio = document.getElementById('portfolioScreen');
+        const portfolioPart = document.getElementById('portfolioPart');
+        if (portfolioPart) {
+          portfolioPart.classList.add('show');
+        }
+      }, 1500); 
+
+      // 2. Let the combined screen sit for another 2.5 seconds, then hide it and show main site
+      setTimeout(() => {
+        const fullLoader = document.getElementById('loadingScreen');
+        const app = document.getElementById('app');
         
-        // Hide Instagram Loader, trigger Portfolio Animation
-        if (loader) loader.classList.add('hide');
-        if (portfolio) portfolio.classList.add('show');
-        
-        // 2. Let Portfolio Animation play for 3.5 seconds before hiding it
-        setTimeout(() => {
-          const app = document.getElementById('app');
-          if (portfolio) {
-            portfolio.classList.remove('show');
-            portfolio.classList.add('hide');
-          }
-          // Reveal main website profile
-          if (app && !app.classList.contains('is-ready')) {
-            app.classList.add('is-ready');
-            app.classList.remove('is-loading');
-          }
-        }, 3500); 
-        
-      }, 2200); 
+        if (fullLoader) {
+          fullLoader.classList.add('hide');
+        }
+        if (app && !app.classList.contains('is-ready')) {
+          app.classList.add('is-ready');
+          app.classList.remove('is-loading');
+        }
+      }, 4000); // 4000ms total loading sequence time
     });
   </script>
 
